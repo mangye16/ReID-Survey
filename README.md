@@ -11,7 +11,7 @@ Deep Learning for Person Re-identification:  A Survey and Outlook
 - A new AGW baseline with non-local Attention block, Generalized mean pooling and Weighted triplet regularization. It acheieves competitive performance on both single-modality and [cross-modality](https://github.com/mangye16/Cross-Modal-Re-ID-baseline) Re-ID tasks.
 
 
-# SOTA on Single-Modality Re-ID with mINP
+# AGW on Single-Modality Re-ID with mINP
 
 ## DukeMTMC dataset
 
