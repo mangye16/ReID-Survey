@@ -1,5 +1,7 @@
 # ReID-Survey
-Deep Learning for Person Re-identification:  A Survey and Outlook 
+Deep Learning for Person Re-identification:  A Survey and Outlook.
+
+A cross-modality implementation is [HERE](https://github.com/mangye16/Cross-Modal-Re-ID-baseline).
 
 
 # Highlights
