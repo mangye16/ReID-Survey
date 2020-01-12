@@ -6,11 +6,11 @@ A cross-modality implementation is [HERE](https://github.com/mangye16/Cross-Moda
 
 ## Highlights
 
-- A comprehensive survey and in-depth analysis is conducted for person Re-ID in recent years (2016-2019)
+- A comprehensive survey with in-depth analysis for person Re-ID in recent years (2016-2019).
 
 - A new evaluation metric, namely mean Inverse Negative Penalty (mINP), which measures the ability to find the hardest correct match.
 
-- A new AGW baseline with non-local Attention block, Generalized mean pooling and Weighted triplet regularization. It acheieves competitive performance on both single-modality and [cross-modality](https://github.com/mangye16/Cross-Modal-Re-ID-baseline) Re-ID tasks.
+- A new AGW baseline with non-local Attention block, Generalized mean pooling and Weighted regularization triplet. It acheieves competitive performance on both single-modality and [cross-modality](https://github.com/mangye16/Cross-Modal-Re-ID-baseline) Re-ID tasks.
 
 
 ## AGW on Single-Modality Re-ID with mINP
