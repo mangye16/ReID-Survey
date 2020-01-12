@@ -43,3 +43,18 @@ Deep Learning for Person Re-identification:  A Survey and Outlook
 | --------   | -----    | -----  |  -----  | ----- |------|------|
 |BNNneck     | ImageNet | 63.4% | 45.1%|  12.4% |[Code](https://github.com/michuanhaohao/reid-strong-baseline) |Bag of Tricks and A Strong Baseline for Deep Person Re-identification. In ArXiv 19. [arXiv](https://arxiv.org/abs/1903.07071)|
 |AGW     | ImageNet | 68.3% | 49.3%|  14.7% | [GoogleDrive](https://drive.google.com/open?id=181K9PQGnej0K5xNX9DRBDPAf3K9JosYk)| Deep Learning for Person Re-identification:  A Survey and Outlook  |
+
+
+### Citation
+
+Please kindly cite this paper in your publications if it helps your research:
+```
+@inproceedings{arxiv20reidsurvey,
+  title={Deep Learning for Person Re-identification: A Survey and Outlook},
+  author={Ye, Mang and Shen, Jianbing and Lin, Gaojie and Xiang, Tao and Shao, Ling and Hoi, Steven C. H.},
+  booktitle={ArXiv},
+  year={2020},
+}
+```
+
+Contact: mangye16@gmail.com
