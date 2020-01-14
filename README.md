@@ -1,7 +1,7 @@
 # ReID-Survey with a Powerful AGW Baseline (To be updated)
 Deep Learning for Person Re-identification:  A Survey and Outlook. [arXiv](https://arxiv.org/abs/2001.04193)
 
-A cross-modality implementation of AGW is [HERE](https://github.com/mangye16/Cross-Modal-Re-ID-baseline).
+An implementation of AGW for cross-modality visible-infrared Re-ID is [HERE](https://github.com/mangye16/Cross-Modal-Re-ID-baseline).
 
 
 ## Highlights
