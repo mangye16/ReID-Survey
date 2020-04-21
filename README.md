@@ -80,7 +80,7 @@ To test a AGW model with on Market1501 with weight file ```'./pretrained/dukemtm
 python3 tools/main.py --config_file='configs/AGW_baseline.yml' MODEL.DEVICE_ID "('0')" DATASETS.NAMES "('market1501')"  MODEL.PRETRAIN_CHOICE "('self')" TEST.WEIGHT "('./pretrained/market1501_AGW.pth')" TEST.EVALUATE_ONLY "('on')" OUTPUT_DIR "('./log/Test')"
 ```
 
-### Citation
+## Citation
 
 Please kindly cite this paper in your publications if it helps your research:
 ```
