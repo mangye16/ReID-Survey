@@ -47,6 +47,21 @@ An implementation of AGW for cross-modality visible-infrared Re-ID is [HERE](htt
 |AGW     | ImageNet | 68.3% | 49.3%|  14.7% | [GoogleDrive](https://drive.google.com/open?id=1xw-t7gVkEghkgHai0nL28VhpS7mBHNG8)| Deep Learning for Person Re-identification:  A Survey and Outlook. In ArXiv 20. [arXiv](https://arxiv.org/abs/2001.04193)   |
 
 
+###Train
+
+To train a AGW model with on Market1501 with GPU device 0, run similarly:
+```
+python3 tools/main.py --config_file='configs/AGW_baseline.yml' MODEL.DEVICE_ID "('0')" DATASETS.NAMES "('market1501')" DATASETS.ROOT_DIR "('./toDataset')"  OUTPUT_DIR "('./log/market1501/Experiment-AGW-baseline')"
+```
+
+
+
+###Test
+To test a AGW model with on Market1501 with weight file ```'./pretrained/dukemtmc_AGW.pth'```, run similarly:
+```
+python3 tools/main.py --config_file='configs/AGW_baseline.yml' MODEL.DEVICE_ID "('0')" DATASETS.NAMES "('market1501')" DATASETS.ROOT_DIR  "('./toDataset')" MODEL.PRETRAIN_CHOICE "('self')" TEST.WEIGHT "('./pretrained/market1501_AGW.pth')" TEST.EVALUATE_ONLY "('on')" OUTPUT_DIR "('./log/Test')"
+```
+
 ### Citation
 
 Please kindly cite this paper in your publications if it helps your research:

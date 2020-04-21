@@ -164,3 +164,45 @@ class Baseline(nn.Module):
             if 'classifier' in i:
                 continue
             self.state_dict()[i].copy_(param_dict[i])
+
+    def get_optimizer(self, cfg, criterion):
+        optimizer = {}
+        params = []
+        lr = cfg.SOLVER.BASE_LR
+        weight_decay = cfg.SOLVER.WEIGHT_DECAY
+        for key, value in self.named_parameters():
+            if not value.requires_grad:
+                continue
+            params += [{"params": [value], "lr": lr, "weight_decay": weight_decay}]
+        if cfg.SOLVER.OPTIMIZER_NAME == 'SGD':
+            optimizer['model'] = getattr(torch.optim, cfg.SOLVER.OPTIMIZER_NAME)(params, momentum=cfg.SOLVER.MOMENTUM)
+        else:
+            optimizer['model'] = getattr(torch.optim, cfg.SOLVER.OPTIMIZER_NAME)(params)
+        if cfg.MODEL.CENTER_LOSS == 'on':
+            optimizer['center'] = torch.optim.SGD(criterion['center'].parameters(), lr=cfg.SOLVER.CENTER_LR)
+        return optimizer
+
+    def get_creterion(self, cfg, num_classes):
+        criterion = {}
+        criterion['xent'] = CrossEntropyLabelSmooth(num_classes=num_classes)  # new add by luo
+
+        print("Weighted Regularized Triplet:", cfg.MODEL.WEIGHT_REGULARIZED_TRIPLET)
+        if cfg.MODEL.WEIGHT_REGULARIZED_TRIPLET == 'on':
+            criterion['triplet'] = WeightedRegularizedTriplet()
+        else:
+            criterion['triplet'] = TripletLoss(cfg.SOLVER.MARGIN)  # triplet loss
+
+        if cfg.MODEL.CENTER_LOSS == 'on':
+            criterion['center'] = CenterLoss(num_classes=num_classes, feat_dim=cfg.MODEL.CENTER_FEAT_DIM,
+                                             use_gpu=True)
+
+        def criterion_total(score, feat, target):
+            loss = criterion['xent'](score, target) + criterion['triplet'](feat, target)[0]
+            if cfg.MODEL.CENTER_LOSS == 'on':
+                loss = loss + cfg.SOLVER.CENTER_LOSS_WEIGHT * criterion['center'](feat, target)
+            return loss
+
+        criterion['total'] = criterion_total
+
+        return criterion
+

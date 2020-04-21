@@ -11,7 +11,9 @@ sys.path.append('.')
 from config import cfg
 from data import make_data_loader
 from modeling import build_model
+from utils.lr_scheduler import WarmupMultiStepLR
 from utils.logger import setup_logger
+from tools.train import do_train
 from tools.test import do_test
 
 
@@ -65,6 +67,44 @@ def main():
         do_test(cfg, model, data_loader, num_query)
         return
 
+    criterion = model.get_creterion(cfg, num_classes)
+    optimizer = model.get_optimizer(cfg, criterion)
+
+    # Add for using self trained model
+    if cfg.MODEL.PRETRAIN_CHOICE == 'self':
+        start_epoch = eval(cfg.MODEL.PRETRAIN_PATH.split('/')[-1].split('.')[0].split('_')[-1])
+        print('Start epoch:', start_epoch)
+        path_to_optimizer = cfg.MODEL.PRETRAIN_PATH.replace('model', 'optimizer')
+        print('Path to the checkpoint of optimizer:', path_to_optimizer)
+        path_to_center_param = cfg.MODEL.PRETRAIN_PATH.replace('model', 'center_param')
+        print('Path to the checkpoint of center_param:', path_to_center_param)
+        path_to_optimizer_center = cfg.MODEL.PRETRAIN_PATH.replace('model', 'optimizer_center')
+        print('Path to the checkpoint of optimizer_center:', path_to_optimizer_center)
+        model.load_state_dict(torch.load(cfg.MODEL.PRETRAIN_PATH))
+        optimizer['model'].load_state_dict(torch.load(path_to_optimizer))
+        criterion['center'].load_state_dict(torch.load(path_to_center_param))
+        optimizer['center'].load_state_dict(torch.load(path_to_optimizer_center))
+        scheduler = WarmupMultiStepLR(optimizer['model'], cfg.SOLVER.STEPS, cfg.SOLVER.GAMMA, cfg.SOLVER.WARMUP_FACTOR,
+                                      cfg.SOLVER.WARMUP_ITERS, cfg.SOLVER.WARMUP_METHOD, start_epoch)
+    elif cfg.MODEL.PRETRAIN_CHOICE == 'imagenet':
+        start_epoch = 0
+        scheduler = WarmupMultiStepLR(optimizer['model'], cfg.SOLVER.STEPS, cfg.SOLVER.GAMMA, cfg.SOLVER.WARMUP_FACTOR,
+                                      cfg.SOLVER.WARMUP_ITERS, cfg.SOLVER.WARMUP_METHOD)
+
+    else:
+        print('Only support pretrain_choice for imagenet and self, but got {}'.format(cfg.MODEL.PRETRAIN_CHOICE))
+
+
+
+    do_train(cfg,
+        model,
+        data_loader,
+        optimizer,
+        scheduler,
+        criterion,
+        num_query,
+        start_epoch
+    )
 
 if __name__ == '__main__':
     main()
