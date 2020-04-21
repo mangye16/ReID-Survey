@@ -9,5 +9,4 @@
 # generalized mean pooling
 # non local blocks
 python3 tools/main.py --config_file='configs/AGW_baseline.yml' MODEL.DEVICE_ID "('3')" \
-DATASETS.NAMES "('market1501')" DATASETS.ROOT_DIR "('./toDataset')"  \
-OUTPUT_DIR "('./log/market1501/Experiment-AGW-baseline')"
+DATASETS.NAMES "('market1501')" OUTPUT_DIR "('./log/market1501/Experiment-AGW-baseline')"

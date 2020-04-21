@@ -10,5 +10,5 @@
 # non local blocks
 # without re-ranking: add TEST.RE_RANKING "('on')" for re-ranking
 python3 tools/main.py --config_file='configs/AGW_baseline.yml' MODEL.DEVICE_ID "('1')" \
-DATASETS.NAMES "('dukemtmc')" DATASETS.ROOT_DIR  "('./toDataset')" MODEL.PRETRAIN_CHOICE "('self')" \
+DATASETS.NAMES "('dukemtmc')" MODEL.PRETRAIN_CHOICE "('self')" \
 TEST.WEIGHT "('./pretrained/dukemtmc_AGW.pth')" TEST.EVALUATE_ONLY "('on')" OUTPUT_DIR "('./log/Test')"
