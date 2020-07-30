@@ -66,14 +66,21 @@ toDataset
         ......
 ```
 
-### 2. Train
+### 2. Install dependencies
+
+  - pytorch>=0.4
+  - torchvision
+  - ignite=0.1.2
+  - yacs
+  
+### 3. Train
 
 To train a AGW model with on Market1501 with GPU device 0, run similarly:
 ```
 python3 tools/main.py --config_file='configs/AGW_baseline.yml' MODEL.DEVICE_ID "('0')" DATASETS.NAMES "('market1501')" OUTPUT_DIR "('./log/market1501/Experiment-AGW-baseline')"
 ```
 
-### 3. Test
+### 4. Test
 
 To test a AGW model with on Market1501 with weight file ```'./pretrained/dukemtmc_AGW.pth'```, run similarly:
 ```
