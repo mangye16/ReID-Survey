@@ -111,11 +111,11 @@ _C.SOLVER.WARMUP_ITERS = 500
 _C.SOLVER.WARMUP_METHOD = "linear"
 
 # epoch number of saving checkpoints
-_C.SOLVER.CHECKPOINT_PERIOD = 50
+_C.SOLVER.CHECKPOINT_PERIOD = 5
 # iteration of display training log
-_C.SOLVER.LOG_PERIOD = 100
+_C.SOLVER.LOG_PERIOD = 5
 # epoch number of validation
-_C.SOLVER.EVAL_PERIOD = 50
+_C.SOLVER.EVAL_PERIOD = 5
 
 # Number of images per batch
 # This is global, so if we have 8 GPUs and IMS_PER_BATCH = 16, each GPU will

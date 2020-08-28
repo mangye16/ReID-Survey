@@ -130,3 +130,6 @@ dmypy.json
 
 # Dataset
 toDataset/
+/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/log/
+/content/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/toDataset/
+/content/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/resnet50-19c8e357.pth

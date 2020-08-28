@@ -50,7 +50,6 @@ def create_supervised_trainer(model, optimizer, criterion, cetner_loss_weight=0.
             for param in criterion['center'].parameters():
                 param.grad.data *= (1. / cetner_loss_weight)
             optimizer['center'].step()
-
         # compute acc
         acc = (score.max(1)[1] == target).float().mean()
         return loss.item(), acc.item()
