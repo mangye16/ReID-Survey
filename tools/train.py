@@ -4,6 +4,7 @@ import logging
 
 import torch
 import torch.nn as nn
+from torch.utils.tensorboard import SummaryWriter
 from ignite.engine import Engine, Events
 from ignite.handlers import ModelCheckpoint, Timer
 from ignite.metrics import RunningAverage
@@ -50,6 +51,7 @@ def create_supervised_trainer(model, optimizer, criterion, cetner_loss_weight=0.
             for param in criterion['center'].parameters():
                 param.grad.data *= (1. / cetner_loss_weight)
             optimizer['center'].step()
+
         # compute acc
         acc = (score.max(1)[1] == target).float().mean()
         return loss.item(), acc.item()
@@ -77,10 +79,11 @@ def do_train(
     logger = logging.getLogger("reid_baseline")
     logger.info("Start training")
 
+    writer = SummaryWriter(log_dir=cfg.OUT_DIR + '/writer')
+
     trainer = create_supervised_trainer(model, optimizer, criterion, cfg.SOLVER.CENTER_LOSS_WEIGHT, device=device)
 
     evaluator = create_supervised_evaluator(model, metrics={'r1_mAP_mINP': r1_mAP_mINP(num_query, max_rank=50, feat_norm=cfg.TEST.FEAT_NORM)}, device=device)
-    
     checkpointer = ModelCheckpoint(output_dir, cfg.MODEL.NAME, checkpoint_period, n_saved=10, require_empty=False)
     trainer.add_event_handler(Events.EPOCH_COMPLETED, checkpointer, {'model': model,
                                                                      'optimizer': optimizer['model'],
@@ -112,6 +115,8 @@ def do_train(
                         .format(engine.state.epoch, ITER, len(data_loader['train']),
                                 engine.state.metrics['avg_loss'], engine.state.metrics['avg_acc'],
                                 scheduler.get_lr()[0]))
+            writer.add_scalar('loss/train_loss', engine.state.metrics['avg_loss'], engine.state.epoch * len(data_loader['train'] + ITER))
+            write.add_scalar('acc/train_acc', engine.state.metrics['avg_acc'], engine.state.epoch * len(data_loader['train'] + ITER))
         if len(data_loader['train']) == ITER:
             ITER = 0
 
@@ -132,7 +137,12 @@ def do_train(
             logger.info("Validation Results - Epoch: {}".format(engine.state.epoch))
             logger.info("mINP: {:.1%}".format(mINP))
             logger.info("mAP: {:.1%}".format(mAP))
+
+            writer.add_scalar('validation_metrics/mINP', mINP, engine.state.epoch * len(data_loader['train']))
+            writer.add_scalar('validation_metrics/mAP', mAP, engine.state.epoch * len(data_loader['train']))
+
             for r in [1, 5, 10]:
                 logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
+                writer.add_scalar('validation_metrics/Rank-{}'.format(r), cmc[r - 1], engine.state.epoch * len(data_loader['train']))
 
     trainer.run(data_loader['train'], max_epochs=epochs)
