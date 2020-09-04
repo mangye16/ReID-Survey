@@ -115,8 +115,8 @@ def do_train(
                         .format(engine.state.epoch, ITER, len(data_loader['train']),
                                 engine.state.metrics['avg_loss'], engine.state.metrics['avg_acc'],
                                 scheduler.get_lr()[0]))
-            writer.add_scalar('loss/train_loss', engine.state.metrics['avg_loss'], engine.state.epoch * len(data_loader['train'] + ITER))
-            write.add_scalar('acc/train_acc', engine.state.metrics['avg_acc'], engine.state.epoch * len(data_loader['train'] + ITER))
+            writer.add_scalar('loss/train_loss', engine.state.metrics['avg_loss'], engine.state.epoch * len(data_loader['train']) + ITER)
+            write.add_scalar('acc/train_acc', engine.state.metrics['avg_acc'], engine.state.epoch * len(data_loader['train']) + ITER)
         if len(data_loader['train']) == ITER:
             ITER = 0
 

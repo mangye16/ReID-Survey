@@ -36,6 +36,7 @@ class ImageDataset(Dataset):
         img_path, pid, camid = self.dataset[index]
         img = read_image(img_path)
 
+        # while it needs to transform everytime that want to get item
         if self.transform is not None:
             img = self.transform(img)
 

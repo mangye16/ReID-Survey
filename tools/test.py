@@ -47,6 +47,7 @@ def do_test(
 
     logger = logging.getLogger("reid_baseline")
     logger.info("Enter inferencing")
+    # By default reranking is off
     if cfg.TEST.RE_RANKING == 'off':
         print("Create evaluator")
         evaluator = create_supervised_evaluator(model, metrics={'r1_mAP_mINP': r1_mAP_mINP(num_query, max_rank=50, feat_norm=cfg.TEST.FEAT_NORM)},

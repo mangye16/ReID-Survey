@@ -19,12 +19,14 @@ from tools.test import do_test
 
 def main():
     parser = argparse.ArgumentParser(description="AGW Re-ID Baseline")
+    # load argument from config file
     parser.add_argument(
         "--config_file", default="", help="path to config file", type=str
     )
+    # ASK :
     parser.add_argument("opts", help="Modify config options using the command-line", default=None,
                         nargs=argparse.REMAINDER)
-
+    # ASK :
     args = parser.parse_args()
 
     num_gpus = int(os.environ["WORLD_SIZE"]) if "WORLD_SIZE" in os.environ else 1
@@ -64,6 +66,7 @@ def main():
     if cfg.TEST.EVALUATE_ONLY == 'on':
         logger.info("Evaluate Only")
         model.load_param(cfg.TEST.WEIGHT)
+        # test
         do_test(cfg, model, data_loader, num_query)
         return
 
