@@ -1,0 +1,936 @@
+2020-09-03 14:13:12,202 reid_baseline INFO: Using 1 GPUS
+2020-09-03 14:13:12,202 reid_baseline INFO: Namespace(config_file='configs/AGW_baseline.yml', opts=['MODEL.DEVICE_ID', "('0')", 'DATASETS.NAMES', "('market1501')", 'OUTPUT_DIR', "('./log/market1501/Experiment-AGW-baseline')"])
+2020-09-03 14:13:12,203 reid_baseline INFO: Loaded configuration file configs/AGW_baseline.yml
+2020-09-03 14:13:12,203 reid_baseline INFO: 
+MODEL:
+  PRETRAIN_CHOICE: 'imagenet'
+  PRETRAIN_PATH: "/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/resnet50-19c8e357.pth"
+  CENTER_LOSS: 'on'
+  CENTER_FEAT_DIM: 2048
+  NAME: 'resnet50_nl'
+  WEIGHT_REGULARIZED_TRIPLET: 'on'
+  GENERALIZED_MEAN_POOL: 'on'
+
+INPUT:
+  IMG_SIZE: [256, 128]
+  PROB: 0.5 # random horizontal flip
+  RE_PROB: 0.5 # random erasing
+  PADDING: 10
+
+DATASETS:
+  NAMES: ('market1501')
+
+DATALOADER:
+  PK_SAMPLER: 'on'
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 8
+
+SOLVER:
+  OPTIMIZER_NAME: 'Adam'
+  MAX_EPOCHS: 160
+  BASE_LR: 0.00035
+
+  CENTER_LR: 0.5
+  CENTER_LOSS_WEIGHT: 0.0005
+
+  WEIGHT_DECAY: 0.0005
+  IMS_PER_BATCH: 64
+
+  STEPS: [40, 70]
+  GAMMA: 0.1
+
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: 'linear'
+
+  CHECKPOINT_PERIOD: 40
+  LOG_PERIOD: 60
+  EVAL_PERIOD: 40
+
+TEST:
+  IMS_PER_BATCH: 64
+  RE_RANKING: 'off'
+  WEIGHT: "path"
+  FEAT_NORM: 'on'
+  EVALUATE_ONLY: 'off'
+
+OUTPUT_DIR: "./log/market1501/Experiment-AGW-baseline"
+
+
+
+2020-09-03 14:13:12,204 reid_baseline INFO: Running with config:
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 8
+  PK_SAMPLER: on
+DATASETS:
+  NAMES: market1501
+  ROOT_DIR: ./toDataset
+INPUT:
+  IMG_SIZE: [256, 128]
+  PADDING: 10
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+  PROB: 0.5
+  RE_PROB: 0.5
+MODEL:
+  CENTER_FEAT_DIM: 2048
+  CENTER_LOSS: on
+  DEVICE: cuda
+  DEVICE_ID: 0
+  GENERALIZED_MEAN_POOL: on
+  LAST_STRIDE: 1
+  NAME: resnet50_nl
+  PRETRAIN_CHOICE: imagenet
+  PRETRAIN_PATH: /gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/resnet50-19c8e357.pth
+  WEIGHT_REGULARIZED_TRIPLET: on
+OUTPUT_DIR: ./log/market1501/Experiment-AGW-baseline
+SOLVER:
+  BASE_LR: 0.00035
+  CENTER_LOSS_WEIGHT: 0.0005
+  CENTER_LR: 0.5
+  CHECKPOINT_PERIOD: 40
+  EVAL_PERIOD: 40
+  GAMMA: 0.1
+  IMS_PER_BATCH: 64
+  LOG_PERIOD: 60
+  MARGIN: 0.3
+  MAX_EPOCHS: 160
+  MOMENTUM: 0.9
+  OPTIMIZER_NAME: Adam
+  STEPS: (40, 70)
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+TEST:
+  EVALUATE_ONLY: off
+  FEAT_NORM: on
+  IMS_PER_BATCH: 64
+  RE_RANKING: off
+  WEIGHT: path
+2020-09-03 14:13:17,970 reid_baseline INFO: Start training
+2020-09-03 14:14:43,615 reid_baseline INFO: Epoch[1] Iteration[60/183] Loss: 22.207, Acc: 0.011, Base Lr: 3.82e-05
+2020-09-03 14:16:27,056 reid_baseline INFO: Epoch[1] Iteration[120/183] Loss: 12.441, Acc: 0.050, Base Lr: 3.82e-05
+2020-09-03 14:19:10,250 reid_baseline INFO: Epoch[1] Iteration[180/183] Loss: 9.086, Acc: 0.131, Base Lr: 3.82e-05
+2020-09-03 14:19:13,312 reid_baseline INFO: Epoch 1 done. Time per batch: 117.308[s] Speed: 99.8[samples/s]
+2020-09-03 14:19:13,313 reid_baseline INFO: ----------
+2020-09-03 14:19:51,767 reid_baseline INFO: Epoch[2] Iteration[60/184] Loss: 7.413, Acc: 0.076, Base Lr: 7.28e-05
+2020-09-03 14:20:27,820 reid_baseline INFO: Epoch[2] Iteration[120/184] Loss: 6.919, Acc: 0.095, Base Lr: 7.28e-05
+2020-09-03 14:21:03,264 reid_baseline INFO: Epoch[2] Iteration[180/184] Loss: 6.038, Acc: 0.182, Base Lr: 7.28e-05
+2020-09-03 14:21:05,794 reid_baseline INFO: Epoch 2 done. Time per batch: 110.494[s] Speed: 106.6[samples/s]
+2020-09-03 14:21:05,794 reid_baseline INFO: ----------
+2020-09-03 14:21:43,138 reid_baseline INFO: Epoch[3] Iteration[60/184] Loss: 6.029, Acc: 0.087, Base Lr: 1.07e-04
+2020-09-03 14:22:18,465 reid_baseline INFO: Epoch[3] Iteration[120/184] Loss: 5.434, Acc: 0.200, Base Lr: 1.07e-04
+2020-09-03 14:22:53,697 reid_baseline INFO: Epoch[3] Iteration[180/184] Loss: 4.363, Acc: 0.398, Base Lr: 1.07e-04
+2020-09-03 14:22:57,515 reid_baseline INFO: Epoch 3 done. Time per batch: 109.240[s] Speed: 107.8[samples/s]
+2020-09-03 14:22:57,516 reid_baseline INFO: ----------
+2020-09-03 14:23:34,828 reid_baseline INFO: Epoch[4] Iteration[60/183] Loss: 4.669, Acc: 0.287, Base Lr: 1.42e-04
+2020-09-03 14:24:10,173 reid_baseline INFO: Epoch[4] Iteration[120/183] Loss: 4.066, Acc: 0.425, Base Lr: 1.42e-04
+2020-09-03 14:24:45,395 reid_baseline INFO: Epoch[4] Iteration[180/183] Loss: 3.165, Acc: 0.614, Base Lr: 1.42e-04
+2020-09-03 14:24:47,776 reid_baseline INFO: Epoch 4 done. Time per batch: 108.746[s] Speed: 107.7[samples/s]
+2020-09-03 14:24:47,777 reid_baseline INFO: ----------
+2020-09-03 14:25:25,310 reid_baseline INFO: Epoch[5] Iteration[60/184] Loss: 3.669, Acc: 0.493, Base Lr: 1.77e-04
+2020-09-03 14:26:00,892 reid_baseline INFO: Epoch[5] Iteration[120/184] Loss: 3.064, Acc: 0.626, Base Lr: 1.77e-04
+2020-09-03 14:26:36,059 reid_baseline INFO: Epoch[5] Iteration[180/184] Loss: 2.392, Acc: 0.769, Base Lr: 1.77e-04
+2020-09-03 14:26:39,051 reid_baseline INFO: Epoch 5 done. Time per batch: 109.672[s] Speed: 107.4[samples/s]
+2020-09-03 14:26:39,052 reid_baseline INFO: ----------
+2020-09-03 14:27:16,330 reid_baseline INFO: Epoch[6] Iteration[60/184] Loss: 2.628, Acc: 0.706, Base Lr: 2.11e-04
+2020-09-03 14:27:51,783 reid_baseline INFO: Epoch[6] Iteration[120/184] Loss: 2.312, Acc: 0.785, Base Lr: 2.11e-04
+2020-09-03 14:28:27,076 reid_baseline INFO: Epoch[6] Iteration[180/184] Loss: 1.908, Acc: 0.869, Base Lr: 2.11e-04
+2020-09-03 14:28:31,093 reid_baseline INFO: Epoch 6 done. Time per batch: 109.341[s] Speed: 107.7[samples/s]
+2020-09-03 14:28:31,093 reid_baseline INFO: ----------
+2020-09-03 14:29:08,225 reid_baseline INFO: Epoch[7] Iteration[60/184] Loss: 2.201, Acc: 0.789, Base Lr: 2.46e-04
+2020-09-03 14:29:43,538 reid_baseline INFO: Epoch[7] Iteration[120/184] Loss: 1.973, Acc: 0.858, Base Lr: 2.46e-04
+2020-09-03 14:30:18,742 reid_baseline INFO: Epoch[7] Iteration[180/184] Loss: 1.690, Acc: 0.914, Base Lr: 2.46e-04
+2020-09-03 14:30:22,393 reid_baseline INFO: Epoch 7 done. Time per batch: 109.023[s] Speed: 108.0[samples/s]
+2020-09-03 14:30:22,394 reid_baseline INFO: ----------
+2020-09-03 14:30:59,480 reid_baseline INFO: Epoch[8] Iteration[60/183] Loss: 1.924, Acc: 0.878, Base Lr: 2.81e-04
+2020-09-03 14:31:34,949 reid_baseline INFO: Epoch[8] Iteration[120/183] Loss: 1.767, Acc: 0.907, Base Lr: 2.81e-04
+2020-09-03 14:32:10,217 reid_baseline INFO: Epoch[8] Iteration[180/183] Loss: 1.598, Acc: 0.931, Base Lr: 2.81e-04
+2020-09-03 14:32:13,798 reid_baseline INFO: Epoch 8 done. Time per batch: 108.572[s] Speed: 107.9[samples/s]
+2020-09-03 14:32:13,799 reid_baseline INFO: ----------
+2020-09-03 14:32:50,995 reid_baseline INFO: Epoch[9] Iteration[60/184] Loss: 1.823, Acc: 0.906, Base Lr: 3.15e-04
+2020-09-03 14:33:26,524 reid_baseline INFO: Epoch[9] Iteration[120/184] Loss: 1.656, Acc: 0.935, Base Lr: 3.15e-04
+2020-09-03 14:34:01,821 reid_baseline INFO: Epoch[9] Iteration[180/184] Loss: 1.517, Acc: 0.951, Base Lr: 3.15e-04
+2020-09-03 14:34:04,343 reid_baseline INFO: Epoch 9 done. Time per batch: 109.348[s] Speed: 107.7[samples/s]
+2020-09-03 14:34:04,344 reid_baseline INFO: ----------
+2020-09-03 14:34:41,432 reid_baseline INFO: Epoch[10] Iteration[60/184] Loss: 1.781, Acc: 0.899, Base Lr: 3.50e-04
+2020-09-03 14:35:16,594 reid_baseline INFO: Epoch[10] Iteration[120/184] Loss: 1.596, Acc: 0.937, Base Lr: 3.50e-04
+2020-09-03 14:35:51,627 reid_baseline INFO: Epoch[10] Iteration[180/184] Loss: 1.469, Acc: 0.957, Base Lr: 3.50e-04
+2020-09-03 14:35:54,177 reid_baseline INFO: Epoch 10 done. Time per batch: 108.768[s] Speed: 108.3[samples/s]
+2020-09-03 14:35:54,177 reid_baseline INFO: ----------
+2020-09-03 14:36:31,349 reid_baseline INFO: Epoch[11] Iteration[60/183] Loss: 1.629, Acc: 0.933, Base Lr: 3.50e-04
+2020-09-03 14:37:06,509 reid_baseline INFO: Epoch[11] Iteration[120/183] Loss: 1.506, Acc: 0.956, Base Lr: 3.50e-04
+2020-09-03 14:37:41,561 reid_baseline INFO: Epoch[11] Iteration[180/183] Loss: 1.412, Acc: 0.967, Base Lr: 3.50e-04
+2020-09-03 14:37:43,524 reid_baseline INFO: Epoch 11 done. Time per batch: 108.299[s] Speed: 108.1[samples/s]
+2020-09-03 14:37:43,524 reid_baseline INFO: ----------
+2020-09-03 14:38:20,624 reid_baseline INFO: Epoch[12] Iteration[60/183] Loss: 1.465, Acc: 0.960, Base Lr: 3.50e-04
+2020-09-03 14:38:55,828 reid_baseline INFO: Epoch[12] Iteration[120/183] Loss: 1.431, Acc: 0.967, Base Lr: 3.50e-04
+2020-09-03 14:39:31,042 reid_baseline INFO: Epoch[12] Iteration[180/183] Loss: 1.384, Acc: 0.974, Base Lr: 3.50e-04
+2020-09-03 14:39:33,006 reid_baseline INFO: Epoch 12 done. Time per batch: 108.386[s] Speed: 108.1[samples/s]
+2020-09-03 14:39:33,007 reid_baseline INFO: ----------
+2020-09-03 14:40:09,965 reid_baseline INFO: Epoch[13] Iteration[60/183] Loss: 1.469, Acc: 0.966, Base Lr: 3.50e-04
+2020-09-03 14:40:45,181 reid_baseline INFO: Epoch[13] Iteration[120/183] Loss: 1.412, Acc: 0.970, Base Lr: 3.50e-04
+2020-09-03 14:41:20,387 reid_baseline INFO: Epoch[13] Iteration[180/183] Loss: 1.352, Acc: 0.978, Base Lr: 3.50e-04
+2020-09-03 14:41:22,347 reid_baseline INFO: Epoch 13 done. Time per batch: 108.110[s] Speed: 108.3[samples/s]
+2020-09-03 14:41:22,347 reid_baseline INFO: ----------
+2020-09-03 14:41:59,458 reid_baseline INFO: Epoch[14] Iteration[60/183] Loss: 1.443, Acc: 0.969, Base Lr: 3.50e-04
+2020-09-03 14:42:34,597 reid_baseline INFO: Epoch[14] Iteration[120/183] Loss: 1.398, Acc: 0.974, Base Lr: 3.50e-04
+2020-09-03 14:43:09,656 reid_baseline INFO: Epoch[14] Iteration[180/183] Loss: 1.334, Acc: 0.982, Base Lr: 3.50e-04
+2020-09-03 14:43:11,613 reid_baseline INFO: Epoch 14 done. Time per batch: 108.195[s] Speed: 108.2[samples/s]
+2020-09-03 14:43:11,613 reid_baseline INFO: ----------
+2020-09-03 14:43:48,862 reid_baseline INFO: Epoch[15] Iteration[60/184] Loss: 1.362, Acc: 0.986, Base Lr: 3.50e-04
+2020-09-03 14:44:24,106 reid_baseline INFO: Epoch[15] Iteration[120/184] Loss: 1.351, Acc: 0.982, Base Lr: 3.50e-04
+2020-09-03 14:44:59,123 reid_baseline INFO: Epoch[15] Iteration[180/184] Loss: 1.314, Acc: 0.981, Base Lr: 3.50e-04
+2020-09-03 14:45:01,642 reid_baseline INFO: Epoch 15 done. Time per batch: 108.956[s] Speed: 108.1[samples/s]
+2020-09-03 14:45:01,642 reid_baseline INFO: ----------
+2020-09-03 14:45:38,626 reid_baseline INFO: Epoch[16] Iteration[60/182] Loss: 1.346, Acc: 0.987, Base Lr: 3.50e-04
+2020-09-03 14:46:13,854 reid_baseline INFO: Epoch[16] Iteration[120/182] Loss: 1.325, Acc: 0.984, Base Lr: 3.50e-04
+2020-09-03 14:46:48,828 reid_baseline INFO: Epoch[16] Iteration[180/182] Loss: 1.289, Acc: 0.984, Base Lr: 3.50e-04
+2020-09-03 14:46:50,200 reid_baseline INFO: Epoch 16 done. Time per batch: 107.502[s] Speed: 108.4[samples/s]
+2020-09-03 14:46:50,339 reid_baseline INFO: ----------
+2020-09-03 14:47:27,240 reid_baseline INFO: Epoch[17] Iteration[60/183] Loss: 1.366, Acc: 0.979, Base Lr: 3.50e-04
+2020-09-03 14:48:02,506 reid_baseline INFO: Epoch[17] Iteration[120/183] Loss: 1.340, Acc: 0.980, Base Lr: 3.50e-04
+2020-09-03 14:48:37,510 reid_baseline INFO: Epoch[17] Iteration[180/183] Loss: 1.297, Acc: 0.983, Base Lr: 3.50e-04
+2020-09-03 14:48:39,472 reid_baseline INFO: Epoch 17 done. Time per batch: 108.061[s] Speed: 108.4[samples/s]
+2020-09-03 14:48:39,473 reid_baseline INFO: ----------
+2020-09-03 14:49:16,550 reid_baseline INFO: Epoch[18] Iteration[60/184] Loss: 1.363, Acc: 0.984, Base Lr: 3.50e-04
+2020-09-03 14:49:51,805 reid_baseline INFO: Epoch[18] Iteration[120/184] Loss: 1.323, Acc: 0.985, Base Lr: 3.50e-04
+2020-09-03 14:50:26,925 reid_baseline INFO: Epoch[18] Iteration[180/184] Loss: 1.279, Acc: 0.988, Base Lr: 3.50e-04
+2020-09-03 14:50:29,450 reid_baseline INFO: Epoch 18 done. Time per batch: 108.918[s] Speed: 108.1[samples/s]
+2020-09-03 14:50:29,450 reid_baseline INFO: ----------
+2020-09-03 14:51:06,699 reid_baseline INFO: Epoch[19] Iteration[60/183] Loss: 1.355, Acc: 0.976, Base Lr: 3.50e-04
+2020-09-03 14:51:41,996 reid_baseline INFO: Epoch[19] Iteration[120/183] Loss: 1.322, Acc: 0.980, Base Lr: 3.50e-04
+2020-09-03 14:52:17,081 reid_baseline INFO: Epoch[19] Iteration[180/183] Loss: 1.280, Acc: 0.985, Base Lr: 3.50e-04
+2020-09-03 14:52:19,023 reid_baseline INFO: Epoch 19 done. Time per batch: 108.391[s] Speed: 108.1[samples/s]
+2020-09-03 14:52:19,023 reid_baseline INFO: ----------
+2020-09-03 14:52:56,008 reid_baseline INFO: Epoch[20] Iteration[60/183] Loss: 1.343, Acc: 0.982, Base Lr: 3.50e-04
+2020-09-03 14:53:31,212 reid_baseline INFO: Epoch[20] Iteration[120/183] Loss: 1.312, Acc: 0.985, Base Lr: 3.50e-04
+2020-09-03 14:54:06,227 reid_baseline INFO: Epoch[20] Iteration[180/183] Loss: 1.289, Acc: 0.984, Base Lr: 3.50e-04
+2020-09-03 14:54:08,188 reid_baseline INFO: Epoch 20 done. Time per batch: 108.085[s] Speed: 108.4[samples/s]
+2020-09-03 14:54:08,188 reid_baseline INFO: ----------
+2020-09-03 14:54:45,215 reid_baseline INFO: Epoch[21] Iteration[60/183] Loss: 1.336, Acc: 0.977, Base Lr: 3.50e-04
+2020-09-03 14:55:20,433 reid_baseline INFO: Epoch[21] Iteration[120/183] Loss: 1.320, Acc: 0.982, Base Lr: 3.50e-04
+2020-09-03 14:55:55,445 reid_baseline INFO: Epoch[21] Iteration[180/183] Loss: 1.277, Acc: 0.987, Base Lr: 3.50e-04
+2020-09-03 14:55:57,380 reid_baseline INFO: Epoch 21 done. Time per batch: 108.108[s] Speed: 108.3[samples/s]
+2020-09-03 14:55:57,381 reid_baseline INFO: ----------
+2020-09-03 14:56:34,024 reid_baseline INFO: Epoch[22] Iteration[60/183] Loss: 1.337, Acc: 0.982, Base Lr: 3.50e-04
+2020-09-03 14:57:09,267 reid_baseline INFO: Epoch[22] Iteration[120/183] Loss: 1.329, Acc: 0.979, Base Lr: 3.50e-04
+2020-09-03 14:57:44,352 reid_baseline INFO: Epoch[22] Iteration[180/183] Loss: 1.294, Acc: 0.982, Base Lr: 3.50e-04
+2020-09-03 14:57:46,301 reid_baseline INFO: Epoch 22 done. Time per batch: 107.872[s] Speed: 108.6[samples/s]
+2020-09-03 14:57:46,302 reid_baseline INFO: ----------
+2020-09-03 14:58:23,254 reid_baseline INFO: Epoch[23] Iteration[60/183] Loss: 1.335, Acc: 0.985, Base Lr: 3.50e-04
+2020-09-03 14:58:58,457 reid_baseline INFO: Epoch[23] Iteration[120/183] Loss: 1.302, Acc: 0.985, Base Lr: 3.50e-04
+2020-09-03 14:59:33,406 reid_baseline INFO: Epoch[23] Iteration[180/183] Loss: 1.256, Acc: 0.990, Base Lr: 3.50e-04
+2020-09-03 14:59:35,494 reid_baseline INFO: Epoch 23 done. Time per batch: 107.964[s] Speed: 108.5[samples/s]
+2020-09-03 14:59:35,495 reid_baseline INFO: ----------
+2020-09-03 15:00:12,324 reid_baseline INFO: Epoch[24] Iteration[60/184] Loss: 1.338, Acc: 0.983, Base Lr: 3.50e-04
+2020-09-03 15:00:47,480 reid_baseline INFO: Epoch[24] Iteration[120/184] Loss: 1.311, Acc: 0.982, Base Lr: 3.50e-04
+2020-09-03 15:01:22,545 reid_baseline INFO: Epoch[24] Iteration[180/184] Loss: 1.273, Acc: 0.985, Base Lr: 3.50e-04
+2020-09-03 15:01:25,052 reid_baseline INFO: Epoch 24 done. Time per batch: 108.487[s] Speed: 108.5[samples/s]
+2020-09-03 15:01:25,053 reid_baseline INFO: ----------
+2020-09-03 15:02:01,982 reid_baseline INFO: Epoch[25] Iteration[60/183] Loss: 1.368, Acc: 0.980, Base Lr: 3.50e-04
+2020-09-03 15:02:37,284 reid_baseline INFO: Epoch[25] Iteration[120/183] Loss: 1.305, Acc: 0.984, Base Lr: 3.50e-04
+2020-09-03 15:03:12,221 reid_baseline INFO: Epoch[25] Iteration[180/183] Loss: 1.268, Acc: 0.988, Base Lr: 3.50e-04
+2020-09-03 15:03:14,163 reid_baseline INFO: Epoch 25 done. Time per batch: 107.965[s] Speed: 108.5[samples/s]
+2020-09-03 15:03:14,163 reid_baseline INFO: ----------
+2020-09-03 15:03:51,184 reid_baseline INFO: Epoch[26] Iteration[60/183] Loss: 1.339, Acc: 0.987, Base Lr: 3.50e-04
+2020-09-03 15:04:26,411 reid_baseline INFO: Epoch[26] Iteration[120/183] Loss: 1.310, Acc: 0.987, Base Lr: 3.50e-04
+2020-09-03 15:05:01,341 reid_baseline INFO: Epoch[26] Iteration[180/183] Loss: 1.270, Acc: 0.989, Base Lr: 3.50e-04
+2020-09-03 15:05:03,476 reid_baseline INFO: Epoch 26 done. Time per batch: 107.931[s] Speed: 108.5[samples/s]
+2020-09-03 15:05:03,476 reid_baseline INFO: ----------
+2020-09-03 15:05:40,211 reid_baseline INFO: Epoch[27] Iteration[60/183] Loss: 1.419, Acc: 0.954, Base Lr: 3.50e-04
+2020-09-03 15:06:15,421 reid_baseline INFO: Epoch[27] Iteration[120/183] Loss: 1.323, Acc: 0.975, Base Lr: 3.50e-04
+2020-09-03 15:06:50,255 reid_baseline INFO: Epoch[27] Iteration[180/183] Loss: 1.281, Acc: 0.982, Base Lr: 3.50e-04
+2020-09-03 15:06:52,231 reid_baseline INFO: Epoch 27 done. Time per batch: 107.612[s] Speed: 108.8[samples/s]
+2020-09-03 15:06:52,231 reid_baseline INFO: ----------
+2020-09-03 15:07:29,018 reid_baseline INFO: Epoch[28] Iteration[60/183] Loss: 1.341, Acc: 0.991, Base Lr: 3.50e-04
+2020-09-03 15:08:04,254 reid_baseline INFO: Epoch[28] Iteration[120/183] Loss: 1.300, Acc: 0.987, Base Lr: 3.50e-04
+2020-09-03 15:08:39,231 reid_baseline INFO: Epoch[28] Iteration[180/183] Loss: 1.255, Acc: 0.988, Base Lr: 3.50e-04
+2020-09-03 15:08:41,178 reid_baseline INFO: Epoch 28 done. Time per batch: 107.876[s] Speed: 108.6[samples/s]
+2020-09-03 15:08:41,178 reid_baseline INFO: ----------
+2020-09-03 15:09:18,033 reid_baseline INFO: Epoch[29] Iteration[60/183] Loss: 1.295, Acc: 0.989, Base Lr: 3.50e-04
+2020-09-03 15:09:53,228 reid_baseline INFO: Epoch[29] Iteration[120/183] Loss: 1.289, Acc: 0.988, Base Lr: 3.50e-04
+2020-09-03 15:10:28,267 reid_baseline INFO: Epoch[29] Iteration[180/183] Loss: 1.258, Acc: 0.991, Base Lr: 3.50e-04
+2020-09-03 15:10:30,210 reid_baseline INFO: Epoch 29 done. Time per batch: 107.940[s] Speed: 108.5[samples/s]
+2020-09-03 15:10:30,211 reid_baseline INFO: ----------
+2020-09-03 15:11:07,382 reid_baseline INFO: Epoch[30] Iteration[60/183] Loss: 1.339, Acc: 0.985, Base Lr: 3.50e-04
+2020-09-03 15:11:42,673 reid_baseline INFO: Epoch[30] Iteration[120/183] Loss: 1.299, Acc: 0.985, Base Lr: 3.50e-04
+2020-09-03 15:12:17,654 reid_baseline INFO: Epoch[30] Iteration[180/183] Loss: 1.266, Acc: 0.987, Base Lr: 3.50e-04
+2020-09-03 15:12:19,598 reid_baseline INFO: Epoch 30 done. Time per batch: 108.234[s] Speed: 108.2[samples/s]
+2020-09-03 15:12:19,598 reid_baseline INFO: ----------
+2020-09-03 15:12:56,933 reid_baseline INFO: Epoch[31] Iteration[60/184] Loss: 1.327, Acc: 0.987, Base Lr: 3.50e-04
+2020-09-03 15:13:32,149 reid_baseline INFO: Epoch[31] Iteration[120/184] Loss: 1.292, Acc: 0.988, Base Lr: 3.50e-04
+2020-09-03 15:14:07,221 reid_baseline INFO: Epoch[31] Iteration[180/184] Loss: 1.260, Acc: 0.988, Base Lr: 3.50e-04
+2020-09-03 15:14:09,740 reid_baseline INFO: Epoch 31 done. Time per batch: 109.022[s] Speed: 108.0[samples/s]
+2020-09-03 15:14:09,740 reid_baseline INFO: ----------
+2020-09-03 15:14:46,528 reid_baseline INFO: Epoch[32] Iteration[60/183] Loss: 1.388, Acc: 0.983, Base Lr: 3.50e-04
+2020-09-03 15:15:21,694 reid_baseline INFO: Epoch[32] Iteration[120/183] Loss: 1.306, Acc: 0.987, Base Lr: 3.50e-04
+2020-09-03 15:15:56,792 reid_baseline INFO: Epoch[32] Iteration[180/183] Loss: 1.271, Acc: 0.987, Base Lr: 3.50e-04
+2020-09-03 15:15:58,720 reid_baseline INFO: Epoch 32 done. Time per batch: 107.899[s] Speed: 108.5[samples/s]
+2020-09-03 15:15:58,720 reid_baseline INFO: ----------
+2020-09-03 15:16:35,223 reid_baseline INFO: Epoch[33] Iteration[60/184] Loss: 1.327, Acc: 0.986, Base Lr: 3.50e-04
+2020-09-03 15:17:10,302 reid_baseline INFO: Epoch[33] Iteration[120/184] Loss: 1.289, Acc: 0.988, Base Lr: 3.50e-04
+2020-09-03 15:17:45,213 reid_baseline INFO: Epoch[33] Iteration[180/184] Loss: 1.250, Acc: 0.990, Base Lr: 3.50e-04
+2020-09-03 15:17:47,732 reid_baseline INFO: Epoch 33 done. Time per batch: 107.922[s] Speed: 109.1[samples/s]
+2020-09-03 15:17:47,733 reid_baseline INFO: ----------
+2020-09-03 15:18:24,573 reid_baseline INFO: Epoch[34] Iteration[60/184] Loss: 1.303, Acc: 0.988, Base Lr: 3.50e-04
+2020-09-03 15:18:59,524 reid_baseline INFO: Epoch[34] Iteration[120/184] Loss: 1.279, Acc: 0.988, Base Lr: 3.50e-04
+2020-09-03 15:19:34,414 reid_baseline INFO: Epoch[34] Iteration[180/184] Loss: 1.259, Acc: 0.986, Base Lr: 3.50e-04
+2020-09-03 15:19:36,954 reid_baseline INFO: Epoch 34 done. Time per batch: 108.120[s] Speed: 108.9[samples/s]
+2020-09-03 15:19:36,955 reid_baseline INFO: ----------
+2020-09-03 15:20:13,996 reid_baseline INFO: Epoch[35] Iteration[60/183] Loss: 1.307, Acc: 0.984, Base Lr: 3.50e-04
+2020-09-03 15:20:49,124 reid_baseline INFO: Epoch[35] Iteration[120/183] Loss: 1.295, Acc: 0.984, Base Lr: 3.50e-04
+2020-09-03 15:21:24,099 reid_baseline INFO: Epoch[35] Iteration[180/183] Loss: 1.246, Acc: 0.988, Base Lr: 3.50e-04
+2020-09-03 15:21:26,058 reid_baseline INFO: Epoch 35 done. Time per batch: 108.001[s] Speed: 108.4[samples/s]
+2020-09-03 15:21:26,058 reid_baseline INFO: ----------
+2020-09-03 15:22:03,035 reid_baseline INFO: Epoch[36] Iteration[60/183] Loss: 1.275, Acc: 0.991, Base Lr: 3.50e-04
+2020-09-03 15:22:38,178 reid_baseline INFO: Epoch[36] Iteration[120/183] Loss: 1.259, Acc: 0.989, Base Lr: 3.50e-04
+2020-09-03 15:23:13,145 reid_baseline INFO: Epoch[36] Iteration[180/183] Loss: 1.250, Acc: 0.991, Base Lr: 3.50e-04
+2020-09-03 15:23:15,093 reid_baseline INFO: Epoch 36 done. Time per batch: 107.956[s] Speed: 108.5[samples/s]
+2020-09-03 15:23:15,093 reid_baseline INFO: ----------
+2020-09-03 15:23:51,991 reid_baseline INFO: Epoch[37] Iteration[60/184] Loss: 1.287, Acc: 0.991, Base Lr: 3.50e-04
+2020-09-03 15:24:27,060 reid_baseline INFO: Epoch[37] Iteration[120/184] Loss: 1.268, Acc: 0.989, Base Lr: 3.50e-04
+2020-09-03 15:25:02,045 reid_baseline INFO: Epoch[37] Iteration[180/184] Loss: 1.238, Acc: 0.990, Base Lr: 3.50e-04
+2020-09-03 15:25:04,563 reid_baseline INFO: Epoch 37 done. Time per batch: 108.383[s] Speed: 108.7[samples/s]
+2020-09-03 15:25:04,563 reid_baseline INFO: ----------
+2020-09-03 15:25:41,367 reid_baseline INFO: Epoch[38] Iteration[60/183] Loss: 1.297, Acc: 0.975, Base Lr: 3.50e-04
+2020-09-03 15:26:16,518 reid_baseline INFO: Epoch[38] Iteration[120/183] Loss: 1.269, Acc: 0.986, Base Lr: 3.50e-04
+2020-09-03 15:26:51,415 reid_baseline INFO: Epoch[38] Iteration[180/183] Loss: 1.235, Acc: 0.991, Base Lr: 3.50e-04
+2020-09-03 15:26:53,373 reid_baseline INFO: Epoch 38 done. Time per batch: 107.731[s] Speed: 108.7[samples/s]
+2020-09-03 15:26:53,373 reid_baseline INFO: ----------
+2020-09-03 15:27:30,457 reid_baseline INFO: Epoch[39] Iteration[60/183] Loss: 1.272, Acc: 0.992, Base Lr: 3.50e-04
+2020-09-03 15:28:05,576 reid_baseline INFO: Epoch[39] Iteration[120/183] Loss: 1.257, Acc: 0.989, Base Lr: 3.50e-04
+2020-09-03 15:28:40,466 reid_baseline INFO: Epoch[39] Iteration[180/183] Loss: 1.237, Acc: 0.990, Base Lr: 3.50e-04
+2020-09-03 15:28:42,407 reid_baseline INFO: Epoch 39 done. Time per batch: 107.981[s] Speed: 108.5[samples/s]
+2020-09-03 15:28:42,408 reid_baseline INFO: ----------
+2020-09-03 15:29:19,116 reid_baseline INFO: Epoch[40] Iteration[60/184] Loss: 1.284, Acc: 0.990, Base Lr: 3.50e-05
+2020-09-03 15:29:54,242 reid_baseline INFO: Epoch[40] Iteration[120/184] Loss: 1.213, Acc: 0.995, Base Lr: 3.50e-05
+2020-09-03 15:30:29,316 reid_baseline INFO: Epoch[40] Iteration[180/184] Loss: 1.169, Acc: 0.997, Base Lr: 3.50e-05
+2020-09-03 15:30:34,242 reid_baseline INFO: Epoch 40 done. Time per batch: 108.333[s] Speed: 108.7[samples/s]
+2020-09-03 15:30:34,242 reid_baseline INFO: ----------
+2020-09-03 15:55:41,787 reid_baseline INFO: Validation Results - Epoch: 40
+2020-09-03 15:55:41,787 reid_baseline INFO: mINP: 47.7%
+2020-09-03 15:55:41,787 reid_baseline INFO: mAP: 80.0%
+2020-09-03 15:55:41,788 reid_baseline INFO: CMC curve, Rank-1  :91.8%
+2020-09-03 15:55:41,789 reid_baseline INFO: CMC curve, Rank-5  :97.6%
+2020-09-03 15:55:41,789 reid_baseline INFO: CMC curve, Rank-10 :98.7%
+2020-09-03 15:56:20,356 reid_baseline INFO: Epoch[41] Iteration[60/184] Loss: 1.173, Acc: 0.998, Base Lr: 3.50e-05
+2020-09-03 15:56:54,998 reid_baseline INFO: Epoch[41] Iteration[120/184] Loss: 1.155, Acc: 0.998, Base Lr: 3.50e-05
+2020-09-03 15:57:30,073 reid_baseline INFO: Epoch[41] Iteration[180/184] Loss: 1.133, Acc: 0.998, Base Lr: 3.50e-05
+2020-09-03 15:57:32,636 reid_baseline INFO: Epoch 41 done. Time per batch: 109.758[s] Speed: 107.3[samples/s]
+2020-09-03 15:57:32,636 reid_baseline INFO: ----------
+2020-09-03 15:58:09,832 reid_baseline INFO: Epoch[42] Iteration[60/184] Loss: 1.143, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 15:58:44,883 reid_baseline INFO: Epoch[42] Iteration[120/184] Loss: 1.131, Acc: 0.998, Base Lr: 3.50e-05
+2020-09-03 15:59:19,877 reid_baseline INFO: Epoch[42] Iteration[180/184] Loss: 1.121, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 15:59:22,415 reid_baseline INFO: Epoch 42 done. Time per batch: 108.720[s] Speed: 108.3[samples/s]
+2020-09-03 15:59:22,415 reid_baseline INFO: ----------
+2020-09-03 15:59:59,342 reid_baseline INFO: Epoch[43] Iteration[60/184] Loss: 1.125, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:00:34,529 reid_baseline INFO: Epoch[43] Iteration[120/184] Loss: 1.124, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:01:09,575 reid_baseline INFO: Epoch[43] Iteration[180/184] Loss: 1.113, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:01:12,122 reid_baseline INFO: Epoch 43 done. Time per batch: 108.607[s] Speed: 108.4[samples/s]
+2020-09-03 16:01:12,122 reid_baseline INFO: ----------
+2020-09-03 16:01:49,494 reid_baseline INFO: Epoch[44] Iteration[60/183] Loss: 1.138, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:02:24,720 reid_baseline INFO: Epoch[44] Iteration[120/183] Loss: 1.123, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:02:59,696 reid_baseline INFO: Epoch[44] Iteration[180/183] Loss: 1.110, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:03:01,697 reid_baseline INFO: Epoch 44 done. Time per batch: 108.427[s] Speed: 108.0[samples/s]
+2020-09-03 16:03:01,697 reid_baseline INFO: ----------
+2020-09-03 16:03:38,870 reid_baseline INFO: Epoch[45] Iteration[60/184] Loss: 1.124, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:04:14,047 reid_baseline INFO: Epoch[45] Iteration[120/184] Loss: 1.116, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:04:49,135 reid_baseline INFO: Epoch[45] Iteration[180/184] Loss: 1.108, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:04:51,724 reid_baseline INFO: Epoch 45 done. Time per batch: 108.850[s] Speed: 108.2[samples/s]
+2020-09-03 16:04:51,724 reid_baseline INFO: ----------
+2020-09-03 16:05:28,896 reid_baseline INFO: Epoch[46] Iteration[60/183] Loss: 1.116, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:06:04,165 reid_baseline INFO: Epoch[46] Iteration[120/183] Loss: 1.118, Acc: 0.998, Base Lr: 3.50e-05
+2020-09-03 16:06:39,229 reid_baseline INFO: Epoch[46] Iteration[180/183] Loss: 1.104, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:06:41,208 reid_baseline INFO: Epoch 46 done. Time per batch: 108.238[s] Speed: 108.2[samples/s]
+2020-09-03 16:06:41,209 reid_baseline INFO: ----------
+2020-09-03 16:07:18,409 reid_baseline INFO: Epoch[47] Iteration[60/184] Loss: 1.106, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:07:53,603 reid_baseline INFO: Epoch[47] Iteration[120/184] Loss: 1.106, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:08:28,696 reid_baseline INFO: Epoch[47] Iteration[180/184] Loss: 1.097, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:08:31,253 reid_baseline INFO: Epoch 47 done. Time per batch: 108.906[s] Speed: 108.1[samples/s]
+2020-09-03 16:08:31,253 reid_baseline INFO: ----------
+2020-09-03 16:09:08,630 reid_baseline INFO: Epoch[48] Iteration[60/183] Loss: 1.107, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:09:43,837 reid_baseline INFO: Epoch[48] Iteration[120/183] Loss: 1.103, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:10:18,763 reid_baseline INFO: Epoch[48] Iteration[180/183] Loss: 1.095, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:10:20,743 reid_baseline INFO: Epoch 48 done. Time per batch: 108.360[s] Speed: 108.1[samples/s]
+2020-09-03 16:10:20,743 reid_baseline INFO: ----------
+2020-09-03 16:10:57,978 reid_baseline INFO: Epoch[49] Iteration[60/184] Loss: 1.105, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:11:33,193 reid_baseline INFO: Epoch[49] Iteration[120/184] Loss: 1.105, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:12:08,284 reid_baseline INFO: Epoch[49] Iteration[180/184] Loss: 1.096, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:12:10,898 reid_baseline INFO: Epoch 49 done. Time per batch: 108.922[s] Speed: 108.1[samples/s]
+2020-09-03 16:12:10,899 reid_baseline INFO: ----------
+2020-09-03 16:12:48,067 reid_baseline INFO: Epoch[50] Iteration[60/184] Loss: 1.096, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:13:23,263 reid_baseline INFO: Epoch[50] Iteration[120/184] Loss: 1.097, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:13:58,253 reid_baseline INFO: Epoch[50] Iteration[180/184] Loss: 1.091, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:14:00,811 reid_baseline INFO: Epoch 50 done. Time per batch: 108.773[s] Speed: 108.3[samples/s]
+2020-09-03 16:14:00,811 reid_baseline INFO: ----------
+2020-09-03 16:14:38,233 reid_baseline INFO: Epoch[51] Iteration[60/183] Loss: 1.097, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:15:13,440 reid_baseline INFO: Epoch[51] Iteration[120/183] Loss: 1.097, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:15:48,333 reid_baseline INFO: Epoch[51] Iteration[180/183] Loss: 1.090, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:15:50,344 reid_baseline INFO: Epoch 51 done. Time per batch: 108.390[s] Speed: 108.1[samples/s]
+2020-09-03 16:15:50,344 reid_baseline INFO: ----------
+2020-09-03 16:16:27,812 reid_baseline INFO: Epoch[52] Iteration[60/182] Loss: 1.099, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:17:03,100 reid_baseline INFO: Epoch[52] Iteration[120/182] Loss: 1.096, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:17:38,073 reid_baseline INFO: Epoch[52] Iteration[180/182] Loss: 1.086, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:17:39,463 reid_baseline INFO: Epoch 52 done. Time per batch: 107.847[s] Speed: 108.0[samples/s]
+2020-09-03 16:17:39,464 reid_baseline INFO: ----------
+2020-09-03 16:18:16,547 reid_baseline INFO: Epoch[53] Iteration[60/183] Loss: 1.114, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:18:51,780 reid_baseline INFO: Epoch[53] Iteration[120/183] Loss: 1.101, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:19:26,855 reid_baseline INFO: Epoch[53] Iteration[180/183] Loss: 1.087, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:19:28,838 reid_baseline INFO: Epoch 53 done. Time per batch: 108.262[s] Speed: 108.2[samples/s]
+2020-09-03 16:19:28,839 reid_baseline INFO: ----------
+2020-09-03 16:20:06,134 reid_baseline INFO: Epoch[54] Iteration[60/183] Loss: 1.099, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:20:41,357 reid_baseline INFO: Epoch[54] Iteration[120/183] Loss: 1.094, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:21:16,454 reid_baseline INFO: Epoch[54] Iteration[180/183] Loss: 1.085, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:21:18,540 reid_baseline INFO: Epoch 54 done. Time per batch: 108.419[s] Speed: 108.0[samples/s]
+2020-09-03 16:21:18,541 reid_baseline INFO: ----------
+2020-09-03 16:21:55,826 reid_baseline INFO: Epoch[55] Iteration[60/183] Loss: 1.099, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:22:31,037 reid_baseline INFO: Epoch[55] Iteration[120/183] Loss: 1.096, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:23:06,071 reid_baseline INFO: Epoch[55] Iteration[180/183] Loss: 1.083, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:23:08,061 reid_baseline INFO: Epoch 55 done. Time per batch: 108.350[s] Speed: 108.1[samples/s]
+2020-09-03 16:23:08,062 reid_baseline INFO: ----------
+2020-09-03 16:23:45,892 reid_baseline INFO: Epoch[56] Iteration[60/183] Loss: 1.108, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:24:21,040 reid_baseline INFO: Epoch[56] Iteration[120/183] Loss: 1.099, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:24:56,066 reid_baseline INFO: Epoch[56] Iteration[180/183] Loss: 1.086, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:24:58,044 reid_baseline INFO: Epoch 56 done. Time per batch: 108.856[s] Speed: 107.6[samples/s]
+2020-09-03 16:24:58,044 reid_baseline INFO: ----------
+2020-09-03 16:25:35,437 reid_baseline INFO: Epoch[57] Iteration[60/183] Loss: 1.096, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:26:10,519 reid_baseline INFO: Epoch[57] Iteration[120/183] Loss: 1.089, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:26:45,480 reid_baseline INFO: Epoch[57] Iteration[180/183] Loss: 1.080, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:26:47,481 reid_baseline INFO: Epoch 57 done. Time per batch: 108.306[s] Speed: 108.1[samples/s]
+2020-09-03 16:26:47,482 reid_baseline INFO: ----------
+2020-09-03 16:27:24,770 reid_baseline INFO: Epoch[58] Iteration[60/183] Loss: 1.093, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:27:59,912 reid_baseline INFO: Epoch[58] Iteration[120/183] Loss: 1.092, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:28:34,932 reid_baseline INFO: Epoch[58] Iteration[180/183] Loss: 1.083, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:28:36,906 reid_baseline INFO: Epoch 58 done. Time per batch: 108.322[s] Speed: 108.1[samples/s]
+2020-09-03 16:28:36,906 reid_baseline INFO: ----------
+2020-09-03 16:29:14,224 reid_baseline INFO: Epoch[59] Iteration[60/183] Loss: 1.096, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:29:49,455 reid_baseline INFO: Epoch[59] Iteration[120/183] Loss: 1.093, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:30:24,569 reid_baseline INFO: Epoch[59] Iteration[180/183] Loss: 1.082, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:30:26,541 reid_baseline INFO: Epoch 59 done. Time per batch: 108.453[s] Speed: 108.0[samples/s]
+2020-09-03 16:30:26,542 reid_baseline INFO: ----------
+2020-09-03 16:31:03,688 reid_baseline INFO: Epoch[60] Iteration[60/183] Loss: 1.091, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:31:38,860 reid_baseline INFO: Epoch[60] Iteration[120/183] Loss: 1.090, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:32:13,957 reid_baseline INFO: Epoch[60] Iteration[180/183] Loss: 1.081, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:32:15,930 reid_baseline INFO: Epoch 60 done. Time per batch: 108.231[s] Speed: 108.2[samples/s]
+2020-09-03 16:32:15,930 reid_baseline INFO: ----------
+2020-09-03 16:32:53,291 reid_baseline INFO: Epoch[61] Iteration[60/183] Loss: 1.086, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:33:28,579 reid_baseline INFO: Epoch[61] Iteration[120/183] Loss: 1.089, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:34:03,705 reid_baseline INFO: Epoch[61] Iteration[180/183] Loss: 1.080, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:34:05,681 reid_baseline INFO: Epoch 61 done. Time per batch: 108.553[s] Speed: 107.9[samples/s]
+2020-09-03 16:34:05,681 reid_baseline INFO: ----------
+2020-09-03 16:34:42,857 reid_baseline INFO: Epoch[62] Iteration[60/184] Loss: 1.082, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:35:17,989 reid_baseline INFO: Epoch[62] Iteration[120/184] Loss: 1.080, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:35:52,907 reid_baseline INFO: Epoch[62] Iteration[180/184] Loss: 1.076, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:35:55,462 reid_baseline INFO: Epoch 62 done. Time per batch: 108.673[s] Speed: 108.4[samples/s]
+2020-09-03 16:35:55,462 reid_baseline INFO: ----------
+2020-09-03 16:36:33,062 reid_baseline INFO: Epoch[63] Iteration[60/184] Loss: 1.096, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:37:08,233 reid_baseline INFO: Epoch[63] Iteration[120/184] Loss: 1.085, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:37:43,301 reid_baseline INFO: Epoch[63] Iteration[180/184] Loss: 1.080, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:37:45,846 reid_baseline INFO: Epoch 63 done. Time per batch: 109.264[s] Speed: 107.8[samples/s]
+2020-09-03 16:37:45,847 reid_baseline INFO: ----------
+2020-09-03 16:38:23,085 reid_baseline INFO: Epoch[64] Iteration[60/184] Loss: 1.084, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:38:58,194 reid_baseline INFO: Epoch[64] Iteration[120/184] Loss: 1.079, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:39:33,174 reid_baseline INFO: Epoch[64] Iteration[180/184] Loss: 1.075, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:39:35,713 reid_baseline INFO: Epoch 64 done. Time per batch: 108.761[s] Speed: 108.3[samples/s]
+2020-09-03 16:39:35,713 reid_baseline INFO: ----------
+2020-09-03 16:40:12,855 reid_baseline INFO: Epoch[65] Iteration[60/183] Loss: 1.092, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:40:47,961 reid_baseline INFO: Epoch[65] Iteration[120/183] Loss: 1.083, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:41:23,177 reid_baseline INFO: Epoch[65] Iteration[180/183] Loss: 1.071, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:41:25,156 reid_baseline INFO: Epoch 65 done. Time per batch: 108.102[s] Speed: 108.3[samples/s]
+2020-09-03 16:41:25,157 reid_baseline INFO: ----------
+2020-09-03 16:42:02,128 reid_baseline INFO: Epoch[66] Iteration[60/183] Loss: 1.095, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:42:37,366 reid_baseline INFO: Epoch[66] Iteration[120/183] Loss: 1.084, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:43:12,475 reid_baseline INFO: Epoch[66] Iteration[180/183] Loss: 1.076, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:43:14,452 reid_baseline INFO: Epoch 66 done. Time per batch: 108.148[s] Speed: 108.3[samples/s]
+2020-09-03 16:43:14,453 reid_baseline INFO: ----------
+2020-09-03 16:43:51,521 reid_baseline INFO: Epoch[67] Iteration[60/183] Loss: 1.088, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:44:26,734 reid_baseline INFO: Epoch[67] Iteration[120/183] Loss: 1.079, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:45:01,767 reid_baseline INFO: Epoch[67] Iteration[180/183] Loss: 1.071, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:45:03,833 reid_baseline INFO: Epoch 67 done. Time per batch: 108.154[s] Speed: 108.3[samples/s]
+2020-09-03 16:45:03,834 reid_baseline INFO: ----------
+2020-09-03 16:45:40,616 reid_baseline INFO: Epoch[68] Iteration[60/183] Loss: 1.081, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:46:15,788 reid_baseline INFO: Epoch[68] Iteration[120/183] Loss: 1.079, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:46:50,862 reid_baseline INFO: Epoch[68] Iteration[180/183] Loss: 1.072, Acc: 0.999, Base Lr: 3.50e-05
+2020-09-03 16:46:52,847 reid_baseline INFO: Epoch 68 done. Time per batch: 107.886[s] Speed: 108.6[samples/s]
+2020-09-03 16:46:52,848 reid_baseline INFO: ----------
+2020-09-03 16:47:30,463 reid_baseline INFO: Epoch[69] Iteration[60/183] Loss: 1.090, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:48:05,650 reid_baseline INFO: Epoch[69] Iteration[120/183] Loss: 1.084, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:48:40,615 reid_baseline INFO: Epoch[69] Iteration[180/183] Loss: 1.072, Acc: 1.000, Base Lr: 3.50e-05
+2020-09-03 16:48:42,594 reid_baseline INFO: Epoch 69 done. Time per batch: 108.598[s] Speed: 107.8[samples/s]
+2020-09-03 16:48:42,594 reid_baseline INFO: ----------
+2020-09-03 16:49:19,852 reid_baseline INFO: Epoch[70] Iteration[60/183] Loss: 1.083, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 16:49:55,057 reid_baseline INFO: Epoch[70] Iteration[120/183] Loss: 1.080, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 16:50:30,021 reid_baseline INFO: Epoch[70] Iteration[180/183] Loss: 1.068, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 16:50:31,994 reid_baseline INFO: Epoch 70 done. Time per batch: 107.974[s] Speed: 108.5[samples/s]
+2020-09-03 16:50:31,995 reid_baseline INFO: ----------
+2020-09-03 16:51:08,603 reid_baseline INFO: Epoch[71] Iteration[60/184] Loss: 1.090, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 16:51:43,791 reid_baseline INFO: Epoch[71] Iteration[120/184] Loss: 1.074, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 16:52:18,923 reid_baseline INFO: Epoch[71] Iteration[180/184] Loss: 1.065, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 16:52:21,472 reid_baseline INFO: Epoch 71 done. Time per batch: 108.308[s] Speed: 108.7[samples/s]
+2020-09-03 16:52:21,473 reid_baseline INFO: ----------
+2020-09-03 16:52:58,769 reid_baseline INFO: Epoch[72] Iteration[60/183] Loss: 1.074, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 16:53:33,997 reid_baseline INFO: Epoch[72] Iteration[120/183] Loss: 1.067, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 16:54:09,056 reid_baseline INFO: Epoch[72] Iteration[180/183] Loss: 1.059, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 16:54:11,027 reid_baseline INFO: Epoch 72 done. Time per batch: 108.447[s] Speed: 108.0[samples/s]
+2020-09-03 16:54:11,028 reid_baseline INFO: ----------
+2020-09-03 16:54:48,199 reid_baseline INFO: Epoch[73] Iteration[60/184] Loss: 1.071, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 16:55:23,408 reid_baseline INFO: Epoch[73] Iteration[120/184] Loss: 1.068, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 16:55:58,501 reid_baseline INFO: Epoch[73] Iteration[180/184] Loss: 1.061, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 16:56:01,097 reid_baseline INFO: Epoch 73 done. Time per batch: 108.893[s] Speed: 108.1[samples/s]
+2020-09-03 16:56:01,098 reid_baseline INFO: ----------
+2020-09-03 16:56:38,277 reid_baseline INFO: Epoch[74] Iteration[60/183] Loss: 1.068, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 16:57:13,464 reid_baseline INFO: Epoch[74] Iteration[120/183] Loss: 1.066, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 16:57:48,452 reid_baseline INFO: Epoch[74] Iteration[180/183] Loss: 1.062, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 16:57:50,419 reid_baseline INFO: Epoch 74 done. Time per batch: 108.175[s] Speed: 108.3[samples/s]
+2020-09-03 16:57:50,419 reid_baseline INFO: ----------
+2020-09-03 16:58:27,567 reid_baseline INFO: Epoch[75] Iteration[60/184] Loss: 1.070, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 16:59:02,676 reid_baseline INFO: Epoch[75] Iteration[120/184] Loss: 1.067, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 16:59:37,531 reid_baseline INFO: Epoch[75] Iteration[180/184] Loss: 1.061, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 16:59:40,086 reid_baseline INFO: Epoch 75 done. Time per batch: 108.544[s] Speed: 108.5[samples/s]
+2020-09-03 16:59:40,086 reid_baseline INFO: ----------
+2020-09-03 17:00:17,302 reid_baseline INFO: Epoch[76] Iteration[60/183] Loss: 1.092, Acc: 0.994, Base Lr: 3.50e-06
+2020-09-03 17:00:52,461 reid_baseline INFO: Epoch[76] Iteration[120/183] Loss: 1.070, Acc: 0.998, Base Lr: 3.50e-06
+2020-09-03 17:01:27,340 reid_baseline INFO: Epoch[76] Iteration[180/183] Loss: 1.062, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 17:01:29,331 reid_baseline INFO: Epoch 76 done. Time per batch: 108.071[s] Speed: 108.4[samples/s]
+2020-09-03 17:01:29,332 reid_baseline INFO: ----------
+2020-09-03 17:02:06,541 reid_baseline INFO: Epoch[77] Iteration[60/184] Loss: 1.074, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:02:41,700 reid_baseline INFO: Epoch[77] Iteration[120/184] Loss: 1.068, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:03:16,631 reid_baseline INFO: Epoch[77] Iteration[180/184] Loss: 1.061, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 17:03:19,182 reid_baseline INFO: Epoch 77 done. Time per batch: 108.689[s] Speed: 108.3[samples/s]
+2020-09-03 17:03:19,183 reid_baseline INFO: ----------
+2020-09-03 17:03:56,486 reid_baseline INFO: Epoch[78] Iteration[60/183] Loss: 1.071, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 17:04:31,595 reid_baseline INFO: Epoch[78] Iteration[120/183] Loss: 1.067, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 17:05:06,626 reid_baseline INFO: Epoch[78] Iteration[180/183] Loss: 1.065, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:05:08,600 reid_baseline INFO: Epoch 78 done. Time per batch: 108.325[s] Speed: 108.1[samples/s]
+2020-09-03 17:05:08,601 reid_baseline INFO: ----------
+2020-09-03 17:05:45,666 reid_baseline INFO: Epoch[79] Iteration[60/182] Loss: 1.069, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:06:20,931 reid_baseline INFO: Epoch[79] Iteration[120/182] Loss: 1.063, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:06:55,916 reid_baseline INFO: Epoch[79] Iteration[180/182] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:06:57,305 reid_baseline INFO: Epoch 79 done. Time per batch: 107.524[s] Speed: 108.3[samples/s]
+2020-09-03 17:06:57,306 reid_baseline INFO: ----------
+2020-09-03 17:07:34,771 reid_baseline INFO: Epoch[80] Iteration[60/183] Loss: 1.074, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:08:09,857 reid_baseline INFO: Epoch[80] Iteration[120/183] Loss: 1.065, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:08:44,770 reid_baseline INFO: Epoch[80] Iteration[180/183] Loss: 1.057, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:08:49,076 reid_baseline INFO: Epoch 80 done. Time per batch: 108.314[s] Speed: 108.1[samples/s]
+2020-09-03 17:08:49,076 reid_baseline INFO: ----------
+2020-09-03 17:12:01,343 reid_baseline INFO: Validation Results - Epoch: 80
+2020-09-03 17:12:01,343 reid_baseline INFO: mINP: 64.4%
+2020-09-03 17:12:01,343 reid_baseline INFO: mAP: 87.7%
+2020-09-03 17:12:01,344 reid_baseline INFO: CMC curve, Rank-1  :95.2%
+2020-09-03 17:12:01,345 reid_baseline INFO: CMC curve, Rank-5  :98.5%
+2020-09-03 17:12:01,345 reid_baseline INFO: CMC curve, Rank-10 :99.1%
+2020-09-03 17:12:39,754 reid_baseline INFO: Epoch[81] Iteration[60/183] Loss: 1.072, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 17:13:14,321 reid_baseline INFO: Epoch[81] Iteration[120/183] Loss: 1.062, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 17:13:49,209 reid_baseline INFO: Epoch[81] Iteration[180/183] Loss: 1.055, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 17:13:51,251 reid_baseline INFO: Epoch 81 done. Time per batch: 108.683[s] Speed: 107.8[samples/s]
+2020-09-03 17:13:51,252 reid_baseline INFO: ----------
+2020-09-03 17:14:27,970 reid_baseline INFO: Epoch[82] Iteration[60/184] Loss: 1.071, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:15:02,906 reid_baseline INFO: Epoch[82] Iteration[120/184] Loss: 1.065, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:15:37,869 reid_baseline INFO: Epoch[82] Iteration[180/184] Loss: 1.056, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 17:15:40,578 reid_baseline INFO: Epoch 82 done. Time per batch: 108.050[s] Speed: 109.0[samples/s]
+2020-09-03 17:15:40,578 reid_baseline INFO: ----------
+2020-09-03 17:16:17,490 reid_baseline INFO: Epoch[83] Iteration[60/184] Loss: 1.074, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:16:52,546 reid_baseline INFO: Epoch[83] Iteration[120/184] Loss: 1.064, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:17:27,444 reid_baseline INFO: Epoch[83] Iteration[180/184] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:17:30,031 reid_baseline INFO: Epoch 83 done. Time per batch: 108.303[s] Speed: 108.7[samples/s]
+2020-09-03 17:17:30,031 reid_baseline INFO: ----------
+2020-09-03 17:18:07,053 reid_baseline INFO: Epoch[84] Iteration[60/183] Loss: 1.065, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:18:42,118 reid_baseline INFO: Epoch[84] Iteration[120/183] Loss: 1.064, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:19:16,982 reid_baseline INFO: Epoch[84] Iteration[180/183] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:19:19,011 reid_baseline INFO: Epoch 84 done. Time per batch: 107.792[s] Speed: 108.7[samples/s]
+2020-09-03 17:19:19,011 reid_baseline INFO: ----------
+2020-09-03 17:19:56,085 reid_baseline INFO: Epoch[85] Iteration[60/184] Loss: 1.070, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:20:31,298 reid_baseline INFO: Epoch[85] Iteration[120/184] Loss: 1.062, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:21:06,213 reid_baseline INFO: Epoch[85] Iteration[180/184] Loss: 1.053, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:21:08,862 reid_baseline INFO: Epoch 85 done. Time per batch: 108.629[s] Speed: 108.4[samples/s]
+2020-09-03 17:21:08,862 reid_baseline INFO: ----------
+2020-09-03 17:21:45,765 reid_baseline INFO: Epoch[86] Iteration[60/183] Loss: 1.067, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:22:20,836 reid_baseline INFO: Epoch[86] Iteration[120/183] Loss: 1.062, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:22:55,998 reid_baseline INFO: Epoch[86] Iteration[180/183] Loss: 1.054, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:22:58,210 reid_baseline INFO: Epoch 86 done. Time per batch: 107.847[s] Speed: 108.6[samples/s]
+2020-09-03 17:22:58,210 reid_baseline INFO: ----------
+2020-09-03 17:23:35,243 reid_baseline INFO: Epoch[87] Iteration[60/184] Loss: 1.070, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:24:10,455 reid_baseline INFO: Epoch[87] Iteration[120/184] Loss: 1.065, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:24:45,339 reid_baseline INFO: Epoch[87] Iteration[180/184] Loss: 1.055, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:24:47,921 reid_baseline INFO: Epoch 87 done. Time per batch: 108.551[s] Speed: 108.5[samples/s]
+2020-09-03 17:24:47,922 reid_baseline INFO: ----------
+2020-09-03 17:25:25,016 reid_baseline INFO: Epoch[88] Iteration[60/184] Loss: 1.083, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:26:00,008 reid_baseline INFO: Epoch[88] Iteration[120/184] Loss: 1.068, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:26:34,864 reid_baseline INFO: Epoch[88] Iteration[180/184] Loss: 1.055, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:26:37,700 reid_baseline INFO: Epoch 88 done. Time per batch: 108.371[s] Speed: 108.7[samples/s]
+2020-09-03 17:26:37,701 reid_baseline INFO: ----------
+2020-09-03 17:27:14,308 reid_baseline INFO: Epoch[89] Iteration[60/183] Loss: 1.066, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:27:49,505 reid_baseline INFO: Epoch[89] Iteration[120/183] Loss: 1.060, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:28:24,440 reid_baseline INFO: Epoch[89] Iteration[180/183] Loss: 1.055, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:28:26,430 reid_baseline INFO: Epoch 89 done. Time per batch: 107.391[s] Speed: 109.1[samples/s]
+2020-09-03 17:28:26,430 reid_baseline INFO: ----------
+2020-09-03 17:29:03,608 reid_baseline INFO: Epoch[90] Iteration[60/184] Loss: 1.057, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:29:38,803 reid_baseline INFO: Epoch[90] Iteration[120/184] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:30:13,889 reid_baseline INFO: Epoch[90] Iteration[180/184] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:30:16,477 reid_baseline INFO: Epoch 90 done. Time per batch: 108.804[s] Speed: 108.2[samples/s]
+2020-09-03 17:30:16,477 reid_baseline INFO: ----------
+2020-09-03 17:30:53,398 reid_baseline INFO: Epoch[91] Iteration[60/183] Loss: 1.064, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:31:28,661 reid_baseline INFO: Epoch[91] Iteration[120/183] Loss: 1.060, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:32:03,675 reid_baseline INFO: Epoch[91] Iteration[180/183] Loss: 1.054, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:32:05,675 reid_baseline INFO: Epoch 91 done. Time per batch: 107.998[s] Speed: 108.4[samples/s]
+2020-09-03 17:32:05,676 reid_baseline INFO: ----------
+2020-09-03 17:32:42,726 reid_baseline INFO: Epoch[92] Iteration[60/184] Loss: 1.065, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:33:17,783 reid_baseline INFO: Epoch[92] Iteration[120/184] Loss: 1.061, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:33:52,746 reid_baseline INFO: Epoch[92] Iteration[180/184] Loss: 1.052, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:33:55,351 reid_baseline INFO: Epoch 92 done. Time per batch: 108.482[s] Speed: 108.6[samples/s]
+2020-09-03 17:33:55,352 reid_baseline INFO: ----------
+2020-09-03 17:34:31,982 reid_baseline INFO: Epoch[93] Iteration[60/183] Loss: 1.062, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:35:07,217 reid_baseline INFO: Epoch[93] Iteration[120/183] Loss: 1.061, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:35:42,317 reid_baseline INFO: Epoch[93] Iteration[180/183] Loss: 1.052, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:35:44,351 reid_baseline INFO: Epoch 93 done. Time per batch: 107.794[s] Speed: 108.7[samples/s]
+2020-09-03 17:35:44,351 reid_baseline INFO: ----------
+2020-09-03 17:36:21,315 reid_baseline INFO: Epoch[94] Iteration[60/184] Loss: 1.073, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 17:36:56,508 reid_baseline INFO: Epoch[94] Iteration[120/184] Loss: 1.061, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:37:31,479 reid_baseline INFO: Epoch[94] Iteration[180/184] Loss: 1.057, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:37:34,065 reid_baseline INFO: Epoch 94 done. Time per batch: 108.529[s] Speed: 108.5[samples/s]
+2020-09-03 17:37:34,065 reid_baseline INFO: ----------
+2020-09-03 17:38:11,006 reid_baseline INFO: Epoch[95] Iteration[60/183] Loss: 1.068, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:38:46,227 reid_baseline INFO: Epoch[95] Iteration[120/183] Loss: 1.059, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:39:21,322 reid_baseline INFO: Epoch[95] Iteration[180/183] Loss: 1.052, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:39:23,362 reid_baseline INFO: Epoch 95 done. Time per batch: 107.969[s] Speed: 108.5[samples/s]
+2020-09-03 17:39:23,362 reid_baseline INFO: ----------
+2020-09-03 17:40:00,655 reid_baseline INFO: Epoch[96] Iteration[60/183] Loss: 1.062, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:40:35,817 reid_baseline INFO: Epoch[96] Iteration[120/183] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:41:10,782 reid_baseline INFO: Epoch[96] Iteration[180/183] Loss: 1.052, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:41:12,783 reid_baseline INFO: Epoch 96 done. Time per batch: 108.253[s] Speed: 108.2[samples/s]
+2020-09-03 17:41:12,783 reid_baseline INFO: ----------
+2020-09-03 17:41:49,574 reid_baseline INFO: Epoch[97] Iteration[60/184] Loss: 1.073, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:42:24,683 reid_baseline INFO: Epoch[97] Iteration[120/184] Loss: 1.062, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:42:59,713 reid_baseline INFO: Epoch[97] Iteration[180/184] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:43:02,313 reid_baseline INFO: Epoch 97 done. Time per batch: 108.330[s] Speed: 108.7[samples/s]
+2020-09-03 17:43:02,313 reid_baseline INFO: ----------
+2020-09-03 17:43:39,415 reid_baseline INFO: Epoch[98] Iteration[60/184] Loss: 1.061, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:44:14,571 reid_baseline INFO: Epoch[98] Iteration[120/184] Loss: 1.059, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:44:49,637 reid_baseline INFO: Epoch[98] Iteration[180/184] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:44:52,227 reid_baseline INFO: Epoch 98 done. Time per batch: 108.650[s] Speed: 108.4[samples/s]
+2020-09-03 17:44:52,228 reid_baseline INFO: ----------
+2020-09-03 17:45:29,239 reid_baseline INFO: Epoch[99] Iteration[60/183] Loss: 1.062, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:46:04,331 reid_baseline INFO: Epoch[99] Iteration[120/183] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:46:39,381 reid_baseline INFO: Epoch[99] Iteration[180/183] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:46:41,393 reid_baseline INFO: Epoch 99 done. Time per batch: 107.974[s] Speed: 108.5[samples/s]
+2020-09-03 17:46:41,393 reid_baseline INFO: ----------
+2020-09-03 17:47:18,333 reid_baseline INFO: Epoch[100] Iteration[60/183] Loss: 1.069, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:47:53,470 reid_baseline INFO: Epoch[100] Iteration[120/183] Loss: 1.062, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 17:48:28,345 reid_baseline INFO: Epoch[100] Iteration[180/183] Loss: 1.054, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:48:30,361 reid_baseline INFO: Epoch 100 done. Time per batch: 107.772[s] Speed: 108.7[samples/s]
+2020-09-03 17:48:30,361 reid_baseline INFO: ----------
+2020-09-03 17:49:07,561 reid_baseline INFO: Epoch[101] Iteration[60/184] Loss: 1.068, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 17:49:42,659 reid_baseline INFO: Epoch[101] Iteration[120/184] Loss: 1.061, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 17:50:17,539 reid_baseline INFO: Epoch[101] Iteration[180/184] Loss: 1.052, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:50:20,144 reid_baseline INFO: Epoch 101 done. Time per batch: 108.568[s] Speed: 108.5[samples/s]
+2020-09-03 17:50:20,144 reid_baseline INFO: ----------
+2020-09-03 17:50:57,000 reid_baseline INFO: Epoch[102] Iteration[60/184] Loss: 1.072, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:51:32,173 reid_baseline INFO: Epoch[102] Iteration[120/184] Loss: 1.060, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:52:07,181 reid_baseline INFO: Epoch[102] Iteration[180/184] Loss: 1.052, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:52:09,770 reid_baseline INFO: Epoch 102 done. Time per batch: 108.139[s] Speed: 108.9[samples/s]
+2020-09-03 17:52:09,771 reid_baseline INFO: ----------
+2020-09-03 17:52:46,352 reid_baseline INFO: Epoch[103] Iteration[60/183] Loss: 1.073, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:53:21,535 reid_baseline INFO: Epoch[103] Iteration[120/183] Loss: 1.060, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:53:56,573 reid_baseline INFO: Epoch[103] Iteration[180/183] Loss: 1.054, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:53:58,598 reid_baseline INFO: Epoch 103 done. Time per batch: 107.486[s] Speed: 109.0[samples/s]
+2020-09-03 17:53:58,598 reid_baseline INFO: ----------
+2020-09-03 17:54:35,486 reid_baseline INFO: Epoch[104] Iteration[60/184] Loss: 1.063, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:55:10,717 reid_baseline INFO: Epoch[104] Iteration[120/184] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:55:45,751 reid_baseline INFO: Epoch[104] Iteration[180/184] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:55:48,362 reid_baseline INFO: Epoch 104 done. Time per batch: 108.568[s] Speed: 108.5[samples/s]
+2020-09-03 17:55:48,362 reid_baseline INFO: ----------
+2020-09-03 17:56:24,901 reid_baseline INFO: Epoch[105] Iteration[60/182] Loss: 1.062, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:57:00,112 reid_baseline INFO: Epoch[105] Iteration[120/182] Loss: 1.057, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:57:35,188 reid_baseline INFO: Epoch[105] Iteration[180/182] Loss: 1.052, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:57:36,619 reid_baseline INFO: Epoch 105 done. Time per batch: 107.076[s] Speed: 108.8[samples/s]
+2020-09-03 17:57:36,619 reid_baseline INFO: ----------
+2020-09-03 17:58:13,857 reid_baseline INFO: Epoch[106] Iteration[60/183] Loss: 1.076, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:58:49,026 reid_baseline INFO: Epoch[106] Iteration[120/183] Loss: 1.063, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:59:24,081 reid_baseline INFO: Epoch[106] Iteration[180/183] Loss: 1.055, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 17:59:26,097 reid_baseline INFO: Epoch 106 done. Time per batch: 108.293[s] Speed: 108.2[samples/s]
+2020-09-03 17:59:26,098 reid_baseline INFO: ----------
+2020-09-03 18:00:02,817 reid_baseline INFO: Epoch[107] Iteration[60/183] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:00:38,023 reid_baseline INFO: Epoch[107] Iteration[120/183] Loss: 1.059, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:01:13,159 reid_baseline INFO: Epoch[107] Iteration[180/183] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:01:15,162 reid_baseline INFO: Epoch 107 done. Time per batch: 107.845[s] Speed: 108.6[samples/s]
+2020-09-03 18:01:15,162 reid_baseline INFO: ----------
+2020-09-03 18:01:52,246 reid_baseline INFO: Epoch[108] Iteration[60/184] Loss: 1.070, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:02:27,402 reid_baseline INFO: Epoch[108] Iteration[120/184] Loss: 1.060, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:03:02,312 reid_baseline INFO: Epoch[108] Iteration[180/184] Loss: 1.052, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:03:05,077 reid_baseline INFO: Epoch 108 done. Time per batch: 108.576[s] Speed: 108.5[samples/s]
+2020-09-03 18:03:05,077 reid_baseline INFO: ----------
+2020-09-03 18:03:42,011 reid_baseline INFO: Epoch[109] Iteration[60/183] Loss: 1.057, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:04:16,969 reid_baseline INFO: Epoch[109] Iteration[120/183] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:04:51,860 reid_baseline INFO: Epoch[109] Iteration[180/183] Loss: 1.052, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:04:53,870 reid_baseline INFO: Epoch 109 done. Time per batch: 107.619[s] Speed: 108.8[samples/s]
+2020-09-03 18:04:53,870 reid_baseline INFO: ----------
+2020-09-03 18:05:30,958 reid_baseline INFO: Epoch[110] Iteration[60/183] Loss: 1.063, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:06:06,114 reid_baseline INFO: Epoch[110] Iteration[120/183] Loss: 1.057, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:06:41,042 reid_baseline INFO: Epoch[110] Iteration[180/183] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:06:43,060 reid_baseline INFO: Epoch 110 done. Time per batch: 107.961[s] Speed: 108.5[samples/s]
+2020-09-03 18:06:43,061 reid_baseline INFO: ----------
+2020-09-03 18:07:20,353 reid_baseline INFO: Epoch[111] Iteration[60/183] Loss: 1.072, Acc: 0.995, Base Lr: 3.50e-06
+2020-09-03 18:07:55,475 reid_baseline INFO: Epoch[111] Iteration[120/183] Loss: 1.062, Acc: 0.998, Base Lr: 3.50e-06
+2020-09-03 18:08:30,314 reid_baseline INFO: Epoch[111] Iteration[180/183] Loss: 1.052, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 18:08:32,315 reid_baseline INFO: Epoch 111 done. Time per batch: 108.049[s] Speed: 108.4[samples/s]
+2020-09-03 18:08:32,316 reid_baseline INFO: ----------
+2020-09-03 18:09:09,396 reid_baseline INFO: Epoch[112] Iteration[60/184] Loss: 1.059, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:09:44,511 reid_baseline INFO: Epoch[112] Iteration[120/184] Loss: 1.059, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:10:19,442 reid_baseline INFO: Epoch[112] Iteration[180/184] Loss: 1.050, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:10:22,045 reid_baseline INFO: Epoch 112 done. Time per batch: 108.535[s] Speed: 108.5[samples/s]
+2020-09-03 18:10:22,047 reid_baseline INFO: ----------
+2020-09-03 18:10:59,092 reid_baseline INFO: Epoch[113] Iteration[60/182] Loss: 1.077, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 18:11:34,217 reid_baseline INFO: Epoch[113] Iteration[120/182] Loss: 1.062, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:12:09,093 reid_baseline INFO: Epoch[113] Iteration[180/182] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:12:10,531 reid_baseline INFO: Epoch 113 done. Time per batch: 107.297[s] Speed: 108.6[samples/s]
+2020-09-03 18:12:10,531 reid_baseline INFO: ----------
+2020-09-03 18:12:47,585 reid_baseline INFO: Epoch[114] Iteration[60/184] Loss: 1.070, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:13:22,943 reid_baseline INFO: Epoch[114] Iteration[120/184] Loss: 1.059, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:13:57,900 reid_baseline INFO: Epoch[114] Iteration[180/184] Loss: 1.049, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:14:00,488 reid_baseline INFO: Epoch 114 done. Time per batch: 108.674[s] Speed: 108.4[samples/s]
+2020-09-03 18:14:00,489 reid_baseline INFO: ----------
+2020-09-03 18:14:38,666 reid_baseline INFO: Epoch[115] Iteration[60/183] Loss: 1.090, Acc: 0.995, Base Lr: 3.50e-06
+2020-09-03 18:15:13,791 reid_baseline INFO: Epoch[115] Iteration[120/183] Loss: 1.063, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 18:15:48,656 reid_baseline INFO: Epoch[115] Iteration[180/183] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:15:50,664 reid_baseline INFO: Epoch 115 done. Time per batch: 108.960[s] Speed: 107.5[samples/s]
+2020-09-03 18:15:50,664 reid_baseline INFO: ----------
+2020-09-03 18:16:27,645 reid_baseline INFO: Epoch[116] Iteration[60/184] Loss: 1.069, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 18:17:02,773 reid_baseline INFO: Epoch[116] Iteration[120/184] Loss: 1.057, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:17:37,686 reid_baseline INFO: Epoch[116] Iteration[180/184] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:17:40,335 reid_baseline INFO: Epoch 116 done. Time per batch: 108.338[s] Speed: 108.7[samples/s]
+2020-09-03 18:17:40,336 reid_baseline INFO: ----------
+2020-09-03 18:18:17,333 reid_baseline INFO: Epoch[117] Iteration[60/184] Loss: 1.071, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:18:52,437 reid_baseline INFO: Epoch[117] Iteration[120/184] Loss: 1.060, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:19:27,393 reid_baseline INFO: Epoch[117] Iteration[180/184] Loss: 1.050, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:19:30,145 reid_baseline INFO: Epoch 117 done. Time per batch: 108.490[s] Speed: 108.5[samples/s]
+2020-09-03 18:19:30,146 reid_baseline INFO: ----------
+2020-09-03 18:20:06,807 reid_baseline INFO: Epoch[118] Iteration[60/183] Loss: 1.068, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:20:41,869 reid_baseline INFO: Epoch[118] Iteration[120/183] Loss: 1.059, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 18:21:16,884 reid_baseline INFO: Epoch[118] Iteration[180/183] Loss: 1.050, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:21:18,899 reid_baseline INFO: Epoch 118 done. Time per batch: 107.508[s] Speed: 108.9[samples/s]
+2020-09-03 18:21:18,900 reid_baseline INFO: ----------
+2020-09-03 18:21:55,791 reid_baseline INFO: Epoch[119] Iteration[60/184] Loss: 1.052, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:22:30,960 reid_baseline INFO: Epoch[119] Iteration[120/184] Loss: 1.053, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:23:05,968 reid_baseline INFO: Epoch[119] Iteration[180/184] Loss: 1.048, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:23:08,541 reid_baseline INFO: Epoch 119 done. Time per batch: 108.482[s] Speed: 108.6[samples/s]
+2020-09-03 18:23:08,541 reid_baseline INFO: ----------
+2020-09-03 18:23:45,854 reid_baseline INFO: Epoch[120] Iteration[60/184] Loss: 1.080, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:24:20,974 reid_baseline INFO: Epoch[120] Iteration[120/184] Loss: 1.062, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:24:55,966 reid_baseline INFO: Epoch[120] Iteration[180/184] Loss: 1.049, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:25:01,036 reid_baseline INFO: Epoch 120 done. Time per batch: 108.807[s] Speed: 108.2[samples/s]
+2020-09-03 18:25:01,036 reid_baseline INFO: ----------
+2020-09-03 18:28:08,636 reid_baseline INFO: Validation Results - Epoch: 120
+2020-09-03 18:28:08,637 reid_baseline INFO: mINP: 65.6%
+2020-09-03 18:28:08,637 reid_baseline INFO: mAP: 88.2%
+2020-09-03 18:28:08,638 reid_baseline INFO: CMC curve, Rank-1  :95.3%
+2020-09-03 18:28:08,638 reid_baseline INFO: CMC curve, Rank-5  :98.6%
+2020-09-03 18:28:08,639 reid_baseline INFO: CMC curve, Rank-10 :99.2%
+2020-09-03 18:28:46,784 reid_baseline INFO: Epoch[121] Iteration[60/184] Loss: 1.070, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:29:21,460 reid_baseline INFO: Epoch[121] Iteration[120/184] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:29:56,445 reid_baseline INFO: Epoch[121] Iteration[180/184] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:29:59,084 reid_baseline INFO: Epoch 121 done. Time per batch: 109.260[s] Speed: 107.8[samples/s]
+2020-09-03 18:29:59,084 reid_baseline INFO: ----------
+2020-09-03 18:30:36,347 reid_baseline INFO: Epoch[122] Iteration[60/184] Loss: 1.067, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:31:11,459 reid_baseline INFO: Epoch[122] Iteration[120/184] Loss: 1.057, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:31:46,366 reid_baseline INFO: Epoch[122] Iteration[180/184] Loss: 1.048, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:31:48,968 reid_baseline INFO: Epoch 122 done. Time per batch: 108.743[s] Speed: 108.3[samples/s]
+2020-09-03 18:31:48,969 reid_baseline INFO: ----------
+2020-09-03 18:32:26,301 reid_baseline INFO: Epoch[123] Iteration[60/183] Loss: 1.055, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:33:01,478 reid_baseline INFO: Epoch[123] Iteration[120/183] Loss: 1.052, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:33:36,565 reid_baseline INFO: Epoch[123] Iteration[180/183] Loss: 1.050, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:33:38,606 reid_baseline INFO: Epoch 123 done. Time per batch: 108.462[s] Speed: 108.0[samples/s]
+2020-09-03 18:33:38,606 reid_baseline INFO: ----------
+2020-09-03 18:34:15,894 reid_baseline INFO: Epoch[124] Iteration[60/184] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:34:51,121 reid_baseline INFO: Epoch[124] Iteration[120/184] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:35:26,147 reid_baseline INFO: Epoch[124] Iteration[180/184] Loss: 1.049, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:35:28,776 reid_baseline INFO: Epoch 124 done. Time per batch: 108.941[s] Speed: 108.1[samples/s]
+2020-09-03 18:35:28,776 reid_baseline INFO: ----------
+2020-09-03 18:36:05,723 reid_baseline INFO: Epoch[125] Iteration[60/183] Loss: 1.059, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:36:40,795 reid_baseline INFO: Epoch[125] Iteration[120/183] Loss: 1.056, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 18:37:15,934 reid_baseline INFO: Epoch[125] Iteration[180/183] Loss: 1.048, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:37:17,968 reid_baseline INFO: Epoch 125 done. Time per batch: 107.989[s] Speed: 108.5[samples/s]
+2020-09-03 18:37:17,969 reid_baseline INFO: ----------
+2020-09-03 18:37:54,865 reid_baseline INFO: Epoch[126] Iteration[60/183] Loss: 1.063, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:38:30,048 reid_baseline INFO: Epoch[126] Iteration[120/183] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:39:05,125 reid_baseline INFO: Epoch[126] Iteration[180/183] Loss: 1.048, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:39:07,163 reid_baseline INFO: Epoch 126 done. Time per batch: 108.003[s] Speed: 108.4[samples/s]
+2020-09-03 18:39:07,163 reid_baseline INFO: ----------
+2020-09-03 18:39:44,331 reid_baseline INFO: Epoch[127] Iteration[60/183] Loss: 1.059, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:40:19,475 reid_baseline INFO: Epoch[127] Iteration[120/183] Loss: 1.055, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:40:54,507 reid_baseline INFO: Epoch[127] Iteration[180/183] Loss: 1.050, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:40:56,716 reid_baseline INFO: Epoch 127 done. Time per batch: 108.191[s] Speed: 108.3[samples/s]
+2020-09-03 18:40:56,716 reid_baseline INFO: ----------
+2020-09-03 18:41:33,976 reid_baseline INFO: Epoch[128] Iteration[60/184] Loss: 1.069, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:42:09,136 reid_baseline INFO: Epoch[128] Iteration[120/184] Loss: 1.059, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:42:44,207 reid_baseline INFO: Epoch[128] Iteration[180/184] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:42:47,159 reid_baseline INFO: Epoch 128 done. Time per batch: 108.894[s] Speed: 108.1[samples/s]
+2020-09-03 18:42:47,160 reid_baseline INFO: ----------
+2020-09-03 18:43:24,587 reid_baseline INFO: Epoch[129] Iteration[60/184] Loss: 1.060, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:43:59,821 reid_baseline INFO: Epoch[129] Iteration[120/184] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:44:34,865 reid_baseline INFO: Epoch[129] Iteration[180/184] Loss: 1.050, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:44:37,626 reid_baseline INFO: Epoch 129 done. Time per batch: 109.096[s] Speed: 107.9[samples/s]
+2020-09-03 18:44:37,626 reid_baseline INFO: ----------
+2020-09-03 18:45:15,125 reid_baseline INFO: Epoch[130] Iteration[60/183] Loss: 1.061, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:45:50,276 reid_baseline INFO: Epoch[130] Iteration[120/183] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:46:25,281 reid_baseline INFO: Epoch[130] Iteration[180/183] Loss: 1.048, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:46:27,308 reid_baseline INFO: Epoch 130 done. Time per batch: 108.514[s] Speed: 107.9[samples/s]
+2020-09-03 18:46:27,308 reid_baseline INFO: ----------
+2020-09-03 18:47:04,350 reid_baseline INFO: Epoch[131] Iteration[60/184] Loss: 1.060, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:47:39,623 reid_baseline INFO: Epoch[131] Iteration[120/184] Loss: 1.055, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:48:14,690 reid_baseline INFO: Epoch[131] Iteration[180/184] Loss: 1.048, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:48:17,293 reid_baseline INFO: Epoch 131 done. Time per batch: 108.669[s] Speed: 108.4[samples/s]
+2020-09-03 18:48:17,294 reid_baseline INFO: ----------
+2020-09-03 18:48:54,280 reid_baseline INFO: Epoch[132] Iteration[60/184] Loss: 1.067, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:49:29,511 reid_baseline INFO: Epoch[132] Iteration[120/184] Loss: 1.060, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:50:04,565 reid_baseline INFO: Epoch[132] Iteration[180/184] Loss: 1.047, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:50:07,187 reid_baseline INFO: Epoch 132 done. Time per batch: 108.680[s] Speed: 108.4[samples/s]
+2020-09-03 18:50:07,188 reid_baseline INFO: ----------
+2020-09-03 18:50:44,420 reid_baseline INFO: Epoch[133] Iteration[60/183] Loss: 1.071, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:51:19,650 reid_baseline INFO: Epoch[133] Iteration[120/183] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:51:54,737 reid_baseline INFO: Epoch[133] Iteration[180/183] Loss: 1.050, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:51:56,765 reid_baseline INFO: Epoch 133 done. Time per batch: 108.364[s] Speed: 108.1[samples/s]
+2020-09-03 18:51:56,766 reid_baseline INFO: ----------
+2020-09-03 18:52:34,141 reid_baseline INFO: Epoch[134] Iteration[60/183] Loss: 1.059, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:53:09,347 reid_baseline INFO: Epoch[134] Iteration[120/183] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:53:44,269 reid_baseline INFO: Epoch[134] Iteration[180/183] Loss: 1.048, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:53:46,315 reid_baseline INFO: Epoch 134 done. Time per batch: 108.356[s] Speed: 108.1[samples/s]
+2020-09-03 18:53:46,316 reid_baseline INFO: ----------
+2020-09-03 18:54:23,266 reid_baseline INFO: Epoch[135] Iteration[60/183] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:54:58,469 reid_baseline INFO: Epoch[135] Iteration[120/183] Loss: 1.053, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:55:33,578 reid_baseline INFO: Epoch[135] Iteration[180/183] Loss: 1.046, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:55:35,678 reid_baseline INFO: Epoch 135 done. Time per batch: 108.102[s] Speed: 108.3[samples/s]
+2020-09-03 18:55:35,678 reid_baseline INFO: ----------
+2020-09-03 18:56:13,104 reid_baseline INFO: Epoch[136] Iteration[60/184] Loss: 1.067, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:56:48,271 reid_baseline INFO: Epoch[136] Iteration[120/184] Loss: 1.055, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:57:23,256 reid_baseline INFO: Epoch[136] Iteration[180/184] Loss: 1.047, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:57:25,869 reid_baseline INFO: Epoch 136 done. Time per batch: 109.003[s] Speed: 108.0[samples/s]
+2020-09-03 18:57:25,869 reid_baseline INFO: ----------
+2020-09-03 18:58:02,743 reid_baseline INFO: Epoch[137] Iteration[60/183] Loss: 1.061, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 18:58:37,889 reid_baseline INFO: Epoch[137] Iteration[120/183] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:59:12,837 reid_baseline INFO: Epoch[137] Iteration[180/183] Loss: 1.047, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 18:59:14,861 reid_baseline INFO: Epoch 137 done. Time per batch: 107.838[s] Speed: 108.6[samples/s]
+2020-09-03 18:59:14,861 reid_baseline INFO: ----------
+2020-09-03 18:59:52,042 reid_baseline INFO: Epoch[138] Iteration[60/183] Loss: 1.069, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 19:00:27,375 reid_baseline INFO: Epoch[138] Iteration[120/183] Loss: 1.055, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:01:02,400 reid_baseline INFO: Epoch[138] Iteration[180/183] Loss: 1.045, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:01:04,542 reid_baseline INFO: Epoch 138 done. Time per batch: 108.272[s] Speed: 108.2[samples/s]
+2020-09-03 19:01:04,543 reid_baseline INFO: ----------
+2020-09-03 19:01:41,807 reid_baseline INFO: Epoch[139] Iteration[60/183] Loss: 1.069, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:02:16,913 reid_baseline INFO: Epoch[139] Iteration[120/183] Loss: 1.057, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:02:51,859 reid_baseline INFO: Epoch[139] Iteration[180/183] Loss: 1.050, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 19:02:53,900 reid_baseline INFO: Epoch 139 done. Time per batch: 108.120[s] Speed: 108.3[samples/s]
+2020-09-03 19:02:53,900 reid_baseline INFO: ----------
+2020-09-03 19:03:31,229 reid_baseline INFO: Epoch[140] Iteration[60/183] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:04:06,503 reid_baseline INFO: Epoch[140] Iteration[120/183] Loss: 1.054, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:04:41,490 reid_baseline INFO: Epoch[140] Iteration[180/183] Loss: 1.048, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:04:43,537 reid_baseline INFO: Epoch 140 done. Time per batch: 108.404[s] Speed: 108.0[samples/s]
+2020-09-03 19:04:43,538 reid_baseline INFO: ----------
+2020-09-03 19:05:20,823 reid_baseline INFO: Epoch[141] Iteration[60/183] Loss: 1.073, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:05:55,831 reid_baseline INFO: Epoch[141] Iteration[120/183] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:06:30,804 reid_baseline INFO: Epoch[141] Iteration[180/183] Loss: 1.050, Acc: 0.999, Base Lr: 3.50e-06
+2020-09-03 19:06:32,844 reid_baseline INFO: Epoch 141 done. Time per batch: 108.091[s] Speed: 108.4[samples/s]
+2020-09-03 19:06:32,844 reid_baseline INFO: ----------
+2020-09-03 19:07:10,102 reid_baseline INFO: Epoch[142] Iteration[60/183] Loss: 1.065, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:07:45,320 reid_baseline INFO: Epoch[142] Iteration[120/183] Loss: 1.055, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:08:20,326 reid_baseline INFO: Epoch[142] Iteration[180/183] Loss: 1.048, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:08:22,345 reid_baseline INFO: Epoch 142 done. Time per batch: 108.293[s] Speed: 108.2[samples/s]
+2020-09-03 19:08:22,345 reid_baseline INFO: ----------
+2020-09-03 19:08:59,441 reid_baseline INFO: Epoch[143] Iteration[60/182] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:09:34,583 reid_baseline INFO: Epoch[143] Iteration[120/182] Loss: 1.054, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:10:09,719 reid_baseline INFO: Epoch[143] Iteration[180/182] Loss: 1.047, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:10:11,176 reid_baseline INFO: Epoch 143 done. Time per batch: 107.655[s] Speed: 108.2[samples/s]
+2020-09-03 19:10:11,176 reid_baseline INFO: ----------
+2020-09-03 19:10:48,344 reid_baseline INFO: Epoch[144] Iteration[60/184] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:11:23,570 reid_baseline INFO: Epoch[144] Iteration[120/184] Loss: 1.053, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:11:58,675 reid_baseline INFO: Epoch[144] Iteration[180/184] Loss: 1.046, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:12:01,283 reid_baseline INFO: Epoch 144 done. Time per batch: 108.936[s] Speed: 108.1[samples/s]
+2020-09-03 19:12:01,283 reid_baseline INFO: ----------
+2020-09-03 19:12:38,305 reid_baseline INFO: Epoch[145] Iteration[60/183] Loss: 1.071, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:13:13,504 reid_baseline INFO: Epoch[145] Iteration[120/183] Loss: 1.054, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:13:48,487 reid_baseline INFO: Epoch[145] Iteration[180/183] Loss: 1.046, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:13:50,514 reid_baseline INFO: Epoch 145 done. Time per batch: 108.049[s] Speed: 108.4[samples/s]
+2020-09-03 19:13:50,646 reid_baseline INFO: ----------
+2020-09-03 19:14:27,353 reid_baseline INFO: Epoch[146] Iteration[60/183] Loss: 1.074, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:15:02,534 reid_baseline INFO: Epoch[146] Iteration[120/183] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:15:37,565 reid_baseline INFO: Epoch[146] Iteration[180/183] Loss: 1.046, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:15:39,603 reid_baseline INFO: Epoch 146 done. Time per batch: 107.763[s] Speed: 108.7[samples/s]
+2020-09-03 19:15:39,604 reid_baseline INFO: ----------
+2020-09-03 19:16:17,141 reid_baseline INFO: Epoch[147] Iteration[60/183] Loss: 1.076, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:16:52,402 reid_baseline INFO: Epoch[147] Iteration[120/183] Loss: 1.057, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:17:27,436 reid_baseline INFO: Epoch[147] Iteration[180/183] Loss: 1.046, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:17:29,640 reid_baseline INFO: Epoch 147 done. Time per batch: 108.688[s] Speed: 107.8[samples/s]
+2020-09-03 19:17:29,641 reid_baseline INFO: ----------
+2020-09-03 19:18:06,899 reid_baseline INFO: Epoch[148] Iteration[60/184] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:18:41,970 reid_baseline INFO: Epoch[148] Iteration[120/184] Loss: 1.049, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:19:16,982 reid_baseline INFO: Epoch[148] Iteration[180/184] Loss: 1.045, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:19:19,578 reid_baseline INFO: Epoch 148 done. Time per batch: 108.732[s] Speed: 108.3[samples/s]
+2020-09-03 19:19:19,578 reid_baseline INFO: ----------
+2020-09-03 19:19:57,010 reid_baseline INFO: Epoch[149] Iteration[60/183] Loss: 1.059, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:20:32,192 reid_baseline INFO: Epoch[149] Iteration[120/183] Loss: 1.052, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:21:07,139 reid_baseline INFO: Epoch[149] Iteration[180/183] Loss: 1.044, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:21:09,165 reid_baseline INFO: Epoch 149 done. Time per batch: 108.423[s] Speed: 108.0[samples/s]
+2020-09-03 19:21:09,166 reid_baseline INFO: ----------
+2020-09-03 19:21:46,229 reid_baseline INFO: Epoch[150] Iteration[60/183] Loss: 1.054, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:22:21,412 reid_baseline INFO: Epoch[150] Iteration[120/183] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:22:56,340 reid_baseline INFO: Epoch[150] Iteration[180/183] Loss: 1.045, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:22:58,375 reid_baseline INFO: Epoch 150 done. Time per batch: 107.980[s] Speed: 108.5[samples/s]
+2020-09-03 19:22:58,375 reid_baseline INFO: ----------
+2020-09-03 19:23:35,959 reid_baseline INFO: Epoch[151] Iteration[60/184] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:24:11,147 reid_baseline INFO: Epoch[151] Iteration[120/184] Loss: 1.050, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:24:46,125 reid_baseline INFO: Epoch[151] Iteration[180/184] Loss: 1.047, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:24:48,744 reid_baseline INFO: Epoch 151 done. Time per batch: 109.168[s] Speed: 107.9[samples/s]
+2020-09-03 19:24:48,744 reid_baseline INFO: ----------
+2020-09-03 19:25:25,841 reid_baseline INFO: Epoch[152] Iteration[60/183] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:26:01,030 reid_baseline INFO: Epoch[152] Iteration[120/183] Loss: 1.049, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:26:36,014 reid_baseline INFO: Epoch[152] Iteration[180/183] Loss: 1.044, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:26:38,045 reid_baseline INFO: Epoch 152 done. Time per batch: 108.107[s] Speed: 108.3[samples/s]
+2020-09-03 19:26:38,046 reid_baseline INFO: ----------
+2020-09-03 19:27:15,153 reid_baseline INFO: Epoch[153] Iteration[60/183] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:27:50,370 reid_baseline INFO: Epoch[153] Iteration[120/183] Loss: 1.052, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:28:25,399 reid_baseline INFO: Epoch[153] Iteration[180/183] Loss: 1.044, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:28:27,600 reid_baseline INFO: Epoch 153 done. Time per batch: 108.111[s] Speed: 108.3[samples/s]
+2020-09-03 19:28:27,600 reid_baseline INFO: ----------
+2020-09-03 19:29:04,721 reid_baseline INFO: Epoch[154] Iteration[60/184] Loss: 1.076, Acc: 0.995, Base Lr: 3.50e-06
+2020-09-03 19:29:39,927 reid_baseline INFO: Epoch[154] Iteration[120/184] Loss: 1.057, Acc: 0.998, Base Lr: 3.50e-06
+2020-09-03 19:30:14,930 reid_baseline INFO: Epoch[154] Iteration[180/184] Loss: 1.046, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:30:17,692 reid_baseline INFO: Epoch 154 done. Time per batch: 108.693[s] Speed: 108.3[samples/s]
+2020-09-03 19:30:17,692 reid_baseline INFO: ----------
+2020-09-03 19:30:54,866 reid_baseline INFO: Epoch[155] Iteration[60/183] Loss: 1.053, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:31:30,067 reid_baseline INFO: Epoch[155] Iteration[120/183] Loss: 1.049, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:32:05,171 reid_baseline INFO: Epoch[155] Iteration[180/183] Loss: 1.044, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:32:07,191 reid_baseline INFO: Epoch 155 done. Time per batch: 108.321[s] Speed: 108.1[samples/s]
+2020-09-03 19:32:07,192 reid_baseline INFO: ----------
+2020-09-03 19:32:44,488 reid_baseline INFO: Epoch[156] Iteration[60/183] Loss: 1.068, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:33:19,756 reid_baseline INFO: Epoch[156] Iteration[120/183] Loss: 1.056, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:33:54,883 reid_baseline INFO: Epoch[156] Iteration[180/183] Loss: 1.045, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:33:56,914 reid_baseline INFO: Epoch 156 done. Time per batch: 108.524[s] Speed: 107.9[samples/s]
+2020-09-03 19:33:56,914 reid_baseline INFO: ----------
+2020-09-03 19:34:34,366 reid_baseline INFO: Epoch[157] Iteration[60/183] Loss: 1.059, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:35:09,661 reid_baseline INFO: Epoch[157] Iteration[120/183] Loss: 1.053, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:35:44,606 reid_baseline INFO: Epoch[157] Iteration[180/183] Loss: 1.047, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:35:46,624 reid_baseline INFO: Epoch 157 done. Time per batch: 108.421[s] Speed: 108.0[samples/s]
+2020-09-03 19:35:46,624 reid_baseline INFO: ----------
+2020-09-03 19:36:23,870 reid_baseline INFO: Epoch[158] Iteration[60/182] Loss: 1.060, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:36:59,034 reid_baseline INFO: Epoch[158] Iteration[120/182] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:37:34,054 reid_baseline INFO: Epoch[158] Iteration[180/182] Loss: 1.044, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:37:35,498 reid_baseline INFO: Epoch 158 done. Time per batch: 107.697[s] Speed: 108.2[samples/s]
+2020-09-03 19:37:35,499 reid_baseline INFO: ----------
+2020-09-03 19:38:12,424 reid_baseline INFO: Epoch[159] Iteration[60/183] Loss: 1.062, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:38:47,563 reid_baseline INFO: Epoch[159] Iteration[120/183] Loss: 1.051, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:39:22,543 reid_baseline INFO: Epoch[159] Iteration[180/183] Loss: 1.044, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:39:24,586 reid_baseline INFO: Epoch 159 done. Time per batch: 107.893[s] Speed: 108.6[samples/s]
+2020-09-03 19:39:24,586 reid_baseline INFO: ----------
+2020-09-03 19:40:01,806 reid_baseline INFO: Epoch[160] Iteration[60/183] Loss: 1.058, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:40:37,035 reid_baseline INFO: Epoch[160] Iteration[120/183] Loss: 1.049, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:41:11,969 reid_baseline INFO: Epoch[160] Iteration[180/183] Loss: 1.043, Acc: 1.000, Base Lr: 3.50e-06
+2020-09-03 19:41:16,272 reid_baseline INFO: Epoch 160 done. Time per batch: 108.231[s] Speed: 108.2[samples/s]
+2020-09-03 19:41:16,272 reid_baseline INFO: ----------
+2020-09-03 19:44:27,986 reid_baseline INFO: Validation Results - Epoch: 160
+2020-09-03 19:44:27,986 reid_baseline INFO: mINP: 66.4%
+2020-09-03 19:44:27,986 reid_baseline INFO: mAP: 88.5%
+2020-09-03 19:44:27,987 reid_baseline INFO: CMC curve, Rank-1  :95.4%
+2020-09-03 19:44:27,988 reid_baseline INFO: CMC curve, Rank-5  :98.5%
+2020-09-03 19:44:27,988 reid_baseline INFO: CMC curve, Rank-10 :99.1%

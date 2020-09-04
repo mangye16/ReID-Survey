@@ -79,7 +79,7 @@ def do_train(
     logger = logging.getLogger("reid_baseline")
     logger.info("Start training")
 
-    writer = SummaryWriter(log_dir=cfg.OUT_DIR + '/writer')
+    writer = SummaryWriter(log_dir=cfg.OUTPUT_DIR + '/writer')
 
     trainer = create_supervised_trainer(model, optimizer, criterion, cfg.SOLVER.CENTER_LOSS_WEIGHT, device=device)
 
@@ -116,7 +116,7 @@ def do_train(
                                 engine.state.metrics['avg_loss'], engine.state.metrics['avg_acc'],
                                 scheduler.get_lr()[0]))
             writer.add_scalar('loss/train_loss', engine.state.metrics['avg_loss'], engine.state.epoch * len(data_loader['train']) + ITER)
-            write.add_scalar('acc/train_acc', engine.state.metrics['avg_acc'], engine.state.epoch * len(data_loader['train']) + ITER)
+            writer.add_scalar('acc/train_acc', engine.state.metrics['avg_acc'], engine.state.epoch * len(data_loader['train']) + ITER)
         if len(data_loader['train']) == ITER:
             ITER = 0
 
