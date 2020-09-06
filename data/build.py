@@ -46,4 +46,16 @@ def make_data_loader(cfg):
         eval_set, batch_size=cfg.TEST.IMS_PER_BATCH, shuffle=False, num_workers=num_workers,
         collate_fn=val_collate_fn
     )
+    # if cfg.VISUALIZE.OPTION == "on" :
+    # query_set = ImageDataset(dataset.query , transforms['eval'])
+    # gallery_set = ImageDataset( dataset.gallery, transforms['eval'])
+    # data_loader['query'] = DataLoader(
+    #     query_set, batch_size=cfg.TEST.IMS_PER_BATCH, shuffle=False, num_workers=num_workers,
+    #     collate_fn=val_collate_fn
+    # )
+    # data_loader['gallery'] = DataLoader(
+    #     gallery_set, batch_size=cfg.TEST.IMS_PER_BATCH, shuffle=False, num_workers=num_workers,
+    #     collate_fn=val_collate_fn
+    # )
+
     return data_loader, len(dataset.query), num_classes

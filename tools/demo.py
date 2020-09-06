@@ -15,7 +15,8 @@ parser.add_argument('--test_dir',default='../Market/pytorch',type=str, help='./t
 opts = parser.parse_args()
 
 data_dir = opts.test_dir
-image_datasets = {x: datasets.ImageFolder( os.path.join(data_dir,x) ) for x in ['gallery','query']}
+# need to create different name for different dataset
+image_datasets = {x: datasets.ImageFolder( os.path.join(data_dir,x) ) for x in ['bounding_box_test','query']}
 
 #####################################################################
 #Show result

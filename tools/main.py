@@ -15,6 +15,7 @@ from utils.lr_scheduler import WarmupMultiStepLR
 from utils.logger import setup_logger
 from tools.train import do_train
 from tools.test import do_test
+from tools.visualize import do_visualize
 
 
 def main():
@@ -63,6 +64,12 @@ def main():
             model = torch.nn.DataParallel(model)
         model.to(device=cfg.MODEL.DEVICE)
 
+    if cfg.VISUALIZE.OPTION == 'on':
+        logger.info("Eval and Visualize Only")
+        model.load_param(cfg.TEST.WEIGHT)
+        # test
+        do_visualize(cfg, model, data_loader, num_query)
+        return
     if cfg.TEST.EVALUATE_ONLY == 'on':
         logger.info("Evaluate Only")
         model.load_param(cfg.TEST.WEIGHT)

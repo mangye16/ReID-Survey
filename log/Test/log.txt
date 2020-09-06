@@ -1,7 +1,7 @@
-2020-09-03 20:20:20,094 reid_baseline INFO: Using 1 GPUS
-2020-09-03 20:20:20,094 reid_baseline INFO: Namespace(config_file='configs/AGW_baseline.yml', opts=['MODEL.DEVICE_ID', "('0')", 'DATASETS.NAMES', "('market1501')", 'MODEL.PRETRAIN_CHOICE', "('self')", 'TEST.WEIGHT', "('/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth')", 'TEST.EVALUATE_ONLY', "('on')", 'OUTPUT_DIR', "('./log/Test')"])
-2020-09-03 20:20:20,094 reid_baseline INFO: Loaded configuration file configs/AGW_baseline.yml
-2020-09-03 20:20:20,095 reid_baseline INFO: 
+2020-09-06 07:21:08,966 reid_baseline INFO: Using 1 GPUS
+2020-09-06 07:21:08,966 reid_baseline INFO: Namespace(config_file='configs/AGW_baseline.yml', opts=['MODEL.DEVICE_ID', "('0')", 'DATASETS.NAMES', "('market1501')", 'MODEL.PRETRAIN_CHOICE', "('self')", 'TEST.WEIGHT', "('/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth')", 'VISUALIZE.OPTION', "('on')", 'TEST.EVALUATE_ONLY', "('on')", 'OUTPUT_DIR', "('./log/Test')"])
+2020-09-06 07:21:08,966 reid_baseline INFO: Loaded configuration file configs/AGW_baseline.yml
+2020-09-06 07:21:08,967 reid_baseline INFO: 
 MODEL:
   PRETRAIN_CHOICE: 'imagenet'
   PRETRAIN_PATH: "/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/resnet50-19c8e357.pth"
@@ -53,12 +53,14 @@ TEST:
   WEIGHT: "path"
   FEAT_NORM: 'on'
   EVALUATE_ONLY: 'off'
+VISUALIZE :
+  OPTION : "off"
 
 OUTPUT_DIR: "./log/market1501/Experiment-AGW-baseline"
 
 
 
-2020-09-03 20:20:20,095 reid_baseline INFO: Running with config:
+2020-09-06 07:21:08,968 reid_baseline INFO: Running with config:
 DATALOADER:
   NUM_INSTANCE: 4
   NUM_WORKERS: 8
@@ -109,11 +111,7 @@ TEST:
   IMS_PER_BATCH: 64
   RE_RANKING: off
   WEIGHT: /gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth
-2020-09-03 20:20:25,723 reid_baseline INFO: Evaluate Only
-2020-09-03 20:20:28,865 reid_baseline INFO: Enter inferencing
-2020-09-03 20:23:49,950 reid_baseline INFO: Validation Results
-2020-09-03 20:23:49,951 reid_baseline INFO: mINP: 66.4%
-2020-09-03 20:23:49,951 reid_baseline INFO: mAP: 88.5%
-2020-09-03 20:23:49,951 reid_baseline INFO: CMC curve, Rank-1  :95.4%
-2020-09-03 20:23:49,951 reid_baseline INFO: CMC curve, Rank-5  :98.5%
-2020-09-03 20:23:49,955 reid_baseline INFO: CMC curve, Rank-10 :99.1%
+VISUALIZE:
+  OPTION: on
+2020-09-06 07:23:49,533 reid_baseline INFO: Eval and Visualize Only
+2020-09-06 07:23:52,738 reid_baseline INFO: Enter inferencing to visualize
