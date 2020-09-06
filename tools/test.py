@@ -20,15 +20,17 @@ def create_supervised_evaluator(model, metrics, device=None):
     Returns:
         Engine: an evaluator engine with supervised inference function
     """
-
+    
     def _inference(engine, batch):
         model.eval()
+        # setting requires_grad flag to false
         with torch.no_grad():
             data, pids, camids = batch
+            # 
             data = data.to(device) if torch.cuda.device_count() >= 1 else data
             feat = model(data)
             return feat, pids, camids
-
+    # Engine is the abstraction refering to the loop provided data and execute func and return result
     engine = Engine(_inference)
 
     for name, metric in metrics.items():
