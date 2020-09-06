@@ -4,6 +4,7 @@ import math
 import random
 import torchvision.transforms as T
 
+
 def build_transforms(cfg):
     normalize_transform = T.Normalize(mean=cfg.INPUT.PIXEL_MEAN, std=cfg.INPUT.PIXEL_STD)
     transforms = {}
@@ -21,7 +22,7 @@ def build_transforms(cfg):
             T.Resize(cfg.INPUT.IMG_SIZE),
             T.ToTensor(),
             normalize_transform
-    ])
+        ])
 
     return transforms
 

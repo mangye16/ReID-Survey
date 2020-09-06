@@ -142,7 +142,9 @@ _C.TEST.EVALUATE_ONLY = 'off'
 _C.VISUALIZE = CN()
 # option
 _C.VISUALIZE.OPTION = "off"
-
+_C.VISUALIZE.IMS_PER_BATCH = 256
+_C.VISUALIZE.NEW_MODEL = "off"
+_C.VISUALIZE.INDEX = 0
 
 # ---------------------------------------------------------------------------- #
 # Misc options

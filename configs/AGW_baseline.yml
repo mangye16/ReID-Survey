@@ -51,6 +51,9 @@ TEST:
   EVALUATE_ONLY: 'off'
 VISUALIZE :
   OPTION : "off"
+  IMS_PER_BATCH : 256
+  NEW_MODEL : "off"
+  INDEX : 0
 
 OUTPUT_DIR: "./log/market1501/Experiment-AGW-baseline"
 
