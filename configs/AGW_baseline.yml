@@ -47,8 +47,10 @@ TEST:
   IMS_PER_BATCH: 64
   RE_RANKING: 'off'
   WEIGHT: "path"
-  FEAT_NORM: 'on'f
+  FEAT_NORM: 'on'
   EVALUATE_ONLY: 'off'
+VISUALIZE :
+  OPTION : "off"
 
 OUTPUT_DIR: "./log/market1501/Experiment-AGW-baseline"
 
