@@ -22,18 +22,8 @@ gallery_label = []
 from torch.utils.tensorboard import SummaryWriter
 global image_writer
 writer = SummaryWriter('./log/market1501/Experiment-AGW-baseline/test_image')
-
-# def matplotlib_imshow(img, one_channel=False):
-#     if one_channel:
-#         img = img.mean(dim=0)
-#     img = img / 2 + 0.5     # unnormalize
-#     npimg = img.numpy()
-#     if one_channel:
-#         plt.imshow(npimg, cmap="Greys")
-#     else:
-#         plt.imshow(np.transpose(npimg, (1, 2, 0)))
         
-def create_supervised_evaluator(model, metrics, device=None):
+def create_feature_extractor(model, device=None):
     """
       Factory function for creating an evaluator for supervised models
 
@@ -68,6 +58,7 @@ def create_supervised_evaluator(model, metrics, device=None):
 
     engine = Engine(_inference)
 
+    # visualize does not have to calculate metrics
     # for name, metric in metrics.items():
     #     metric.attach(engine, name)
 
@@ -80,25 +71,19 @@ def do_visualize(
         data_loader,
         num_query
 ):
-  if ( not os.path.exists('./log/market1501/feature-pickle.pkl'))or cfg.VISUALIZE.NEW_MODEL == "on"  :
+  if ( not os.path.exists('./log/market1501/feature-pickle.pkl')) or cfg.VISUALIZE.NEED_NEW_FEAT_EMBED == "on"  :
+      print("compute new feature embedding")
       global query_feat, query_cam, query_label
       global gallery_feat, gallery_cam, gallery_label    
       device = cfg.MODEL.DEVICE
       logger = logging.getLogger("reid_baseline")
       logger.info("Enter inferencing to visualize")
-      # TRY : By default reranking is off
-      if cfg.TEST.RE_RANKING == 'off':
-          print("Create evaluator")
-          query_engine = create_supervised_evaluator(model, metrics={'r1_mAP_mINP': r1_mAP_mINP(num_query, max_rank=50, feat_norm=cfg.TEST.FEAT_NORM)},
-                                                  device=device)
-          gallery_engine = create_supervised_evaluator(model, metrics={'r1_mAP_mINP': r1_mAP_mINP(num_query, max_rank=50, feat_norm=cfg.TEST.FEAT_NORM)},
-                                                  device=device)
-      elif cfg.TEST.RE_RANKING == 'on':
-          print("Create evaluator for reranking")
-          evaluator = create_supervised_evaluator(model, metrics={'r1_mAP_mINP': r1_mAP_mINP_reranking(num_query, max_rank=50, feat_norm=cfg.TEST.FEAT_NORM)},
-                                                  device=device)
-      else:
-          print("Unsupported re_ranking config. Only support for on or off, but got {}.".format(cfg.TEST.RE_RANKING))
+
+      print("Create query engine and gallery engine to make feature extractor")
+      query_engine = create_feature_extractor(model,
+                                              device=device)
+      gallery_engine = create_feature_extractor(model,
+                                              device=device)
 
       # timer = Timer(average=True)
       # timer.attach(query_engine, pause=Events.ITERATION_COMPLETED)
@@ -234,7 +219,8 @@ def do_visualize(
       print(i)
       make_query(i)
   else :
-    make_query(i)
+    fig = make_query(i)
+    fig.savefig("./log/market1501/show.png")
     # index = sort_img(query_feature[i],query_label[i],query_cam[i],gallery_feature,gallery_label,gallery_cam)
     # ########################################################################
     # # Visualize the rank result
