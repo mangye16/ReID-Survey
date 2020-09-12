@@ -20,7 +20,7 @@ class Oxygen_1(BaseImageDataset):
     """
     dataset_dir = 'oxygen1'
 
-    def __init__(self, root='./Oxygen_1', verbose=True, **kwargs):
+    def __init__(self, root='./toDataset', verbose=True, **kwargs):
         super(Oxygen_1, self).__init__()
         # global print_dataset_statistics
         self.dataset_dir = osp.join(root, self.dataset_dir)

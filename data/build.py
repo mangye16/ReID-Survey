@@ -24,7 +24,7 @@ def val_no_label_collate_fn(batch) :
 def make_data_loader(cfg):
     transforms = build_transforms(cfg)
     dataset = init_dataset(cfg.DATASETS.NAMES, root=cfg.DATASETS.ROOT_DIR)
-    if cfg.VISUALIZE.OPTION == "on_oxygen_no_label"
+    if cfg.VISUALIZE.OPTION == "on_no_label"
         gallery_set = ImageNoLabelDataset( dataset.gallery, transforms['eval'])
         data_loader={}
         data_loader['gallery'] = DataLoader(

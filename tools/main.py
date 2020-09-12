@@ -55,7 +55,7 @@ def main():
     cudnn.benchmark = True
 
     # 1. Build Model
-    if cfg.VISUALIZE.OPTION == "on_oxygen_no_label" :
+    if cfg.VISUALIZE.OPTION == "on_no_label" :
         data_loader = make_data_loader(cfg)
         model = build_model(cfg, 1)
     else : 
@@ -74,7 +74,7 @@ def main():
         # test
         do_visualize(cfg, model, data_loader, num_query)
         return
-    else if cfg.VISUALIZE.OPTION == "on_oxygen_no_label" :
+    else if cfg.VISUALIZE.OPTION == "on_no_label" :
         logger.info("Visualize no label Only")
         model.load_param(cfg.TEST.WEIGHT)
         do_visualize_no_label(cfg, model, data_loader)
