@@ -46,7 +46,7 @@ def make_data_loader(cfg):
         eval_set, batch_size=cfg.TEST.IMS_PER_BATCH, shuffle=False, num_workers=num_workers,
         collate_fn=val_collate_fn
     )
-    if cfg.VISUALIZE.OPTION == "on" :
+    if cfg.VISUALIZE.OPTION == "on" and cfg.EMBEDDING_PROJECTOR.OPTION == "off" :
       query_set = ImageDataset(dataset.query , transforms['eval'])
       gallery_set = ImageDataset( dataset.gallery, transforms['eval'])
       data_loader['query'] = DataLoader(
@@ -57,5 +57,5 @@ def make_data_loader(cfg):
           gallery_set, batch_size=cfg.VISUALIZE.IMS_PER_BATCH, shuffle=False, num_workers=num_workers,
           collate_fn=val_collate_fn
       )
-
+            
     return data_loader, len(dataset.query), num_classes
