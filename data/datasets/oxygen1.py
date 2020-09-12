@@ -105,5 +105,4 @@ class Oxygen_1(BaseImageDataset):
         # (path, cam, date)
         # without validate cam id or date format
         dataset = [(img_path, img_path.split("/")[-2], img_path.split("/")[-1][:10]) for img_path in img_paths]
-        print(dataset)
         return dataset
