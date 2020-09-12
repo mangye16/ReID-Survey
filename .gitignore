@@ -137,10 +137,10 @@ toDataset/
 /content/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/log/
 *.pth
 feature-pickle.pkl
-log/*
 */feature-pickle.pkl
 *.pkl
 *.png
-*/market1501/*
-*/test_image/*
-*/market1501/**/writer/*
+**/market1501/
+**/test_image/
+**/writer/
+**/log
