@@ -2,8 +2,9 @@
 
 import glob
 import re
-
+import os
 import os.path as osp
+from os.path import join
 
 from .bases import BaseImageDataset
 
@@ -24,7 +25,7 @@ class Oxygen_1(BaseImageDataset):
         super(Oxygen_1, self).__init__()
         # global print_dataset_statistics
         self.dataset_dir = osp.join(root, self.dataset_dir)
-        self.gallery_dir = osp.join(self.dataset_dir, 'gallery')
+        self.gallery_dir = osp.join(self.dataset_dir, 'gallery/')
         # self.train_dir = osp.join(self.dataset_dir, 'bounding_box_train')
         # self.query_dir = osp.join(self.dataset_dir, 'query')
         # self.gallery_dir = osp.join(self.dataset_dir, 'bounding_box_test')
@@ -76,8 +77,13 @@ class Oxygen_1(BaseImageDataset):
     # TODO : 1 mbk-(/d+)-(/d+)
     # data loader without label or pid
     def _process_dir(self, dir_path, relabel=False):
-        img_paths = glob.glob(osp.join(dir_path, '*.jpg'))
-        
+        # print(dir_path)
+        all_folder = os.listdir(dir_path)
+        # print(all_folder)
+        img_paths = [fs for files in [glob.glob(osp.join(dir_path+folder, '*.jpg')) for folder in all_folder] for fs in files]
+        # print(img_paths)
+        # print(os.getcwd())
+        # print(os.listdir('./toDataset/oxygen1/gallery'))
         # pattern = re.compile(r'mbk-(/d+)-(/d+)')
         # pid_container = set()
         # for img_path in img_paths:
@@ -99,5 +105,5 @@ class Oxygen_1(BaseImageDataset):
         # (path, cam, date)
         # without validate cam id or date format
         dataset = [(img_path, img_path.split("/")[-2], img_path.split("/")[-1][:10]) for img_path in img_paths]
-
+        print(dataset)
         return dataset

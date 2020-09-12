@@ -35,12 +35,12 @@ def create_feature_extractor(model, device=None):
         global ITER
         model.eval()
         with torch.no_grad():
-            data, pids, camids = batch
+            data, camid, date = batch
             data = data.to(device) if torch.cuda.device_count() >= 1 else data
             
             feat = model(data)
-            # print('shape {}'.format(feat.shape))
-            return feat, pids, camids
+            print('shape {}'.format(feat.shape))
+            return feat, camid, date
 
     engine = Engine(_inference)
 
@@ -56,7 +56,7 @@ def do_visualize_no_label(
         model,
         data_loader
 ):
-  if ( not os.path.exists('./log/{}/feature-pickle.pkl').format(cfg.DATASETS.NAMES)) or cfg.VISUALIZE.NEED_NEW_FEAT_EMBED == "on"  :
+  if ( not os.path.exists('./log/{}/feature-pickle.pkl'.format(cfg.DATASETS.NAMES)) or cfg.VISUALIZE.NEED_NEW_FEAT_EMBED == "on" )  :
       print("compute new feature embedding")
       global gallery_feat, gallery_cam, gallery_date   
       device = cfg.MODEL.DEVICE
@@ -74,14 +74,15 @@ def do_visualize_no_label(
         global ITER
         ITER += 1
         gallery_feat.append(gallery_engine.state.output[0])
-        gallery_cam.extend(gallery_engine.state.output[2])
-        gallery_date.extend(gallery_engine.state.output[1])
-        # logger.info("Epoch[{}] Iteration[{}/{}] output shape : {}"
-        #                   .format(engine.state.epoch, ITER, len(data_loader['query']), query_engine.state.output[0].shape))
+        gallery_cam.extend(gallery_engine.state.output[1])
+        gallery_date.extend(gallery_engine.state.output[2])
+        logger.info("Epoch[{}] Iteration[{}/{}] output shape : {}"
+                          .format(engine.state.epoch, ITER, len(data_loader['gallery']), gallery_engine.state.output[0].shape))
 
       #Show result
-
+      # print(data_loader['gallery'].dataset)
       gallery_engine.run(data_loader['gallery'])
+      # print(len(gallery_feat))
       gallery_feature = torch.cat(gallery_feat)
 
       # -------------------- visualize step ----------------------------------
@@ -96,7 +97,7 @@ def do_visualize_no_label(
           }
           pickle.dump(feat_dump_obj, fout, protocol=pickle.HIGHEST_PROTOCOL)
   else :
-      with open("./log/{}/feature-pickle.pkl", "rb").format(cfg.DATASETS.NAMES) as fout: 
+      with open("./log/{}/feature-pickle.pkl".format(cfg.DATASET.NAMES), "rb").format(cfg.DATASETS.NAMES) as fout: 
         feat_dump_obj = pickle.load(fout)
         gallery_feature = feat_dump_obj["gallery"]["feat"]
         gallery_cam = feat_dump_obj["gallery"]["cam"]

@@ -15,6 +15,7 @@ from utils.logger import setup_logger
 from tools.train import do_train
 from tools.test import do_test
 from tools.visualize import do_visualize
+from tools.visualize_no_label import do_visualize_no_label
 
 def main():
     parser = argparse.ArgumentParser(description="AGW Re-ID Baseline")
@@ -74,11 +75,11 @@ def main():
         # test
         do_visualize(cfg, model, data_loader, num_query)
         return
-    else if cfg.VISUALIZE.OPTION == "on_no_label" :
+    elif cfg.VISUALIZE.OPTION == "on_no_label" :
         logger.info("Visualize no label Only")
         model.load_param(cfg.TEST.WEIGHT)
         do_visualize_no_label(cfg, model, data_loader)
-
+        return
     if cfg.TEST.EVALUATE_ONLY == 'on':
         logger.info("Evaluate Only")
         model.load_param(cfg.TEST.WEIGHT)

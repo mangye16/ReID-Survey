@@ -7,7 +7,7 @@ from .msmt17 import MSMT17
 from .veri import VeRi
 from .oxygen1 import Oxygen_1
 
-from .dataset_loader import ImageDataset
+from .dataset_loader import ImageDataset,ImageNoLabelDataset
 
 __factory = {
     'market1501': Market1501,

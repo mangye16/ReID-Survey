@@ -46,7 +46,9 @@ class ImageNoLabelDataset(Dataset):
     """Image Person ReID Dataset"""
 
     def __init__(self, dataset, transform=None):
+        print("init dataset")
         self.dataset = dataset
+        print(dataset)
         # TODO compute new transform
         self.transform = transform
         # self.transform = None
