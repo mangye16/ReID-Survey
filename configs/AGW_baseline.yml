@@ -1,6 +1,8 @@
 MODEL:
   PRETRAIN_CHOICE: 'imagenet'
-  PRETRAIN_PATH: "/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/resnet50-19c8e357.pth"
+  # PRETRAIN_PATH: "/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/resnet50-19c8e357.pth"
+  PRETRAIN_PATH: 'C:/Users/60310249/.torch/models/resnet50-19c8e357.pth'
+  PRETRAIN_PATH: ""
   CENTER_LOSS: 'on'
   CENTER_FEAT_DIM: 2048
   NAME: 'resnet50_nl'
@@ -54,6 +56,8 @@ VISUALIZE :
   IMS_PER_BATCH : 256
   NEW_MODEL : "off"
   INDEX : 0
+EMBEDDING_PROJECTOR:
+  OPTION: "off"
 
 OUTPUT_DIR: "./log/market1501/Experiment-AGW-baseline"
 
