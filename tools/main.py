@@ -6,7 +6,6 @@ import sys
 import torch
 
 from torch.backends import cudnn
-
 sys.path.append('.')
 from config import cfg
 from data import make_data_loader
@@ -17,7 +16,7 @@ from tools.train import do_train
 from tools.test import do_test
 from tools.visualize import do_visualize
 from tools.embedding_projector import do_embedding_projector
-
+from tools.visualize_no_label import do_visualize_no_label
 
 def main():
     parser = argparse.ArgumentParser(description="AGW Re-ID Baseline")
@@ -57,27 +56,36 @@ def main():
         os.environ['CUDA_VISIBLE_DEVICES'] = cfg.MODEL.DEVICE_ID    # new add by gu
     cudnn.benchmark = True
 
-    data_loader, num_query, num_classes = make_data_loader(cfg)
-    model = build_model(cfg, num_classes)
+    # 1. Build Model
+    if cfg.VISUALIZE.OPTION == "on_no_label" :
+        data_loader = make_data_loader(cfg)
+        model = build_model(cfg, 1)
+    else : 
+        data_loader, num_query, num_classes = make_data_loader(cfg)
+        model = build_model(cfg, num_classes)
 
     if 'cpu' not in cfg.MODEL.DEVICE:
         if torch.cuda.device_count() > 1:
             model = torch.nn.DataParallel(model)
         model.to(device=cfg.MODEL.DEVICE)
 
+    # 2. Select Option Mode
     if cfg.VISUALIZE.OPTION == 'on':
-        logger.info("Eval and Visualize Only")
+        logger.info("Visualize Only")
         model.load_param(cfg.TEST.WEIGHT)
         # test
         do_visualize(cfg, model, data_loader, num_query)
         return
-
     if cfg.EMBEDDING_PROJECTOR.OPTION == 'on':
         logger.info("Eval and Visualize embedding projector")
         model.load_param(cfg.TEST.WEIGHT)
         do_embedding_projector(cfg, model, data_loader, num_query)
         return 
-
+    if cfg.VISUALIZE.OPTION == "on_no_label" :
+        logger.info("Visualize no label Only")
+        model.load_param(cfg.TEST.WEIGHT)
+        do_visualize_no_label(cfg, model, data_loader)
+        return
     if cfg.TEST.EVALUATE_ONLY == 'on':
         logger.info("Evaluate Only")
         model.load_param(cfg.TEST.WEIGHT)

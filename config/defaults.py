@@ -143,7 +143,7 @@ _C.VISUALIZE = CN()
 # option
 _C.VISUALIZE.OPTION = "off"
 _C.VISUALIZE.IMS_PER_BATCH = 256
-_C.VISUALIZE.NEW_MODEL = "off"
+_C.VISUALIZE.NEED_NEW_FEAT_EMBED = "off"
 _C.VISUALIZE.INDEX = 0
 # ---------------------------------------------------------------------------- #
 # Embedding projector

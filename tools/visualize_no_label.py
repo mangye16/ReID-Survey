@@ -13,12 +13,9 @@ import os
 
 global ITER
 ITER = 0
-query_feat = []
-query_cam = []
-query_label = []
 gallery_feat = []
 gallery_cam = []
-gallery_label = []
+gallery_date = []
 from torch.utils.tensorboard import SummaryWriter
         
 def create_feature_extractor(model, device=None):
@@ -38,12 +35,12 @@ def create_feature_extractor(model, device=None):
         global ITER
         model.eval()
         with torch.no_grad():
-            data, pids, camids = batch
+            data, camid, date = batch
             data = data.to(device) if torch.cuda.device_count() >= 1 else data
             
             feat = model(data)
-            # print('shape {}'.format(feat.shape))
-            return feat, pids, camids
+            print('shape {}'.format(feat.shape))
+            return feat, camid, date
 
     engine = Engine(_inference)
 
@@ -54,90 +51,62 @@ def create_feature_extractor(model, device=None):
     return engine
 
 
-def do_visualize(
+def do_visualize_no_label(
         cfg,
         model,
-        data_loader,
-        num_query
+        data_loader
 ):
-  if ( not os.path.exists('./log/{}/feature-pickle.pkl').format(cfg.DATASETS.NAMES)) or cfg.VISUALIZE.NEED_NEW_FEAT_EMBED == "on"  :
+  if ( not os.path.exists('./log/{}/feature-pickle.pkl'.format(cfg.DATASETS.NAMES)) or cfg.VISUALIZE.NEED_NEW_FEAT_EMBED == "on" )  :
       print("compute new feature embedding")
-      global query_feat, query_cam, query_label
-      global gallery_feat, gallery_cam, gallery_label   
-      #   writer = SummaryWriter('./log/{}/Experiment-AGW-baseline/test_image').format(cfg.DATASET.NAMES)
+      global gallery_feat, gallery_cam, gallery_date   
       device = cfg.MODEL.DEVICE
       logger = logging.getLogger("reid_baseline")
-      logger.info("Enter inferencing to visualize")
+      logger.info("Enter inferencing to visualize no label data")
 
-      print("Create query engine and gallery engine to make feature extractor")
-      query_engine = create_feature_extractor(model,
-                                              device=device)
+      print("Create gallery engine to make feature extractor")
       gallery_engine = create_feature_extractor(model,
                                               device=device)
 
-      # timer = Timer(average=True)
-      # timer.attach(query_engine, pause=Events.ITERATION_COMPLETED)
       
       @gallery_engine.on(Events.ITERATION_COMPLETED)
       def append_result_gal(engine) :
-        global gallery_feat, gallery_cam, gallery_label
+        global gallery_feat, gallery_cam, gallery_date
         global ITER
         ITER += 1
         gallery_feat.append(gallery_engine.state.output[0])
-        gallery_cam.extend(gallery_engine.state.output[2])
-        gallery_label.extend(gallery_engine.state.output[1])
-        # logger.info("Epoch[{}] Iteration[{}/{}] output shape : {}"
-        #                   .format(engine.state.epoch, ITER, len(data_loader['query']), query_engine.state.output[0].shape))
+        gallery_cam.extend(gallery_engine.state.output[1])
+        gallery_date.extend(gallery_engine.state.output[2])
+        logger.info("Epoch[{}] Iteration[{}/{}] output shape : {}"
+                          .format(engine.state.epoch, ITER, len(data_loader['gallery']), gallery_engine.state.output[0].shape))
 
-      @query_engine.on(Events.ITERATION_COMPLETED)
-      def append_result_query(engine) :
-        global query_feat, query_cam, query_label
-        global ITER
-        ITER += 1
-        query_feat.append(query_engine.state.output[0])
-        query_cam.extend(query_engine.state.output[2])
-        query_label.extend(query_engine.state.output[1])
       #Show result
-
-      query_engine.run(data_loader['query'])
-      # print(torch.cat(query_feat).shape)
+      # print(data_loader['gallery'].dataset)
       gallery_engine.run(data_loader['gallery'])
-      # print(torch.cat(gallery_feat).shape)
-
-      query_feature = torch.cat(query_feat)
+      # print(len(gallery_feat))
       gallery_feature = torch.cat(gallery_feat)
 
       # -------------------- visualize step ----------------------------------
-      print(query_feature.shape)
       print(gallery_feature.shape)
       with open("./log/{}/feature-pickle.pkl".format(cfg.DATASETS.NAMES), "wb") as fout:
           feat_dump_obj = {
-            "query" : {
-                "feat" : query_feature, 
-                "id" : query_label,
-                "cam" : query_cam
-              },
             "gallery" : {
                 "feat" : gallery_feature, 
-                "id" : gallery_label,
-                "cam" : gallery_cam
+                "cam" : gallery_cam,
+                "date" : gallery_date
             }
           }
           pickle.dump(feat_dump_obj, fout, protocol=pickle.HIGHEST_PROTOCOL)
   else :
-      with open("./log/{}/feature-pickle.pkl", "rb").format(cfg.DATASETS.NAMES) as fout: 
+      with open("./log/{}/feature-pickle.pkl".format(cfg.DATASET.NAMES), "rb").format(cfg.DATASETS.NAMES) as fout: 
         feat_dump_obj = pickle.load(fout)
-        query_feature = feat_dump_obj["query"]["feat"]
-        query_label = feat_dump_obj["query"]["id"]
-        query_cam = feat_dump_obj["query"]["cam"]
         gallery_feature = feat_dump_obj["gallery"]["feat"]
-        gallery_label = feat_dump_obj["gallery"]["id"]
         gallery_cam = feat_dump_obj["gallery"]["cam"]
-  query_feature = query_feature.cuda()
+        galelry_date = feat_dump_obj["gallery"]["date"]
   gallery_feature = gallery_feature.cuda()
   #######################################################################
   # sort the images
-  def sort_img(qf, ql, qc, gf, gl, gc):
+  # TODO qf - gallery_feat[i], ql -> qc , qc -> qd, gl -> gc, gc -> gd
+  def sort_img(qf, qc, qd, gf, gc, gd):
       query = qf.view(-1,1)
       # print(query.shape)
       score = torch.mm(gf,query)
@@ -148,20 +117,22 @@ def do_visualize(
       # predict index
       index = np.argsort(score)  #from small to large
       index = index[::-1]
-      # index = index[0:2000]
-      # not counting image from the same iden in the same cam  
-      # good index : query label equal to gallery label
-      query_index = np.argwhere(gl==ql)
-      #same camera
-      camera_index = np.argwhere(gc==qc)
-      # here
-      #good_index = np.setdiff1d(query_index, camera_index, assume_unique=True)
-      junk_index1 = np.argwhere(gl==-1)
-      junk_index2 = np.intersect1d(query_index, camera_index)
-      junk_index = np.append(junk_index2, junk_index1) 
-      # stuck
-      mask = np.in1d(index, junk_index, invert=True)
-      index = index[mask]
+      #   TODO NOMASK FOR NOW
+      #   TODO MASK FOR ITSELF
+        #   # index  index[0:2000]
+        #   # not counting image from the same iden in the same cam  
+        #   # good index : query label equal to gallery label
+        #   query_index = np.argwhere(gl==ql)
+        #   #same camera
+        #   camera_index = np.argwhere(gc==qc)
+        #   # here
+        #   #good_index = np.setdiff1d(query_index, camera_index, assume_unique=True)
+        #   junk_index1 = np.argwhere(gl==-1)
+        #   junk_index2 = np.intersect1d(query_index, camera_index)
+        #   junk_index = np.append(junk_index2, junk_index1) 
+        #   # stuck
+        #   mask = np.in1d(index, junk_index, invert=True)
+        #   index = index[mask=]
       return index
   def imshow(path, ax,title=None):
       """Imshow for Tensor."""
@@ -169,13 +140,14 @@ def do_visualize(
       ax.imshow(im)
       if title is not None:
           ax.set_title(title)
+  # TODO FIX QUERY
   def make_query(i) :
       query_ind = i
-      index = sort_img(query_feature[i],query_label[i],query_cam[i],gallery_feature,gallery_label,gallery_cam)
+      index = sort_img(gallery_feature[i],gallery_cam[i],gallery_date[i],gallery_feature,gallery_cam,gallery_date)
       ########################################################################
       # Visualize the rank result
-      _, _, _, query_path = data_loader['query'].dataset[i]
-      query_lb = query_label[i]
+      _, _, _, query_path = data_loader['gallery'].dataset[i]
+    #   query_lb = query_label[i]
       print('Top 10 images are as follow:')
       try: # Visualize Ranking Result 
           # Graphical User Interface is needed
@@ -185,15 +157,17 @@ def do_visualize(
           imshow(query_path,ax,'query')
           # show top 10
           for i in range(10):
-              ax = fig.add_subplot(1,11,i+2)
-              ax.axis('off')
-              gallery_img, _, _, img_path = data_loader['gallery'].dataset[index[i]]
-              label = gallery_label[index[i]]
-              imshow(img_path, ax)
-              if label == query_lb:
-                  ax.set_title('%d'%(i+1), color='green')
-              else:
-                  ax.set_title('%d'%(i+1), color='red')
+            ax = fig.add_subplot(1,11,i+2)
+            ax.axis('off')
+            _, _, _, img_path = data_loader['gallery'].dataset[index[i]]
+            # label = gallery_label[index[i]]
+            imshow(img_path, ax)
+            #   if label == query_lb:
+            #       ax.set_title('%d'%(i+1), color='green')
+            #   else:
+            #       ax.set_title('%d'%(i+1), color='red')
+
+            ax.set_title('%d'%(i+1))
       except RuntimeError:
           for i in range(10):
               img_path = data_loader['gallery'].dataset[index[i]][-1]
@@ -205,7 +179,7 @@ def do_visualize(
   i = cfg.VISUALIZE.INDEX
   if i<0 :
     # print("kaboom")
-    query_size = len(data_loader["query"].dataset)
+    query_size = len(data_loader["gallery"].dataset)
     for i in range(query_size) : 
       print(i)
       make_query(i)
