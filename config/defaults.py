@@ -147,6 +147,12 @@ _C.VISUALIZE.NEED_NEW_FEAT_EMBED = "off"
 _C.VISUALIZE.INDEX = 0
 _C.VISUALIZE.TOP_RANK = 10
 _C.VISUALIZE.RE_RANK = "off"
+# ---------------------------------------------------------------------------- #
+# Embedding projector
+# ---------------------------------------------------------------------------- #
+_C.EMBEDDING_PROJECTOR = CN()
+# option 
+_C.EMBEDDING_PROJECTOR.OPTION = "off"
 
 # ---------------------------------------------------------------------------- #
 # Misc options
