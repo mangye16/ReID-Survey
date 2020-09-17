@@ -139,7 +139,7 @@ def do_visualize_no_label(
       if not re_rank :
         index = sort_img(gallery_feature[i],gallery_cam[i],gallery_date[i],gallery_feature,gallery_cam,gallery_date,ignore_index=i)
       else :
-        index = reranking_list[i]
+        index = reranking_list[i][1:]
       ########################################################################
       # Visualize the rank result
       _, _, _, query_path = data_loader['gallery'].dataset[i]
