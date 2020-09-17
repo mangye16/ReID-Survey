@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pickle
 import os
+from utils.re_ranking import re_ranking_no_label
 
 global ITER
 ITER = 0
@@ -24,7 +25,6 @@ def create_feature_extractor(model, device=None):
 
       Args:
           model (`torch.nn.Module`): the model to evaluate
-          metrics (dict of str - :class:`ignite.metrics.Metric`): a map of metric names to Metrics
           device (str, optional): device type specification (default: None).
               Applies to both model and batches.
       Returns:
@@ -43,10 +43,6 @@ def create_feature_extractor(model, device=None):
             return feat, camid, date
 
     engine = Engine(_inference)
-
-    # visualize does not have to calculate metrics
-    # for name, metric in metrics.items():
-    #     metric.attach(engine, name)
 
     return engine
 
@@ -80,9 +76,7 @@ def do_visualize_no_label(
                           .format(engine.state.epoch, ITER, len(data_loader['gallery']), gallery_engine.state.output[0].shape))
 
       #Show result
-      # print(data_loader['gallery'].dataset)
       gallery_engine.run(data_loader['gallery'])
-      # print(len(gallery_feat))
       gallery_feature = torch.cat(gallery_feat)
 
       # -------------------- visualize step ----------------------------------
@@ -140,13 +134,16 @@ def do_visualize_no_label(
       if title is not None:
           ax.set_title(title)
   # TODO FIX QUERY
-  def make_query(i) :
+  def make_query(i,re_rank=False,reranking_list=None) :
       query_ind = i
-      index = sort_img(gallery_feature[i],gallery_cam[i],gallery_date[i],gallery_feature,gallery_cam,gallery_date,ignore_index=i)
+      if not re_rank :
+        index = sort_img(gallery_feature[i],gallery_cam[i],gallery_date[i],gallery_feature,gallery_cam,gallery_date,ignore_index=i)
+      else :
+        index = reranking_list[i]
       ########################################################################
       # Visualize the rank result
       _, _, _, query_path = data_loader['gallery'].dataset[i]
-    #   query_lb = query_label[i]
+      #   query_lb = query_label[i]
       print('Top 10 images are as follow:')
       try: # Visualize Ranking Result 
           # Graphical User Interface is needed
@@ -159,12 +156,7 @@ def do_visualize_no_label(
             ax = fig.add_subplot(1,11,i+2)
             ax.axis('off')
             _, _, _, img_path = data_loader['gallery'].dataset[index[i]]
-            # label = gallery_label[index[i]]
             imshow(img_path, ax)
-            #   if label == query_lb:
-            #       ax.set_title('%d'%(i+1), color='green')
-            #   else:
-            #       ax.set_title('%d'%(i+1), color='red')
 
             ax.set_title('%d'%(i+1))
       except RuntimeError:
@@ -176,12 +168,16 @@ def do_visualize_no_label(
       fig.savefig("./log/{}/query_image/show_{}.png".format(cfg.DATASETS.NAMES,query_ind))
       return fig
   i = cfg.VISUALIZE.INDEX
+  # query all image in gallery
+  is_re_rank = False
+  if cfg.VISUALIZE.RE_RANK == "on" :
+    reranking_list = re_ranking_no_label(gallery_feature,k1=20,k2=6,lambda_value=0.3)
+    is_re_rank = True
   if i<0 :
-    # print("kaboom")
     query_size = len(data_loader["gallery"].dataset)
     for i in range(query_size) : 
       print(i)
-      make_query(i)
+      make_query(i, is_re_rank,reranking_list)
   else :
-    fig = make_query(i)
+    fig = make_query(i, is_re_rank, reranking_list)
     fig.savefig("./log/{}/show.png".format(cfg.DATASETS.NAMES))
