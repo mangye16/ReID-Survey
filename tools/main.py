@@ -15,6 +15,7 @@ from utils.logger import setup_logger
 from tools.train import do_train
 from tools.test import do_test
 from tools.visualize import do_visualize
+from tools.embedding_projector import do_embedding_projector
 from tools.visualize_no_label import do_visualize_no_label
 
 def main():
@@ -75,7 +76,12 @@ def main():
         # test
         do_visualize(cfg, model, data_loader, num_query)
         return
-    elif cfg.VISUALIZE.OPTION == "on_no_label" :
+    if cfg.EMBEDDING_PROJECTOR.OPTION == 'on':
+        logger.info("Eval and Visualize embedding projector")
+        model.load_param(cfg.TEST.WEIGHT)
+        do_embedding_projector(cfg, model, data_loader, num_query)
+        return 
+    if cfg.VISUALIZE.OPTION == "on_no_label" :
         logger.info("Visualize no label Only")
         model.load_param(cfg.TEST.WEIGHT)
         do_visualize_no_label(cfg, model, data_loader)
