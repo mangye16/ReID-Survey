@@ -45,9 +45,7 @@ class r1_mAP_mINP(Metric):
         distmat.addmm_(1, -2, qf, gf.t())
         distmat = distmat.cpu().numpy()
         cmc, mAP, mINP = eval_func(distmat, q_pids, g_pids, q_camids, g_camids)
-
         return cmc, mAP, mINP
-
 
 class r1_mAP_mINP_reranking(Metric):
     def __init__(self, num_query, max_rank=50, feat_norm='on'):

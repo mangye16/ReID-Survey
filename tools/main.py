@@ -28,7 +28,6 @@ def main():
                         nargs=argparse.REMAINDER)
     # ASK :
     args = parser.parse_args()
-
     num_gpus = int(os.environ["WORLD_SIZE"]) if "WORLD_SIZE" in os.environ else 1
 
     if args.config_file != "":

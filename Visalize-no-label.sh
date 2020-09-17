@@ -7,4 +7,5 @@ mkdir ./log/oxygen1
 mkdir ./log/oxygen1/query_image
 
 # and run this command in single line
-!python3 ./tools/main.py --config_file='configs/AGW_baseline.yml' MODEL.DEVICE_ID "('0')" DATASETS.NAMES "('oxygen1')" MODEL.PRETRAIN_CHOICE "('self')" TEST.WEIGHT "('./log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth')"  VISUALIZE.OPTION "('on_no_label')"  VISUALIZE.INDEX "(-1)"  VISUALIZE.NEED_NEW_FEAT_EMBED "('on')" 
+python ./tools/main.py --config_file='configs/AGW_baseline.yml' MODEL.DEVICE_ID "('0')" DATASETS.NAMES "('oxygen1')" MODEL.PRETRAIN_CHOICE "('self')" TEST.WEIGHT "('./log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth')"  VISUALIZE.OPTION "('on_no_label')"  VISUALIZE.INDEX "(-1)"  VISUALIZE.NEED_NEW_FEAT_EMBED "('off')" 
+VISUALIZE.TOP_RANK "(20)"  VISUALIZE.RE_RANK "('on')" 

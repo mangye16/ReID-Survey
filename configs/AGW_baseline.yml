@@ -54,6 +54,8 @@ VISUALIZE :
   IMS_PER_BATCH : 256
   NEED_NEW_FEAT_EMBED : "off"
   INDEX : 0
+  TOP_RANK : 10 
+  RE_RANK : "off"
 
 OUTPUT_DIR: "./log/market1501/Experiment-AGW-baseline"
 

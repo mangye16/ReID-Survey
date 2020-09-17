@@ -104,11 +104,11 @@ def do_visualize_no_label(
         galelry_date = feat_dump_obj["gallery"]["date"]
   gallery_feature = gallery_feature.cuda()
   #######################################################################
-  # sort the images
+  # sort the images by cosine similarity matrix score
   # TODO qf - gallery_feat[i], ql -> qc , qc -> qd, gl -> gc, gc -> gd
-  def sort_img(qf, qc, qd, gf, gc, gd):
+  def sort_img(qf, qc, qd, gf, gc, gd,ignore_index=None):
       query = qf.view(-1,1)
-      # print(query.shape)
+      gf = torch.cat([gf[0:ignore_index], gf[ignore_index+1:]])
       score = torch.mm(gf,query)
       # tensor.cuda() is used to move a tensor to GPU memory.
       # tensor.cpu() moves it back to memory accessible to the CPU.
@@ -119,8 +119,7 @@ def do_visualize_no_label(
       index = index[::-1]
       #   TODO NOMASK FOR NOW
       #   TODO MASK FOR ITSELF
-        #   # index  index[0:2000]
-        #   # not counting image from the same iden in the same cam  
+        #   # not counting image from the same iden in the same cam
         #   # good index : query label equal to gallery label
         #   query_index = np.argwhere(gl==ql)
         #   #same camera
@@ -143,7 +142,7 @@ def do_visualize_no_label(
   # TODO FIX QUERY
   def make_query(i) :
       query_ind = i
-      index = sort_img(gallery_feature[i],gallery_cam[i],gallery_date[i],gallery_feature,gallery_cam,gallery_date)
+      index = sort_img(gallery_feature[i],gallery_cam[i],gallery_date[i],gallery_feature,gallery_cam,gallery_date,ignore_index=i)
       ########################################################################
       # Visualize the rank result
       _, _, _, query_path = data_loader['gallery'].dataset[i]

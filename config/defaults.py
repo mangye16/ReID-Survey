@@ -145,6 +145,8 @@ _C.VISUALIZE.OPTION = "off"
 _C.VISUALIZE.IMS_PER_BATCH = 256
 _C.VISUALIZE.NEED_NEW_FEAT_EMBED = "off"
 _C.VISUALIZE.INDEX = 0
+_C.VISUALIZE.TOP_RANK = 10
+_C.VISUALIZE.RE_RANK = "off"
 
 # ---------------------------------------------------------------------------- #
 # Misc options
