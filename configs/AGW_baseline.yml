@@ -1,8 +1,8 @@
 MODEL:
-  PRETRAIN_CHOICE: 'imagenet'
-  # PRETRAIN_PATH: "/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/resnet50-19c8e357.pth"
-  PRETRAIN_PATH: 'C:/Users/60310249/.torch/models/resnet50-19c8e357.pth'
-  PRETRAIN_PATH: ""
+  PRETRAIN_CHOICE: 'self'
+  PRETRAIN_PATH: "/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth"
+  # PRETRAIN_PATH: 'C:/Users/60310249/.torch/models/resnet50-19c8e357.pth'
+  TRANSFER_MODE : 'off'
   CENTER_LOSS: 'on'
   CENTER_FEAT_DIM: 2048
   NAME: 'resnet50_nl'
@@ -25,8 +25,8 @@ DATALOADER:
 
 SOLVER:
   OPTIMIZER_NAME: 'Adam'
-  MAX_EPOCHS: 160
-  BASE_LR: 0.00035
+  MAX_EPOCHS: 180
+  BASE_LR: 0.00035หื
 
   CENTER_LR: 0.5
   CENTER_LOSS_WEIGHT: 0.0005
@@ -41,9 +41,9 @@ SOLVER:
   WARMUP_ITERS: 10
   WARMUP_METHOD: 'linear'
 
-  CHECKPOINT_PERIOD: 40
-  LOG_PERIOD: 60
-  EVAL_PERIOD: 40
+  CHECKPOINT_PERIOD: 20
+  LOG_PERIOD: 180
+  EVAL_PERIOD: 20
 
 TEST:
   IMS_PER_BATCH: 64

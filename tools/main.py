@@ -96,7 +96,11 @@ def main():
     optimizer = model.get_optimizer(cfg, criterion)
 
     # Add for using self trained model
-    if cfg.MODEL.PRETRAIN_CHOICE == 'self':
+    if cfg.MODEL.PRETRAIN_CHOICE == 'self' and cfg.MODEL.TRANSFER_MODE == "off":
+        to_load = {'model': model,
+              'optimizer': optimizer['model'],
+              'center_param': criterion['center'],
+              'optimizer_center': optimizer['center']}
         start_epoch = eval(cfg.MODEL.PRETRAIN_PATH.split('/')[-1].split('.')[0].split('_')[-1])
         print('Start epoch:', start_epoch)
         path_to_optimizer = cfg.MODEL.PRETRAIN_PATH.replace('model', 'optimizer')
@@ -105,17 +109,33 @@ def main():
         print('Path to the checkpoint of center_param:', path_to_center_param)
         path_to_optimizer_center = cfg.MODEL.PRETRAIN_PATH.replace('model', 'optimizer_center')
         print('Path to the checkpoint of optimizer_center:', path_to_optimizer_center)
-        model.load_state_dict(torch.load(cfg.MODEL.PRETRAIN_PATH))
-        optimizer['model'].load_state_dict(torch.load(path_to_optimizer))
-        criterion['center'].load_state_dict(torch.load(path_to_center_param))
-        optimizer['center'].load_state_dict(torch.load(path_to_optimizer_center))
+        # model.load_state_dict(torch.load(cfg.MODEL.PRETRAIN_PATH))
+        model.load_param(cfg.MODEL.PRETRAIN_PATH)
+        # optimizer['model'].load_param(path_to_optimizer)
+        # criterion['center'].load_param(path_to_center_param)
+        # optimizer['center'].load_param(path_to_optimizer_center)
+        # 
+        optimizer['model'].load_state_dict(torch.load(path_to_optimizer).state_dict())
+        criterion['center'].load_state_dict(torch.load(path_to_center_param).state_dict())
+        optimizer['center'].load_state_dict(torch.load(path_to_optimizer_center).state_dict())
         scheduler = WarmupMultiStepLR(optimizer['model'], cfg.SOLVER.STEPS, cfg.SOLVER.GAMMA, cfg.SOLVER.WARMUP_FACTOR,
                                       cfg.SOLVER.WARMUP_ITERS, cfg.SOLVER.WARMUP_METHOD, start_epoch)
+    elif cfg.MODEL.PRETRAIN_CHOICE == 'self' and cfg.MODEL.TRANSFER_MODE == "on":
+        start_epoch = 0
+        print('Start epoch:', start_epoch)
+        path_to_optimizer = cfg.MODEL.PRETRAIN_PATH.replace('model', 'optimizer')
+        print('Path to the checkpoint of optimizer:', path_to_optimizer)
+        path_to_center_param = cfg.MODEL.PRETRAIN_PATH.replace('model', 'center_param')
+        print('Path to the checkpoint of center_param:', path_to_center_param)
+        path_to_optimizer_center = cfg.MODEL.PRETRAIN_PATH.replace('model', 'optimizer_center')
+        print('Path to the checkpoint of optimizer_center:', path_to_optimizer_center)
+        model.load_param(cfg.MODEL.PRETRAIN_PATH)
+        scheduler = WarmupMultiStepLR(optimizer['model'], cfg.SOLVER.STEPS, cfg.SOLVER.GAMMA, cfg.SOLVER.WARMUP_FACTOR,
+                                      cfg.SOLVER.WARMUP_ITERS, cfg.SOLVER.WARMUP_METHOD)
     elif cfg.MODEL.PRETRAIN_CHOICE == 'imagenet':
         start_epoch = 0
         scheduler = WarmupMultiStepLR(optimizer['model'], cfg.SOLVER.STEPS, cfg.SOLVER.GAMMA, cfg.SOLVER.WARMUP_FACTOR,
                                       cfg.SOLVER.WARMUP_ITERS, cfg.SOLVER.WARMUP_METHOD)
-
     else:
         print('Only support pretrain_choice for imagenet and self, but got {}'.format(cfg.MODEL.PRETRAIN_CHOICE))
 

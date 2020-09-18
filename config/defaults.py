@@ -27,6 +27,7 @@ _C.MODEL.NAME = 'resnet50'
 _C.MODEL.LAST_STRIDE = 1
 # Path to pretrained model of backbone
 _C.MODEL.PRETRAIN_PATH = ''
+_C.MODEL.TRANSFER_MODE ="off"
 # Use ImageNet pretrained model to initialize backbone or use self trained model to initialize the whole model
 # Options: 'imagenet' or 'self'
 _C.MODEL.PRETRAIN_CHOICE = 'imagenet'
