@@ -27,6 +27,7 @@ def make_data_loader(cfg):
     num_workers = cfg.DATALOADER.NUM_WORKERS
     if cfg.VISUALIZE.OPTION == "on_no_label" :
         gallery_set = ImageNoLabelDataset( dataset.gallery, transforms['eval'])
+        print(gallery_set.dataset[0])
         data_loader={}
         data_loader['gallery'] = DataLoader(
             gallery_set, batch_size=cfg.VISUALIZE.IMS_PER_BATCH, shuffle=False, num_workers=num_workers,

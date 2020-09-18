@@ -77,10 +77,11 @@ def do_visualize_no_label(
 
       #Show result
       gallery_engine.run(data_loader['gallery'])
+      # print(type(gallery_feat))
       gallery_feature = torch.cat(gallery_feat)
 
       # -------------------- visualize step ----------------------------------
-      print(gallery_feature.shape)
+      # print(gallery_feature.shape)
       with open("./log/{}/feature-pickle.pkl".format(cfg.DATASETS.NAMES), "wb") as fout:
           feat_dump_obj = {
             "gallery" : {
@@ -91,7 +92,7 @@ def do_visualize_no_label(
           }
           pickle.dump(feat_dump_obj, fout, protocol=pickle.HIGHEST_PROTOCOL)
   else :
-      with open("./log/{}/feature-pickle.pkl".format(cfg.DATASET.NAMES), "rb").format(cfg.DATASETS.NAMES) as fout: 
+      with open("./log/{}/feature-pickle.pkl".format(cfg.DATASETS.NAMES), "rb") as fout: 
         feat_dump_obj = pickle.load(fout)
         gallery_feature = feat_dump_obj["gallery"]["feat"]
         gallery_cam = feat_dump_obj["gallery"]["cam"]
@@ -171,6 +172,9 @@ def do_visualize_no_label(
   # query all image in gallery
   is_re_rank = False
   if cfg.VISUALIZE.RE_RANK == "on" :
+    # print(gallery_feature)
+    # print(gallery_feature.shape)
+    # gallery_feature = gallery_feature.view(-1,1)
     reranking_list = re_ranking_no_label(gallery_feature,k1=20,k2=6,lambda_value=0.3)
     is_re_rank = True
   if i<0 :

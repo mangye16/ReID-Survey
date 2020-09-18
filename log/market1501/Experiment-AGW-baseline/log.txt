@@ -1,10 +1,12 @@
-2020-09-12 18:44:29,285 reid_baseline INFO: Using 1 GPUS
-2020-09-12 18:44:29,285 reid_baseline INFO: Namespace(config_file='configs/AGW_baseline.yml', opts=['MODEL.DEVICE_ID', "('0')", 'DATASETS.NAMES', "('oxygen1')", 'MODEL.PRETRAIN_CHOICE', "('self')", 'TEST.WEIGHT', "('./log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth')", 'VISUALIZE.OPTION', "('on_no_label')", 'VISUALIZE.INDEX', '(-1)', 'VISUALIZE.NEED_NEW_FEAT_EMBED', "('on')"])
-2020-09-12 18:44:29,286 reid_baseline INFO: Loaded configuration file configs/AGW_baseline.yml
-2020-09-12 18:44:29,287 reid_baseline INFO: 
+2020-09-18 07:34:15,686 reid_baseline INFO: Using 1 GPUS
+2020-09-18 07:34:15,687 reid_baseline INFO: Namespace(config_file='configs/AGW_baseline.yml', opts=['MODEL.DEVICE_ID', "('0')", 'DATASETS.NAMES', "('oxygen1')", 'MODEL.PRETRAIN_CHOICE', "('self')", 'TEST.WEIGHT', "('./log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth')", 'VISUALIZE.OPTION', "('on_no_label')", 'VISUALIZE.INDEX', '(10)', 'VISUALIZE.NEED_NEW_FEAT_EMBED', "('on')", 'VISUALIZE.TOP_RANK', '(20)', 'VISUALIZE.RE_RANK', "('on')"])
+2020-09-18 07:34:15,687 reid_baseline INFO: Loaded configuration file configs/AGW_baseline.yml
+2020-09-18 07:34:15,688 reid_baseline INFO: 
 MODEL:
   PRETRAIN_CHOICE: 'imagenet'
-  PRETRAIN_PATH: "/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/resnet50-19c8e357.pth"
+  # PRETRAIN_PATH: "/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/resnet50-19c8e357.pth"
+  PRETRAIN_PATH: 'C:/Users/60310249/.torch/models/resnet50-19c8e357.pth'
+  PRETRAIN_PATH: ""
   CENTER_LOSS: 'on'
   CENTER_FEAT_DIM: 2048
   NAME: 'resnet50_nl'
@@ -58,12 +60,16 @@ VISUALIZE :
   IMS_PER_BATCH : 256
   NEED_NEW_FEAT_EMBED : "off"
   INDEX : 0
+  TOP_RANK : 10 
+  RE_RANK : "off"
+EMBEDDING_PROJECTOR:
+  OPTION: "off"
 
 OUTPUT_DIR: "./log/market1501/Experiment-AGW-baseline"
 
 
 
-2020-09-12 18:44:29,287 reid_baseline INFO: Running with config:
+2020-09-18 07:34:15,689 reid_baseline INFO: Running with config:
 DATALOADER:
   NUM_INSTANCE: 4
   NUM_WORKERS: 8
@@ -71,6 +77,8 @@ DATALOADER:
 DATASETS:
   NAMES: oxygen1
   ROOT_DIR: ./toDataset
+EMBEDDING_PROJECTOR:
+  OPTION: off
 INPUT:
   IMG_SIZE: [256, 128]
   PADDING: 10
@@ -87,7 +95,7 @@ MODEL:
   LAST_STRIDE: 1
   NAME: resnet50_nl
   PRETRAIN_CHOICE: self
-  PRETRAIN_PATH: /gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/resnet50-19c8e357.pth
+  PRETRAIN_PATH: 
   WEIGHT_REGULARIZED_TRIPLET: on
 OUTPUT_DIR: ./log/market1501/Experiment-AGW-baseline
 SOLVER:
@@ -116,9 +124,11 @@ TEST:
   WEIGHT: ./log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth
 VISUALIZE:
   IMS_PER_BATCH: 256
-  INDEX: -1
+  INDEX: 10
   NEED_NEW_FEAT_EMBED: on
   OPTION: on_no_label
-2020-09-12 18:44:34,041 reid_baseline INFO: Visualize no label Only
-2020-09-12 18:44:34,554 reid_baseline INFO: Enter inferencing to visualize no label data
-2020-09-12 18:44:35,291 reid_baseline INFO: Epoch[1] Iteration[1/1] output shape : torch.Size([45, 2048])
+  RE_RANK: on
+  TOP_RANK: 20
+2020-09-18 07:34:20,012 reid_baseline INFO: Visualize no label Only
+2020-09-18 07:34:20,631 reid_baseline INFO: Enter inferencing to visualize no label data
+2020-09-18 07:34:21,293 reid_baseline INFO: Epoch[1] Iteration[1/1] output shape : torch.Size([15, 2048])
