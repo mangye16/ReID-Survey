@@ -137,9 +137,11 @@ def do_visualize_no_label(
   # TODO FIX QUERY
   def make_query(i,re_rank=False,reranking_list=None) :
       query_ind = i
+      re_rank_str = ""
       if not re_rank :
         index = sort_img(gallery_feature[i],gallery_cam[i],gallery_date[i],gallery_feature,gallery_cam,gallery_date,ignore_index=i)
       else :
+        re_rank_str = "_re_rank_"
         index = reranking_list[i][1:]
       ########################################################################
       # Visualize the rank result
@@ -166,7 +168,7 @@ def do_visualize_no_label(
               print(img_path[0])
           print('If you want to see the visualization of the ranking result, graphical user interface is needed.')
       plt.show()
-      fig.savefig("./log/{}/query_image/show_{}.png".format(cfg.DATASETS.NAMES,query_ind))
+      fig.savefig("./log/{}/query_image/show_{}{}.png".format(cfg.DATASETS.NAMES,query_ind,re_rank_str))
       return fig
   i = cfg.VISUALIZE.INDEX
   # query all image in gallery
