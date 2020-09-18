@@ -1,7 +1,7 @@
-2020-09-18 07:34:15,686 reid_baseline INFO: Using 1 GPUS
-2020-09-18 07:34:15,687 reid_baseline INFO: Namespace(config_file='configs/AGW_baseline.yml', opts=['MODEL.DEVICE_ID', "('0')", 'DATASETS.NAMES', "('oxygen1')", 'MODEL.PRETRAIN_CHOICE', "('self')", 'TEST.WEIGHT', "('./log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth')", 'VISUALIZE.OPTION', "('on_no_label')", 'VISUALIZE.INDEX', '(10)', 'VISUALIZE.NEED_NEW_FEAT_EMBED', "('on')", 'VISUALIZE.TOP_RANK', '(20)', 'VISUALIZE.RE_RANK', "('on')"])
-2020-09-18 07:34:15,687 reid_baseline INFO: Loaded configuration file configs/AGW_baseline.yml
-2020-09-18 07:34:15,688 reid_baseline INFO: 
+2020-09-18 07:55:11,910 reid_baseline INFO: Using 1 GPUS
+2020-09-18 07:55:11,911 reid_baseline INFO: Namespace(config_file='configs/AGW_baseline.yml', opts=['MODEL.DEVICE_ID', "('0')", 'DATASETS.NAMES', "('oxygen1')", 'MODEL.PRETRAIN_CHOICE', "('self')", 'TEST.WEIGHT', "('./log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth')", 'VISUALIZE.OPTION', "('on_no_label')", 'VISUALIZE.INDEX', '(10)', 'VISUALIZE.NEED_NEW_FEAT_EMBED', "('on')", 'VISUALIZE.TOP_RANK', '(20)', 'VISUALIZE.RE_RANK', "('on')"])
+2020-09-18 07:55:11,911 reid_baseline INFO: Loaded configuration file configs/AGW_baseline.yml
+2020-09-18 07:55:11,912 reid_baseline INFO: 
 MODEL:
   PRETRAIN_CHOICE: 'imagenet'
   # PRETRAIN_PATH: "/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/resnet50-19c8e357.pth"
@@ -69,7 +69,7 @@ OUTPUT_DIR: "./log/market1501/Experiment-AGW-baseline"
 
 
 
-2020-09-18 07:34:15,689 reid_baseline INFO: Running with config:
+2020-09-18 07:55:11,913 reid_baseline INFO: Running with config:
 DATALOADER:
   NUM_INSTANCE: 4
   NUM_WORKERS: 8
@@ -129,6 +129,6 @@ VISUALIZE:
   OPTION: on_no_label
   RE_RANK: on
   TOP_RANK: 20
-2020-09-18 07:34:20,012 reid_baseline INFO: Visualize no label Only
-2020-09-18 07:34:20,631 reid_baseline INFO: Enter inferencing to visualize no label data
-2020-09-18 07:34:21,293 reid_baseline INFO: Epoch[1] Iteration[1/1] output shape : torch.Size([15, 2048])
+2020-09-18 07:55:16,299 reid_baseline INFO: Visualize no label Only
+2020-09-18 07:55:16,911 reid_baseline INFO: Enter inferencing to visualize no label data
+2020-09-18 07:55:17,573 reid_baseline INFO: Epoch[1] Iteration[1/1] output shape : torch.Size([15, 2048])

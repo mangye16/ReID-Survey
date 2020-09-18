@@ -169,7 +169,7 @@ def do_visualize_no_label(
           print('If you want to see the visualization of the ranking result, graphical user interface is needed.')
       plt.show()
       fig.savefig("./log/{}/query_image/show_{}{}.png".format(cfg.DATASETS.NAMES,query_ind,re_rank_str))
-      return fig
+      return fig,re_rank_str
   i = cfg.VISUALIZE.INDEX
   # query all image in gallery
   is_re_rank = False
@@ -185,5 +185,5 @@ def do_visualize_no_label(
       print(i)
       make_query(i, is_re_rank,reranking_list)
   else :
-    fig = make_query(i, is_re_rank, reranking_list)
-    fig.savefig("./log/{}/show.png".format(cfg.DATASETS.NAMES))
+    fig, re_rank_str = make_query(i, is_re_rank, reranking_list)
+    fig.savefig("./log/{}/show{}.png".format(cfg.DATASETS.NAMES,re_rank_str))
