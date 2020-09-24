@@ -1,5 +1,4 @@
 # encoding: utf-8
-
 import argparse
 import os
 import sys
@@ -24,13 +23,12 @@ def main():
     parser.add_argument(
         "--config_file", default="", help="path to config file", type=str
     )
-    # ASK :
+
     parser.add_argument("opts", help="Modify config options using the command-line", default=None,
                         nargs=argparse.REMAINDER)
-    # ASK :
     args = parser.parse_args()
-    num_gpus = int(os.environ["WORLD_SIZE"]) if "WORLD_SIZE" in os.environ else 1
 
+    num_gpus = int(os.environ["WORLD_SIZE"]) if "WORLD_SIZE" in os.environ else 1
     if args.config_file != "":
         cfg.merge_from_file(args.config_file)
     cfg.merge_from_list(args.opts)
@@ -91,7 +89,6 @@ def main():
         # test
         do_test(cfg, model, data_loader, num_query)
         return
-
     criterion = model.get_creterion(cfg, num_classes)
     optimizer = model.get_optimizer(cfg, criterion)
 
