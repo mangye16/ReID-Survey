@@ -3,3 +3,5 @@ torch==1.4.0
 torchvision
 ignite
 yacs
+# conda install -c pytorch ignite
+# pip install pytorch-ignite==0.1.2
