@@ -13,12 +13,9 @@ random.seed(seed)
 
 # Dataset_without_eth 
 #   - date
-#        [N] [gender]_[age]_[id]/[gender]_[age]_[camid]_[date_timestamp]_[anonymous].jpg
-#        [Y] [id]/[gender]_[age]_[camid]_[date_timestamp]_[anonymous].jpg
-
+#        [Y] [id]/[gender]_[age]_[anonymous_cam]_[date_timestamp]_[anonymous].jpg
 
 # labelled dataset to labelled-pool
-
 src_dir_path = './mock_Dataset_without_eth'
 dst_dir_path = './Oxygen1'
 train_dir_path = dst_dir_path + '/bounding_box_train'

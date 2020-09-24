@@ -1,33 +1,25 @@
 # encoding: utf-8
+
 import glob
 import re
-
 import os.path as osp
-
 from .bases import BaseImageDataset
 
-class VeRi(BaseImageDataset):
+class Oxygen(BaseImageDataset):
     """
-       VeRi-776
-       Reference:
-       Liu, Xinchen, et al. "Large-scale vehicle re-identification in urban surveillance videos." ICME 2016.
+    Oxygen
+    Dataset statistics:
+    # identities: 1501 (+1 for background)
+    # images: 12936 (train) + 3368 (query) + 15913 (gallery)
+    """
+    dataset_dir = 'market1501'
 
-       URL:https://vehiclereid.github.io/VeRi/
-
-       Dataset statistics:
-       # identities: 776
-       # images: 37778 (train) + 1678 (query) + 11579 (gallery)
-       # cameras: 20
-       """
-
-    dataset_dir = 'veri'
-
-    def __init__(self, root='./toDataset', verbose=True, **kwargs):
-        super(VeRi, self).__init__()
+    def __init__(self, root='./Oxygen', verbose=True, **kwargs):
+        super(Oxygen, self).__init__()
         self.dataset_dir = osp.join(root, self.dataset_dir)
-        self.train_dir = osp.join(self.dataset_dir, 'image_train')
-        self.query_dir = osp.join(self.dataset_dir, 'image_query')
-        self.gallery_dir = osp.join(self.dataset_dir, 'image_test')
+        self.train_dir = osp.join(self.dataset_dir, 'bounding_box_train')
+        self.query_dir = osp.join(self.dataset_dir, 'query')
+        self.gallery_dir = osp.join(self.dataset_dir, 'bounding_box_test')
 
         self._check_before_run()
 
@@ -36,7 +28,7 @@ class VeRi(BaseImageDataset):
         gallery = self._process_dir(self.gallery_dir, relabel=False)
 
         if verbose:
-            print("=> VeRi-776 loaded")
+            print("=> Oxygen loaded")
             self.print_dataset_statistics(train, query, gallery)
 
         self.train = train
@@ -60,7 +52,7 @@ class VeRi(BaseImageDataset):
 
     def _process_dir(self, dir_path, relabel=False):
         img_paths = glob.glob(osp.join(dir_path, '*.jpg'))
-        pattern = re.compile(r'([-\d]+)_c(\d+)')
+        pattern = re.compile(r'([-\d]+)_c(\d)')
 
         pid_container = set()
         for img_path in img_paths:
@@ -73,11 +65,9 @@ class VeRi(BaseImageDataset):
         for img_path in img_paths:
             pid, camid = map(int, pattern.search(img_path).groups())
             if pid == -1: continue  # junk images are just ignored
-            assert 0 <= pid <= 776  # pid == 0 means background
-            assert 1 <= camid <= 20
+            assert 0 <= pid <= 1501  # pid == 0 means background
+            assert 1 <= camid <= 6
             camid -= 1  # index starts from 0
             if relabel: pid = pid2label[pid]
             dataset.append((img_path, pid, camid))
-
         return dataset
-
