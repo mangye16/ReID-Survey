@@ -1,7 +1,14 @@
+<<<<<<< Updated upstream
 2020-09-24 19:32:15,052 reid_baseline INFO: Using 1 GPUS
 2020-09-24 19:32:15,053 reid_baseline INFO: Namespace(config_file='configs/AGW_baseline.yml', opts=['MODEL.DEVICE_ID', "('0')", 'DATASETS.NAMES', "('oxygen')", 'MODEL.TRANSFER_MODE', "('on')", 'MODEL.PRETRAIN_CHOICE', "('self')", 'MODEL.PRETRAIN_PATH', "('./log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth')"])
 2020-09-24 19:32:15,053 reid_baseline INFO: Loaded configuration file configs/AGW_baseline.yml
 2020-09-24 19:32:15,053 reid_baseline INFO: 
+=======
+2020-09-25 02:52:40,975 reid_baseline INFO: Using 1 GPUS
+2020-09-25 02:52:40,976 reid_baseline INFO: Namespace(config_file='configs/AGW_baseline.yml', opts=['MODEL.DEVICE_ID', "('0')", 'DATASETS.NAMES', "('oxygen')", 'MODEL.TRANSFER_MODE', "('on')", 'MODEL.PRETRAIN_CHOICE', "('self')", 'MODEL.PRETRAIN_PATH', "('./log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth')"])
+2020-09-25 02:52:40,977 reid_baseline INFO: Loaded configuration file configs/AGW_baseline.yml
+2020-09-25 02:52:40,978 reid_baseline INFO: 
+>>>>>>> Stashed changes
 MODEL:
   PRETRAIN_CHOICE: 'self'
   PRETRAIN_PATH: "/content/drive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth"
@@ -69,7 +76,11 @@ OUTPUT_DIR: "./log/market1501/Experiment-AGW-baseline"
 
 
 
+<<<<<<< Updated upstream
 2020-09-24 19:32:15,054 reid_baseline INFO: Running with config:
+=======
+2020-09-25 02:52:40,987 reid_baseline INFO: Running with config:
+>>>>>>> Stashed changes
 DATALOADER:
   NUM_INSTANCE: 4
   NUM_WORKERS: 8
@@ -130,6 +141,7 @@ VISUALIZE:
   OPTION: off
   RE_RANK: off
   TOP_RANK: 10
+<<<<<<< Updated upstream
 2020-09-24 19:32:21,094 reid_baseline INFO: Start training
 2020-09-24 19:32:21,473 reid_baseline INFO: Epoch 1 done. Time per batch: 0.000[s] Speed: 171.6[samples/s]
 2020-09-24 19:32:21,474 reid_baseline INFO: ----------
@@ -153,3 +165,5 @@ VISUALIZE:
 2020-09-24 19:32:24,728 reid_baseline INFO: ----------
 2020-09-24 19:32:25,087 reid_baseline INFO: Epoch 11 done. Time per batch: 0.000[s] Speed: 178.3[samples/s]
 2020-09-24 19:32:25,087 reid_baseline INFO: ----------
+=======
+>>>>>>> Stashed changes

@@ -14,7 +14,7 @@ class Oxygen(BaseImageDataset):
     """
     dataset_dir = 'oxygen'
 
-    def __init__(self, root='./Oxygen', verbose=True, **kwargs):
+    def __init__(self, root='./toDataset', verbose=True, **kwargs):
         super(Oxygen, self).__init__()
         self.dataset_dir = osp.join(root, self.dataset_dir)
         self.train_dir = osp.join(self.dataset_dir, 'bounding_box_train')
@@ -52,22 +52,25 @@ class Oxygen(BaseImageDataset):
 
     def _process_dir(self, dir_path, relabel=False):
         img_paths = glob.glob(osp.join(dir_path, '*.jpg'))
-        pattern = re.compile(r'([-\d]+)_(\d)')
+        pattern = re.compile(r'([-\d]+)_(.*)_')
 
         pid_container = set()
         for img_path in img_paths:
-            pid, _ = map(int, pattern.search(img_path).groups() )
+            # print(pattern.search(img_path).groups())
+            pid = int(pattern.search(img_path).groups()[0])
             if pid == -1: continue  # junk images are just ignored
             pid_container.add(pid)
         pid2label = {pid: label for label, pid in enumerate(pid_container)}
         dataset = []
         for img_path in img_paths:
-            pid, camid = map(int, pattern.search(img_path).groups())
-            print(pid,camid)
+            grp = pattern.search(img_path).groups()
+            pid, camid = (int(grp[0]), grp[1])
+            # pid, camid = map(int, pattern.search(img_path).groups())
+            # print(pid,camid)
             if pid == -1: continue  # junk images are just ignored
             # assert 0 <= pid <= 1501  # pid == 0 means background
             # assert 1 <= camid <= 6
-            camid -= 1  # index starts from 0
+            # camid -= 1  # index starts from 0
             if relabel: pid = pid2label[pid]
             dataset.append((img_path, pid, camid))
         return dataset
