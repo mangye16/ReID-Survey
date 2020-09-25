@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pickle
 import os
+import tqdm
 
 global ITER
 ITER = 0
@@ -60,7 +61,7 @@ def do_visualize(
         data_loader,
         num_query
 ):
-  if ( not os.path.exists('./log/{}/feature-pickle.pkl').format(cfg.DATASETS.NAMES)) or cfg.VISUALIZE.NEED_NEW_FEAT_EMBED == "on"  :
+  if ( not os.path.exists('./log/{}/feature-pickle.pkl'.format(cfg.DATASETS.NAMES))  or cfg.VISUALIZE.NEED_NEW_FEAT_EMBED == "on" )  :
       print("compute new feature embedding")
       global query_feat, query_cam, query_label
       global gallery_feat, gallery_cam, gallery_label   
@@ -125,7 +126,7 @@ def do_visualize(
           }
           pickle.dump(feat_dump_obj, fout, protocol=pickle.HIGHEST_PROTOCOL)
   else :
-      with open("./log/{}/feature-pickle.pkl", "rb").format(cfg.DATASETS.NAMES) as fout: 
+      with open("./log/{}/feature-pickle.pkl".format(cfg.DATASETS.NAMES), "rb") as fout: 
         feat_dump_obj = pickle.load(fout)
         query_feature = feat_dump_obj["query"]["feat"]
         query_label = feat_dump_obj["query"]["id"]
@@ -176,7 +177,7 @@ def do_visualize(
       # Visualize the rank result
       _, _, _, query_path = data_loader['query'].dataset[i]
       query_lb = query_label[i]
-      print('Top 10 images are as follow:')
+    #   print('Top 10 images are as follow:')
       try: # Visualize Ranking Result 
           # Graphical User Interface is needed
           fig = plt.figure(figsize=(16,4))
@@ -199,15 +200,15 @@ def do_visualize(
               img_path = data_loader['gallery'].dataset[index[i]][-1]
               print(img_path[0])
           print('If you want to see the visualization of the ranking result, graphical user interface is needed.')
-      plt.show()
+    #   plt.show()
       fig.savefig("./log/{}/query_image/show_{}.png".format(cfg.DATASETS.NAMES,query_ind))
       return fig
   i = cfg.VISUALIZE.INDEX
   if i<0 :
     # print("kaboom")
     query_size = len(data_loader["query"].dataset)
-    for i in range(query_size) : 
-      print(i)
+    for i in tqdm.tqdm(range(query_size)) : 
+    #   print(i)
       make_query(i)
   else :
     fig = make_query(i)
