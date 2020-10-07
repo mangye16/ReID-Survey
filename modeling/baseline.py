@@ -8,8 +8,7 @@ from .backbones.resnet import ResNet, Bottleneck
 from .backbones.senet import SENet, SEResNetBottleneck, SEBottleneck, SEResNeXtBottleneck
 from .backbones.resnet_ibn_a import resnet50_ibn_a
 from .backbones.resnet_nl import ResNetNL
-from .layer import CrossEntropyLabelSmooth, TripletLoss, WeightedRegularizedTriplet, CenterLoss, GeneralizedMeanPooling, GeneralizedMeanPoolingP
-from .layer.pooling import GeM
+from .layer import CrossEntropyLabelSmooth, TripletLoss, WeightedRegularizedTriplet, CenterLoss, GeM
 
 def weights_init_kaiming(m):
     classname = m.__class__.__name__
