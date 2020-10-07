@@ -8,11 +8,11 @@ def build_model(cfg, num_classes):
                     model_path=cfg.MODEL.PRETRAIN_PATH,
                     backbone=cfg.MODEL.BACKBONE,
                     pool_type=cfg.MODEL.POOL_TYPE,
-                    use_dropout=cfg.MODEL.USE_DROPOUT,
-                    cosine_loss_type=cfg.MODEL.COSINE_LOSS_TYPE,
-                    s=cfg.MODEL.SCALING_FACTOR,
-                    m=cfg.MODEL.MARGIN,
-                    use_bnbias=cfg.MODEL.USE_BNBIAS,
-                    use_sestn=cfg.MODEL.USE_SESTN,
-                    pretrain_choice=cfg.MODEL.PRETRAIN_CHOICE)
+                    use_dropout=cfg.COSINE_HEAD.USE_DROPOUT,
+                    cosine_loss_type=cfg.COSINE_HEAD.COSINE_LOSS_TYPE,
+                    s=cfg.COSINE_HEAD.SCALING_FACTOR,
+                    m=cfg.COSINE_HEAD.MARGIN,
+                    use_bnbias=cfg.COSINE_HEAD.USE_BNBIAS,
+                    use_sestn=cfg.COSINE_HEAD.USE_SESTN,
+                    pretrain_choice=cfg.COSINE_HEAD.PRETRAIN_CHOICE)
     return model

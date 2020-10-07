@@ -25,7 +25,6 @@ def weights_init_kaiming(m):
             nn.init.constant_(m.weight, 1.0)
             nn.init.constant_(m.bias, 0.0)
 
-
 def weights_init_classifier(m):
     classname = m.__class__.__name__
     if classname.find('Linear') != -1:
