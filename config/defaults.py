@@ -39,11 +39,11 @@ _C.MODEL.WEIGHT_REGULARIZED_TRIPLET = 'off'
 # custom config
 _C.MODEL.POOL_TYPE = 'avg'
 _C.MODEL.COSINE_LOSS_TYPE = ''
-_C.COSINE_HEAD.SCALING_FACTOR = 60.0
-_C.COSINE_HEAD.MARGIN = 0.35
-_C.COSINE_HEAD.USE_BNBIAS = False 
-_C.COSINE_HEAD.USE_DROPOUT = True
-_C.COSINE_HEAD.USE_SESTN = False 
+_C.MODEL.SCALING_FACTOR = 60.0
+_C.MODEL.MARGIN = 0.35
+_C.MODEL.USE_BNBIAS = False 
+_C.MODEL.USE_DROPOUT = True
+_C.MODEL.USE_SESTN = False 
 
 # -----------------------------------------------------------------------------
 # INPUT
