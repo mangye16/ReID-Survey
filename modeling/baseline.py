@@ -9,6 +9,7 @@ from .backbones.senet import SENet, SEResNetBottleneck, SEBottleneck, SEResNeXtB
 from .backbones.resnet_ibn_a import resnet50_ibn_a
 from .backbones.resnet_nl import ResNetNL
 from .layer import CrossEntropyLabelSmooth, TripletLoss, WeightedRegularizedTriplet, CenterLoss, GeM
+from .layer.cosine_loss import AdaCos, CosFace, ArcFace
 
 def weights_init_kaiming(m):
     classname = m.__class__.__name__
@@ -48,7 +49,8 @@ class Baseline(nn.Module):
                 m=0.35,
                 use_bnbias=False, 
                 use_sestn=False,
-                pretrain_choice=None):
+                pretrain_choice=None,
+                training=True):
         super(Baseline, self).__init__()
         if backbone == 'resnet50':
             self.base = ResNet(last_stride=last_stride,
@@ -138,6 +140,7 @@ class Baseline(nn.Module):
             print('Loading pretrained ImageNet model......')
 
         self.num_classes = num_classes
+        in_features = self.in_planes
 
         if pool_type == "avg":
             self.gap = nn.AdaptiveAvgPool2d(1)
@@ -166,9 +169,9 @@ class Baseline(nn.Module):
         #     self.global_pool = nn.AdaptiveAvgPool2d(1)
         
         # bnneck
-        self.bottleneck = nn.BatchNorm1d(self.in_planes)
+        self.bottleneck = nn.BatchNorm1d(in_features)
         if not use_bnbias:
-            self.bottleneck.bias.requires_grad(False)
+            self.bottleneck.bias.requires_grad = False
             print("==> remove bnneck bias")
         else:
             print("==> using bnneck bias")
@@ -191,7 +194,7 @@ class Baseline(nn.Module):
         global_feat = global_feat.view(global_feat.shape[0], -1)  # flatten to (bs, 2048)
         feat = self.bottleneck(global_feat)  # normalize for angular softmax
 
-        if self.traninig:
+        if self.training:
             if self.use_dropout:
                 feat = self.gap(self.base(x))
             if self.cosine_loss_type == '':

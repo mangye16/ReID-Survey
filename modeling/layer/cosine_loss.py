@@ -71,7 +71,7 @@ class AdaCos(nn.Module):
         self.num_classes = num_classes
         self.s = math.sqrt(2) * math.log(num_classes - 1)
         self.m = m
-        self.W = Parameter(torch.FloatTensor(num_classes - 1))
+        self.W = Parameter(torch.FloatTensor(num_classes, num_features))
         nn.init.xavier_uniform_(self.W)
     def forward(self, input, label=None):
         # normalize features 
@@ -79,6 +79,9 @@ class AdaCos(nn.Module):
         # normalize weights 
         W = F.normalize(self.W)
         # dot product
+        print('debug logging')
+        print(x.shape)
+        print(W.shape)
         logits = F.linear(x, W)        
         if label is None:
             return logits
