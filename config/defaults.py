@@ -22,7 +22,7 @@ _C.MODEL.DEVICE = "cuda"
 # ID number of GPU
 _C.MODEL.DEVICE_ID = '0'
 # Name of backbone
-_C.MODEL.NAME = 'resnet50'
+_C.MODEL.BACKBONE = 'resnet50'
 # Last stride of backbone
 _C.MODEL.LAST_STRIDE = 1
 # Path to pretrained model of backbone
@@ -36,9 +36,14 @@ _C.MODEL.CENTER_LOSS = 'on'
 _C.MODEL.CENTER_FEAT_DIM = 2048
 # If train with weighted regularized triplet loss, options: 'on', 'off'
 _C.MODEL.WEIGHT_REGULARIZED_TRIPLET = 'off'
-# If train with generalized mean pooling, options: 'on', 'off'
-_C.MODEL.GENERALIZED_MEAN_POOL = 'off'
-
+# custom config
+_C.MODEL.POOL_TYPE = 'avg'
+_C.MODEL.COSINE_LOSS_TYPE = ''
+_C.MODEL.SCALING_FACTOR = 60.0
+_C.MODEL.MARGIN = 0.35
+_C.MODEL.USE_BNBIAS = False 
+_C.MODEL.USE_DROPOUT = True
+_C.MODEL.USE_SESTN = False 
 
 # -----------------------------------------------------------------------------
 # INPUT
