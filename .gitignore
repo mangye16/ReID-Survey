@@ -144,3 +144,4 @@ feature-pickle.pkl
 **/test_image/
 **/writer/
 **/log
+log/*
