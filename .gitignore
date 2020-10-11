@@ -145,3 +145,4 @@ feature-pickle.pkl
 **/writer/
 **/log
 log/*
+log/
