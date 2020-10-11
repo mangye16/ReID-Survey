@@ -15,7 +15,7 @@ python ./tools/main.py --config_file='configs/AGW_baseline.yml' \
   MODEL.DEVICE_ID "('0')" \
   DATASETS.NAMES "('oxygen1')" \
   MODEL.PRETRAIN_CHOICE "('self')" \
-  TEST.WEIGHT "('./log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth')" \
+  TEST.WEIGHT "('/home/thanit456/capstone/ReID-Survey/log/market1501/local-AGW-baseline-2/resnet50_nl_model_120.pth')" \
   VISUALIZE.OPTION "('on_no_label')" \
   VISUALIZE.INDEX "(-1)" \
   VISUALIZE.NEED_NEW_FEAT_EMBED "('off')" \

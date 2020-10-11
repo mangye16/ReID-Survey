@@ -11,6 +11,7 @@ import numpy as np
 import pickle
 import os
 from utils.re_ranking import re_ranking_no_label
+from utils.re_ranking_batch import re_ranking_batch_gpu
 
 global ITER
 ITER = 0
@@ -153,6 +154,8 @@ def do_visualize_no_label(
       index= list(index)
       # print(query_ind)
       # print(index[:20])
+      print('index : ', index)
+      print('query index : ', query_ind)
       index.remove(query_ind)
       # print(index[:20])
       # exit()
@@ -208,7 +211,15 @@ def do_visualize_no_label(
     # print(gallery_feature)
     # print(gallery_feature.shape)
     # gallery_feature = gallery_feature.view(-1,1)
-    reranking_list = re_ranking_no_label(gallery_feature,k1=20,k2=6,lambda_value=0.3)
+
+    # ? version entire data
+    # reranking_list = re_ranking_no_label(gallery_feature,k1=20,k2=6,lambda_value=0.3)
+    # ? version batch version
+    reranking_list = re_ranking_batch_gpu(torch.cat([gallery_feature]), 
+                                        len(gallery_feature), 
+                                        k1=20, k2=6, lambda_value=0.3,
+                                        len_slice=1000)
+
     is_re_rank = True
   cam_option = cfg.VISUALIZE.CAM_OPTION
   print("start querying")
@@ -217,5 +228,9 @@ def do_visualize_no_label(
     for i in range(query_size) : 
       make_query(i, is_re_rank,reranking_list,cam_option=cam_option)
   else :
+    print('gallery_feature shape : ', gallery_feature.shape)
+    print('i : ', i)
+    print('is_re_rank : ', is_re_rank)
+    print('reranking_list : ', reranking_list)
     fig, re_rank_str = make_query(i, is_re_rank, reranking_list)
     fig.savefig("./log/{}/show{}.png".format(cfg.DATASETS.NAMES,re_rank_str))

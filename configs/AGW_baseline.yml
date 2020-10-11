@@ -15,6 +15,11 @@ MODEL:
   USE_DROPOUT: False
   USE_SESTN: False 
 
+# COSINE_LOSS: 
+#   TYPE: 'ArcFace'
+#   S: 30.0
+#   M: 0.5
+
 INPUT:
   IMG_SIZE: [256, 128]
   PROB: 0.5 # random horizontal flip

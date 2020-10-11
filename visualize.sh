@@ -4,4 +4,3 @@ python ./tools/main.py --config_file='configs/AGW_baseline.yml' \
     TEST.WEIGHT "('./log/market1501/local-AGW-baseline/resnet50_nl_model_120.pth')" \
     VISUALIZE.OPTION "('on')" \
     OUTPUT_DIR "('./log/Test')" 
-    
