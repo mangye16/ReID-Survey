@@ -3,27 +3,21 @@ MODEL:
   # PRETRAIN_PATH: "/content/drive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/log/market1501/local-AGW-baseline/resnet50_nl_model_120.pth"
   PRETRAIN_PATH: '/home/thanit456/torch/weights/resnet50-19c8e357.pth'
   TRANSFER_MODE : 'off'
-  CENTER_LOSS: 'on'
-  CENTER_FEAT_DIM: 2048
   BACKBONE: 'resnet50_nl'
   WEIGHT_REGULARIZED_TRIPLET: 'on'
-  POOL_TYPE: 'avg'
-  COSINE_LOSS_TYPE: 'CosFace'
-  SCALING_FACTOR: 60.0
-  MARGIN: 0.35
-  USE_BNBIAS: False 
+  USE_COS: False
   USE_DROPOUT: False
-  USE_SESTN: False 
-
-# COSINE_LOSS: 
-#   TYPE: 'ArcFace'
-#   S: 30.0
-#   M: 0.5
+  BASELINE: 
+    POOL_TYPE: 'avg'
+    COSINE_LOSS_TYPE: 'CosFace'
+    SCALING_FACTOR: 60.0
+    MARGIN: 0.35
 
 INPUT:
   IMG_SIZE: [256, 128]
   PROB: 0.5 # random horizontal flip
   RE_PROB: 0.5 # random erasing
+  RE_MAX_RATIO: 0.2
   PADDING: 10
 
 DATASETS:
@@ -38,10 +32,16 @@ SOLVER:
   OPTIMIZER_NAME: 'Adam'
   MAX_EPOCHS: 180
   BASE_LR: 0.00035
-  CENTER_LR: 0.5
-  CENTER_LOSS_WEIGHT: 0.0005
+  MARGIN: 0.3
 
-  WEIGHT_DECAY: 0.0005
+  CENTER_LOSS:
+    USE: True
+    LR: 0.5
+    # ALPHA: 0.5
+    WEIGHT: 0.0005
+    NUM_FEATS: 2048
+
+  WEIGHT_DECAY: 5e-4
   IMS_PER_BATCH: 64
   # IMS_PER_BATCH: 32
 

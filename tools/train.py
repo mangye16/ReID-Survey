@@ -81,7 +81,7 @@ def do_train(
 
     writer = SummaryWriter(log_dir=cfg.OUTPUT_DIR + '/writer')
 
-    trainer = create_supervised_trainer(model, optimizer, criterion, cfg.SOLVER.CENTER_LOSS_WEIGHT, device=device)
+    trainer = create_supervised_trainer(model, optimizer, criterion, cfg.SOLVER.CENTER_LOSS.WEIGHT, device=device)
 
     evaluator = create_supervised_evaluator(model, metrics={'r1_mAP_mINP': r1_mAP_mINP(num_query, max_rank=50, feat_norm=cfg.TEST.FEAT_NORM)}, device=device)
     checkpointer = ModelCheckpoint(output_dir, cfg.MODEL.BACKBONE, checkpoint_period, n_saved=10, require_empty=False)

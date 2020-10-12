@@ -235,8 +235,8 @@ class Baseline(nn.Module):
             optimizer['model'] = getattr(torch.optim, cfg.SOLVER.OPTIMIZER_NAME)(params, momentum=cfg.SOLVER.MOMENTUM)
         else:
             optimizer['model'] = getattr(torch.optim, cfg.SOLVER.OPTIMIZER_NAME)(params)
-        if cfg.MODEL.CENTER_LOSS == 'on':
-            optimizer['center'] = torch.optim.SGD(criterion['center'].parameters(), lr=cfg.SOLVER.CENTER_LR)
+        if cfg.SOLVER.CENTER_LOSS.USE:
+            optimizer['center'] = torch.optim.SGD(criterion['center'].parameters(), lr=cfg.SOLVER.CENTER_LOSS.LR)
         return optimizer
 
     def get_creterion(self, cfg, num_classes):
@@ -249,14 +249,14 @@ class Baseline(nn.Module):
         else:
             criterion['triplet'] = TripletLoss(cfg.SOLVER.MARGIN)  # triplet loss
 
-        if cfg.MODEL.CENTER_LOSS == 'on':
-            criterion['center'] = CenterLoss(num_classes=num_classes, feat_dim=cfg.MODEL.CENTER_FEAT_DIM,
+        if cfg.SOLVER.CENTER_LOSS.USE:
+            criterion['center'] = CenterLoss(num_classes=num_classes, feat_dim=cfg.SOLVER.CENTER_LOSS.NUM_FEAT,
                                              use_gpu=True)
 
         def criterion_total(score, feat, target):
             loss = criterion['xent'](score, target) + criterion['triplet'](feat, target)[0]
-            if cfg.MODEL.CENTER_LOSS == 'on':
-                loss = loss + cfg.SOLVER.CENTER_LOSS_WEIGHT * criterion['center'](feat, target)
+            if cfg.SOLVER.CENTER_LOSS.USE:
+                loss = loss + cfg.SOLVER.CENTER_LOSS.WEIGHT * criterion['center'](feat, target)
             return loss
 
         criterion['total'] = criterion_total

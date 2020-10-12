@@ -36,14 +36,19 @@ _C.MODEL.CENTER_LOSS = 'on'
 _C.MODEL.CENTER_FEAT_DIM = 2048
 # If train with weighted regularized triplet loss, options: 'on', 'off'
 _C.MODEL.WEIGHT_REGULARIZED_TRIPLET = 'off'
-# custom config
-_C.MODEL.POOL_TYPE = 'avg'
-_C.MODEL.COSINE_LOSS_TYPE = ''
-_C.MODEL.SCALING_FACTOR = 60.0
-_C.MODEL.MARGIN = 0.35
-_C.MODEL.USE_BNBIAS = False 
-_C.MODEL.USE_DROPOUT = True
-_C.MODEL.USE_SESTN = False 
+# If train with cos 
+_C.MODEL.USE_COS = False
+# If train with dropout
+_C.MODEL.USE_DROPOUT = False
+
+# for baseline 
+_C.MODEL.BASELINE = CN()
+_C.MODEL.BASELINE.POOL_TYPE = 'avg'
+_C.MODEL.BASELINE.COSINE_LOSS_TYPE = ''
+_C.MODEL.BASELINE.SCALING_FACTOR = 60.0
+_C.MODEL.BASELINE.MARGIN = 0.35
+_C.MODEL.BASELINE.USE_BNBIAS = False 
+_C.MODEL.BASELINE.USE_SESTN = False 
 
 # -----------------------------------------------------------------------------
 # INPUT
@@ -55,6 +60,7 @@ _C.INPUT.IMG_SIZE = [384, 128]
 _C.INPUT.PROB = 0.5
 # Random probability for random erasing
 _C.INPUT.RE_PROB = 0.5
+_C.INPUT.RE_MAX_RATIO = 0.4
 # Values to be used for image normalization
 _C.INPUT.PIXEL_MEAN = [0.485, 0.456, 0.406]
 # Values to be used for image normalization
@@ -96,10 +102,20 @@ _C.SOLVER.BASE_LR = 3e-4
 _C.SOLVER.MOMENTUM = 0.9
 # Margin of triplet loss
 _C.SOLVER.MARGIN = 0.3
-# Learning rate of SGD to learn the centers of center loss
-_C.SOLVER.CENTER_LR = 0.5
-# Balanced weight of center loss
-_C.SOLVER.CENTER_LOSS_WEIGHT = 0.0005
+
+###### Center loss  ######
+
+_C.SOLVER.CENTER_LOSS = CN()
+
+_C.SOLVER.CENTER_LOSS.USE = False
+# # Learning rate of SGD to learn the centers of center loss
+_C.SOLVER.CENTER_LOSS.LR = 0.5
+_C.SOLVER.CENTER_LOSS.WEIGHT = 0.0005
+# _C.SOLVER.CENTER_LOSS.ALPHA = 1.0
+
+_C.SOLVER.CENTER_LOSS.NUM_FEATS = 2048
+
+##########################
 
 # Settings of weight decay
 _C.SOLVER.WEIGHT_DECAY = 0.0005
