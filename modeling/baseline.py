@@ -236,7 +236,7 @@ class Baseline(nn.Module):
         else:
             optimizer['model'] = getattr(torch.optim, cfg.SOLVER.OPTIMIZER_NAME)(params)
         if cfg.SOLVER.CENTER_LOSS.USE:
-            optimizer['center'] = torch.optim.SGD(criterion['center'].parameters(), lr=cfg.SOLVER.CENTER_LOSS.LR)
+            optimizer['center'] = torch.optim.SGD(criterion['center'].parameters(), lr=cfg.SOLVER.CENTER_LOSS.LR, momentum=cfg.SOLVER.MOMENTUM)
         return optimizer
 
     def get_creterion(self, cfg, num_classes):
@@ -250,7 +250,7 @@ class Baseline(nn.Module):
             criterion['triplet'] = TripletLoss(cfg.SOLVER.MARGIN)  # triplet loss
 
         if cfg.SOLVER.CENTER_LOSS.USE:
-            criterion['center'] = CenterLoss(num_classes=num_classes, feat_dim=cfg.SOLVER.CENTER_LOSS.NUM_FEAT,
+            criterion['center'] = CenterLoss(num_classes=num_classes, feat_dim=cfg.SOLVER.CENTER_LOSS.NUM_FEATS,
                                              use_gpu=True)
 
         def criterion_total(score, feat, target):
