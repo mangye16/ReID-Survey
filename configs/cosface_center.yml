@@ -19,8 +19,6 @@ INPUT:
   RE_PROB: 0.5 # random erasing
   RE_MAX_RATIO: 0.2
   PADDING: 10
-  PIXEL_MEAN: [0.1646,0.2110,0.2467]
-  PIXEL_STD: [0.1366,0.1373,0.1806]
 
 DATASETS:
   NAMES: ('market1501')
@@ -37,6 +35,7 @@ SOLVER:
   MARGIN: 0.3
   MOMENTUM: 0.0
 
+  # Center loss will always force using SGD optimizer
   CENTER_LOSS:
     USE: True
     LR: 0.5
