@@ -16,7 +16,7 @@ class ArcFace(nn.Module):
 
     def forward(self, input, label=None):
         # normalized features
-        x = F.normalize(self.x)
+        x = F.normalize(input)
         # normalized weights 
         W = F.normalize(self.W)
         # dot product

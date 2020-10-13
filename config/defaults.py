@@ -31,9 +31,6 @@ _C.MODEL.TRANSFER_MODE ="off"
 # Use ImageNet pretrained model to initialize backbone or use self trained model to initialize the whole model
 # Options: 'imagenet' or 'self'
 _C.MODEL.PRETRAIN_CHOICE = 'imagenet'
-# If train with center loss, options: 'bnneck' or 'no'
-_C.MODEL.CENTER_LOSS = 'on'
-_C.MODEL.CENTER_FEAT_DIM = 2048
 # If train with weighted regularized triplet loss, options: 'on', 'off'
 _C.MODEL.WEIGHT_REGULARIZED_TRIPLET = 'off'
 # If train with cos 
@@ -133,11 +130,11 @@ _C.SOLVER.WARMUP_ITERS = 500
 _C.SOLVER.WARMUP_METHOD = "linear"
 
 # epoch number of saving checkpoints
-_C.SOLVER.CHECKPOINT_PERIOD = 5
+_C.SOLVER.CHECKPOINT_PERIOD = 50
 # iteration of display training log
-_C.SOLVER.LOG_PERIOD = 5
+_C.SOLVER.LOG_PERIOD = 100
 # epoch number of validation
-_C.SOLVER.EVAL_PERIOD = 5
+_C.SOLVER.EVAL_PERIOD = 50
 
 # Number of images per batch
 # This is global, so if we have 8 GPUs and IMS_PER_BATCH = 16, each GPU will

@@ -9,11 +9,13 @@ from .functional import gem, adaptive_gem2d
 class GeM(nn.Module):
     def __init__(self, p=3.0, eps=1e-6, freeze_p=True):
         super(GeM, self).__init__()
-        self.p = p if freeze_p else Parameter 
-        self.eps = eps 
+        self.p = p if freeze_p else Parameter(torch.ones(1) * p)
+        self.eps = eps
         self.freeze_p = freeze_p
     def forward(self, x):
+        # return LF.gem(x, p=self.p, eps=self.eps)
         return gem(x, p=self.p, eps=self.eps)
+
     def __repr__(self):
         if isinstance(self.p, float):
             p = self.p

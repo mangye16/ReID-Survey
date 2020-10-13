@@ -5,11 +5,11 @@ MODEL:
   TRANSFER_MODE : 'off'
   BACKBONE: 'resnet50_nl'
   WEIGHT_REGULARIZED_TRIPLET: 'on'
-  USE_COS: False
+  USE_COS: False # unused config
   USE_DROPOUT: False
   BASELINE: 
-    POOL_TYPE: 'avg'
-    COSINE_LOSS_TYPE: 'CosFace'
+    POOL_TYPE: 'gem'
+    COSINE_LOSS_TYPE: ''
     SCALING_FACTOR: 60.0
     MARGIN: 0.35
 
@@ -17,7 +17,7 @@ INPUT:
   IMG_SIZE: [256, 128]
   PROB: 0.5 # random horizontal flip
   RE_PROB: 0.5 # random erasing
-  RE_MAX_RATIO: 0.2
+  RE_MAX_RATIO: 0.4 # correspond to actual baseline
   PADDING: 10
 
 DATASETS:
@@ -30,7 +30,7 @@ DATALOADER:
 
 SOLVER:
   OPTIMIZER_NAME: 'Adam'
-  MAX_EPOCHS: 180
+  MAX_EPOCHS: 120
   BASE_LR: 0.00035
   MARGIN: 0.3
 
@@ -54,8 +54,8 @@ SOLVER:
   WARMUP_METHOD: 'linear'
 
   CHECKPOINT_PERIOD: 20
-  LOG_PERIOD: 180
-  EVAL_PERIOD: 20
+  LOG_PERIOD: 20
+  EVAL_PERIOD: 40
 
 TEST:
   IMS_PER_BATCH: 64

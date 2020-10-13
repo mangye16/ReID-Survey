@@ -38,7 +38,7 @@ SOLVER:
 
   # Center loss will always force using SGD optimizer
   CENTER_LOSS:
-    USE: False
+    USE: True
     LR: 0.5
     # ALPHA: 0.5
     WEIGHT: 0.0005
