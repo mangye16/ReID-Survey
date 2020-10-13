@@ -4,6 +4,7 @@ import logging
 
 import torch
 import torch.nn as nn
+from torch.utils.tensorboard import SummaryWriter
 from ignite.engine import Engine, Events
 from ignite.handlers import ModelCheckpoint, Timer
 from ignite.metrics import RunningAverage
@@ -78,14 +79,24 @@ def do_train(
     logger = logging.getLogger("reid_baseline")
     logger.info("Start training")
 
-    trainer = create_supervised_trainer(model, optimizer, criterion, cfg.SOLVER.CENTER_LOSS_WEIGHT, device=device)
+    writer = SummaryWriter(log_dir=cfg.OUTPUT_DIR + '/writer')
+
+    if cfg.SOLVER.CENTER_LOSS.USE:
+        trainer = create_supervised_trainer(model, optimizer, criterion, cfg.SOLVER.CENTER_LOSS.WEIGHT, device=device)
+    else:
+        trainer = create_supervised_trainer(model, optimizer, criterion, device=device)
 
     evaluator = create_supervised_evaluator(model, metrics={'r1_mAP_mINP': r1_mAP_mINP(num_query, max_rank=50, feat_norm=cfg.TEST.FEAT_NORM)}, device=device)
-    checkpointer = ModelCheckpoint(output_dir, cfg.MODEL.NAME, checkpoint_period, n_saved=10, require_empty=False)
-    trainer.add_event_handler(Events.EPOCH_COMPLETED, checkpointer, {'model': model,
-                                                                     'optimizer': optimizer['model'],
-                                                                     'center_param': criterion['center'],
-                                                                     'optimizer_center': optimizer['center']})
+    checkpointer = ModelCheckpoint(output_dir, cfg.MODEL.BACKBONE, checkpoint_period, n_saved=10, require_empty=False)
+    if cfg.SOLVER.CENTER_LOSS.USE:
+        trainer.add_event_handler(Events.EPOCH_COMPLETED, checkpointer, {'model': model,
+                                                                        'optimizer': optimizer['model'],
+                                                                        'center_param': criterion['center'],
+                                                                        'optimizer_center': optimizer['center']})
+    else:
+        trainer.add_event_handler(Events.EPOCH_COMPLETED, checkpointer, {'model': model,
+                                                                        'optimizer': optimizer['model']
+                                                                        })
     timer = Timer(average=True)
     timer.attach(trainer, start=Events.EPOCH_STARTED, resume=Events.ITERATION_STARTED,
                  pause=Events.ITERATION_COMPLETED, step=Events.ITERATION_COMPLETED)
@@ -112,6 +123,8 @@ def do_train(
                         .format(engine.state.epoch, ITER, len(data_loader['train']),
                                 engine.state.metrics['avg_loss'], engine.state.metrics['avg_acc'],
                                 scheduler.get_lr()[0]))
+            writer.add_scalar('loss/train_loss', engine.state.metrics['avg_loss'], engine.state.epoch * len(data_loader['train']) + ITER)
+            writer.add_scalar('acc/train_acc', engine.state.metrics['avg_acc'], engine.state.epoch * len(data_loader['train']) + ITER)
         if len(data_loader['train']) == ITER:
             ITER = 0
 
@@ -132,7 +145,12 @@ def do_train(
             logger.info("Validation Results - Epoch: {}".format(engine.state.epoch))
             logger.info("mINP: {:.1%}".format(mINP))
             logger.info("mAP: {:.1%}".format(mAP))
+
+            writer.add_scalar('validation_metrics/mINP', mINP, engine.state.epoch * len(data_loader['train']))
+            writer.add_scalar('validation_metrics/mAP', mAP, engine.state.epoch * len(data_loader['train']))
+
             for r in [1, 5, 10]:
                 logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
+                writer.add_scalar('validation_metrics/Rank-{}'.format(r), cmc[r - 1], engine.state.epoch * len(data_loader['train']))
 
     trainer.run(data_loader['train'], max_epochs=epochs)

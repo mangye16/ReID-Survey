@@ -8,5 +8,5 @@
 # weight regularized triplet loss
 # generalized mean pooling
 # non local blocks
-python3 tools/main.py --config_file='configs/AGW_baseline.yml' MODEL.DEVICE_ID "('3')" \
-DATASETS.NAMES "('market1501')" OUTPUT_DIR "('./log/market1501/Experiment-AGW-baseline')"
+python3 tools/main.py --config_file='configs/AGW_baseline.yml' MODEL.DEVICE_ID "('0')" \
+DATASETS.NAMES "('market1501')" OUTPUT_DIR "('./log/market1501/AGW-new-conf-1')"

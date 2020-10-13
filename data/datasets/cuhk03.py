@@ -3,7 +3,9 @@
 import h5py
 import os.path as osp
 from scipy.io import loadmat
-from scipy.misc import imsave
+# from scipy.misc import imsave
+from imageio import imwrite as imsave
+
 
 from utils.iotools import mkdir_if_missing, write_json, read_json
 from .bases import BaseImageDataset

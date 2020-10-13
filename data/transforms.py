@@ -15,7 +15,7 @@ def build_transforms(cfg):
         T.RandomCrop(cfg.INPUT.IMG_SIZE),
         T.ToTensor(),
         normalize_transform,
-        RandomErasing(probability=cfg.INPUT.RE_PROB, mean=cfg.INPUT.PIXEL_MEAN)
+        RandomErasing(probability=cfg.INPUT.RE_PROB, mean=cfg.INPUT.PIXEL_MEAN, sh=cfg.INPUT.RE_MAX_RATIO)
     ])
 
     transforms['eval'] = T.Compose([

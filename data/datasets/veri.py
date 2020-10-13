@@ -6,7 +6,6 @@ import os.path as osp
 
 from .bases import BaseImageDataset
 
-
 class VeRi(BaseImageDataset):
     """
        VeRi-776

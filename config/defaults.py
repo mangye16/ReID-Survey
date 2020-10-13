@@ -22,22 +22,30 @@ _C.MODEL.DEVICE = "cuda"
 # ID number of GPU
 _C.MODEL.DEVICE_ID = '0'
 # Name of backbone
-_C.MODEL.NAME = 'resnet50'
+_C.MODEL.BACKBONE = 'resnet50'
 # Last stride of backbone
 _C.MODEL.LAST_STRIDE = 1
 # Path to pretrained model of backbone
 _C.MODEL.PRETRAIN_PATH = ''
+_C.MODEL.TRANSFER_MODE ="off"
 # Use ImageNet pretrained model to initialize backbone or use self trained model to initialize the whole model
 # Options: 'imagenet' or 'self'
 _C.MODEL.PRETRAIN_CHOICE = 'imagenet'
-# If train with center loss, options: 'bnneck' or 'no'
-_C.MODEL.CENTER_LOSS = 'on'
-_C.MODEL.CENTER_FEAT_DIM = 2048
 # If train with weighted regularized triplet loss, options: 'on', 'off'
 _C.MODEL.WEIGHT_REGULARIZED_TRIPLET = 'off'
-# If train with generalized mean pooling, options: 'on', 'off'
-_C.MODEL.GENERALIZED_MEAN_POOL = 'off'
+# If train with cos 
+_C.MODEL.USE_COS = False
+# If train with dropout
+_C.MODEL.USE_DROPOUT = False
 
+# for baseline 
+_C.MODEL.BASELINE = CN()
+_C.MODEL.BASELINE.POOL_TYPE = 'avg'
+_C.MODEL.BASELINE.COSINE_LOSS_TYPE = ''
+_C.MODEL.BASELINE.SCALING_FACTOR = 60.0
+_C.MODEL.BASELINE.MARGIN = 0.35
+_C.MODEL.BASELINE.USE_BNBIAS = False 
+_C.MODEL.BASELINE.USE_SESTN = False 
 
 # -----------------------------------------------------------------------------
 # INPUT
@@ -49,6 +57,7 @@ _C.INPUT.IMG_SIZE = [384, 128]
 _C.INPUT.PROB = 0.5
 # Random probability for random erasing
 _C.INPUT.RE_PROB = 0.5
+_C.INPUT.RE_MAX_RATIO = 0.4
 # Values to be used for image normalization
 _C.INPUT.PIXEL_MEAN = [0.485, 0.456, 0.406]
 # Values to be used for image normalization
@@ -90,10 +99,20 @@ _C.SOLVER.BASE_LR = 3e-4
 _C.SOLVER.MOMENTUM = 0.9
 # Margin of triplet loss
 _C.SOLVER.MARGIN = 0.3
-# Learning rate of SGD to learn the centers of center loss
-_C.SOLVER.CENTER_LR = 0.5
-# Balanced weight of center loss
-_C.SOLVER.CENTER_LOSS_WEIGHT = 0.0005
+
+###### Center loss  ######
+
+_C.SOLVER.CENTER_LOSS = CN()
+
+_C.SOLVER.CENTER_LOSS.USE = False
+# # Learning rate of SGD to learn the centers of center loss
+_C.SOLVER.CENTER_LOSS.LR = 0.5
+_C.SOLVER.CENTER_LOSS.WEIGHT = 0.0005
+# _C.SOLVER.CENTER_LOSS.ALPHA = 1.0
+
+_C.SOLVER.CENTER_LOSS.NUM_FEATS = 2048
+
+##########################
 
 # Settings of weight decay
 _C.SOLVER.WEIGHT_DECAY = 0.0005
@@ -135,6 +154,25 @@ _C.TEST.WEIGHT = ""
 # Whether feature is nomalized before test, if on, it is equivalent to cosine distance
 _C.TEST.FEAT_NORM = 'on'
 _C.TEST.EVALUATE_ONLY = 'off'
+
+# ---------------------------------------------------------------------------- #
+# Visualize
+# ---------------------------------------------------------------------------- #
+_C.VISUALIZE = CN()
+# option
+_C.VISUALIZE.OPTION = "off"
+_C.VISUALIZE.CAM_OPTION = "allow_other"
+_C.VISUALIZE.IMS_PER_BATCH = 256
+_C.VISUALIZE.NEED_NEW_FEAT_EMBED = "off"
+_C.VISUALIZE.INDEX = 0
+_C.VISUALIZE.TOP_RANK = 10
+_C.VISUALIZE.RE_RANK = "off"
+# ---------------------------------------------------------------------------- #
+# Embedding projector
+# ---------------------------------------------------------------------------- #
+_C.EMBEDDING_PROJECTOR = CN()
+# option 
+_C.EMBEDDING_PROJECTOR.OPTION = "off"
 
 # ---------------------------------------------------------------------------- #
 # Misc options

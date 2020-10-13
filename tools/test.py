@@ -20,15 +20,17 @@ def create_supervised_evaluator(model, metrics, device=None):
     Returns:
         Engine: an evaluator engine with supervised inference function
     """
-
+    
     def _inference(engine, batch):
         model.eval()
+        # setting requires_grad flag to false
         with torch.no_grad():
             data, pids, camids = batch
+            # 
             data = data.to(device) if torch.cuda.device_count() >= 1 else data
             feat = model(data)
             return feat, pids, camids
-
+    # Engine is the abstraction refering to the loop provided data and execute func and return result
     engine = Engine(_inference)
 
     for name, metric in metrics.items():
@@ -47,6 +49,7 @@ def do_test(
 
     logger = logging.getLogger("reid_baseline")
     logger.info("Enter inferencing")
+    # TRY : By default reranking is off
     if cfg.TEST.RE_RANKING == 'off':
         print("Create evaluator")
         evaluator = create_supervised_evaluator(model, metrics={'r1_mAP_mINP': r1_mAP_mINP(num_query, max_rank=50, feat_norm=cfg.TEST.FEAT_NORM)},

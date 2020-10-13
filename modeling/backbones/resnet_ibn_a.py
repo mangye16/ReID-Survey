@@ -3,6 +3,7 @@ import torch.nn as nn
 import math
 import torch.utils.model_zoo as model_zoo
 
+from ..layer.attention import SESTNLayer
 
 __all__ = ['ResNet_IBN', 'resnet50_ibn_a', 'resnet101_ibn_a',
            'resnet152_ibn_a']
@@ -76,7 +77,7 @@ class Bottleneck_IBN(nn.Module):
 
 class ResNet_IBN(nn.Module):
 
-    def __init__(self, last_stride, block, layers, num_classes=1000):
+    def __init__(self, last_stride, block, layers, num_classes=1000, use_sestn=False):
         scale = 64
         self.inplanes = scale
         super(ResNet_IBN, self).__init__()
@@ -91,6 +92,11 @@ class ResNet_IBN(nn.Module):
         self.layer4 = self._make_layer(block, scale*8, layers[3], stride=last_stride)
         self.avgpool = nn.AvgPool2d(7)
         self.fc = nn.Linear(scale * 8 * block.expansion, num_classes)
+
+        self.use_sestn = use_sestn
+        if use_sestn:
+            self.sestn1 = SESTNLayer(256, 16)
+            self.sestn2 = SESTNLayer(512, 32)
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -130,7 +136,15 @@ class ResNet_IBN(nn.Module):
         x = self.maxpool(x)
         
         x = self.layer1(x)
+
+        if self.use_sestn:
+            x = self.sestn1(x)
+
         x = self.layer2(x)
+
+        if self.use_sestn:
+            x = self.sestn2(x)
+
         x = self.layer3(x)
         x = self.layer4(x)
 

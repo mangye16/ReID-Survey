@@ -67,14 +67,12 @@ class BaseVideoDataset(BaseDataset):
     def print_dataset_statistics(self, train, query, gallery):
         num_train_pids, num_train_tracklets, num_train_cams, train_tracklet_stats = \
             self.get_videodata_info(train, return_tracklet_stats=True)
-
         num_query_pids, num_query_tracklets, num_query_cams, query_tracklet_stats = \
             self.get_videodata_info(query, return_tracklet_stats=True)
-
         num_gallery_pids, num_gallery_tracklets, num_gallery_cams, gallery_tracklet_stats = \
             self.get_videodata_info(gallery, return_tracklet_stats=True)
-
         tracklet_stats = train_tracklet_stats + query_tracklet_stats + gallery_tracklet_stats
+        
         min_num = np.min(tracklet_stats)
         max_num = np.max(tracklet_stats)
         avg_num = np.mean(tracklet_stats)

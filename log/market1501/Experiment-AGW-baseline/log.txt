@@ -1,0 +1,169 @@
+<<<<<<< Updated upstream
+2020-09-24 19:32:15,052 reid_baseline INFO: Using 1 GPUS
+2020-09-24 19:32:15,053 reid_baseline INFO: Namespace(config_file='configs/AGW_baseline.yml', opts=['MODEL.DEVICE_ID', "('0')", 'DATASETS.NAMES', "('oxygen')", 'MODEL.TRANSFER_MODE', "('on')", 'MODEL.PRETRAIN_CHOICE', "('self')", 'MODEL.PRETRAIN_PATH', "('./log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth')"])
+2020-09-24 19:32:15,053 reid_baseline INFO: Loaded configuration file configs/AGW_baseline.yml
+2020-09-24 19:32:15,053 reid_baseline INFO: 
+=======
+2020-09-25 02:52:40,975 reid_baseline INFO: Using 1 GPUS
+2020-09-25 02:52:40,976 reid_baseline INFO: Namespace(config_file='configs/AGW_baseline.yml', opts=['MODEL.DEVICE_ID', "('0')", 'DATASETS.NAMES', "('oxygen')", 'MODEL.TRANSFER_MODE', "('on')", 'MODEL.PRETRAIN_CHOICE', "('self')", 'MODEL.PRETRAIN_PATH', "('./log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth')"])
+2020-09-25 02:52:40,977 reid_baseline INFO: Loaded configuration file configs/AGW_baseline.yml
+2020-09-25 02:52:40,978 reid_baseline INFO: 
+>>>>>>> Stashed changes
+MODEL:
+  PRETRAIN_CHOICE: 'self'
+  PRETRAIN_PATH: "/content/drive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth"
+  # PRETRAIN_PATH: 'C:/Users/60310249/.torch/models/resnet50-19c8e357.pth'
+  TRANSFER_MODE : 'off'
+  CENTER_LOSS: 'on'
+  CENTER_FEAT_DIM: 2048
+  NAME: 'resnet50_nl'
+  WEIGHT_REGULARIZED_TRIPLET: 'on'
+  GENERALIZED_MEAN_POOL: 'on'
+
+INPUT:
+  IMG_SIZE: [256, 128]
+  PROB: 0.5 # random horizontal flip
+  RE_PROB: 0.5 # random erasing
+  PADDING: 10
+
+DATASETS:
+  NAMES: ('market1501')
+
+DATALOADER:
+  PK_SAMPLER: 'on'
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 8
+
+SOLVER:
+  OPTIMIZER_NAME: 'Adam'
+  MAX_EPOCHS: 180
+  BASE_LR: 0.00035
+
+  CENTER_LR: 0.5
+  CENTER_LOSS_WEIGHT: 0.0005
+
+  WEIGHT_DECAY: 0.0005
+  IMS_PER_BATCH: 64
+
+  STEPS: [40, 70]
+  GAMMA: 0.1
+
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: 'linear'
+
+  CHECKPOINT_PERIOD: 20
+  LOG_PERIOD: 180
+  EVAL_PERIOD: 20
+
+TEST:
+  IMS_PER_BATCH: 64
+  RE_RANKING: 'off'
+  WEIGHT: "path"
+  FEAT_NORM: 'on'
+  EVALUATE_ONLY: 'off'
+VISUALIZE :
+  OPTION : "off"
+  IMS_PER_BATCH : 256
+  NEED_NEW_FEAT_EMBED : "off"
+  INDEX : 0
+  TOP_RANK : 10 
+  RE_RANK : "off"
+EMBEDDING_PROJECTOR:
+  OPTION: "off"
+
+OUTPUT_DIR: "./log/market1501/Experiment-AGW-baseline"
+
+
+
+<<<<<<< Updated upstream
+2020-09-24 19:32:15,054 reid_baseline INFO: Running with config:
+=======
+2020-09-25 02:52:40,987 reid_baseline INFO: Running with config:
+>>>>>>> Stashed changes
+DATALOADER:
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 8
+  PK_SAMPLER: on
+DATASETS:
+  NAMES: oxygen
+  ROOT_DIR: ./toDataset
+EMBEDDING_PROJECTOR:
+  OPTION: off
+INPUT:
+  IMG_SIZE: [256, 128]
+  PADDING: 10
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+  PROB: 0.5
+  RE_PROB: 0.5
+MODEL:
+  CENTER_FEAT_DIM: 2048
+  CENTER_LOSS: on
+  DEVICE: cuda
+  DEVICE_ID: 0
+  GENERALIZED_MEAN_POOL: on
+  LAST_STRIDE: 1
+  NAME: resnet50_nl
+  PRETRAIN_CHOICE: self
+  PRETRAIN_PATH: ./log/market1501/Experiment-AGW-baseline/resnet50_nl_model_160.pth
+  TRANSFER_MODE: on
+  WEIGHT_REGULARIZED_TRIPLET: on
+OUTPUT_DIR: ./log/market1501/Experiment-AGW-baseline
+SOLVER:
+  BASE_LR: 0.00035
+  CENTER_LOSS_WEIGHT: 0.0005
+  CENTER_LR: 0.5
+  CHECKPOINT_PERIOD: 20
+  EVAL_PERIOD: 20
+  GAMMA: 0.1
+  IMS_PER_BATCH: 64
+  LOG_PERIOD: 180
+  MARGIN: 0.3
+  MAX_EPOCHS: 180
+  MOMENTUM: 0.9
+  OPTIMIZER_NAME: Adam
+  STEPS: (40, 70)
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+TEST:
+  EVALUATE_ONLY: off
+  FEAT_NORM: on
+  IMS_PER_BATCH: 64
+  RE_RANKING: off
+  WEIGHT: path
+VISUALIZE:
+  IMS_PER_BATCH: 256
+  INDEX: 0
+  NEED_NEW_FEAT_EMBED: off
+  OPTION: off
+  RE_RANK: off
+  TOP_RANK: 10
+<<<<<<< Updated upstream
+2020-09-24 19:32:21,094 reid_baseline INFO: Start training
+2020-09-24 19:32:21,473 reid_baseline INFO: Epoch 1 done. Time per batch: 0.000[s] Speed: 171.6[samples/s]
+2020-09-24 19:32:21,474 reid_baseline INFO: ----------
+2020-09-24 19:32:21,829 reid_baseline INFO: Epoch 2 done. Time per batch: 0.000[s] Speed: 180.2[samples/s]
+2020-09-24 19:32:21,830 reid_baseline INFO: ----------
+2020-09-24 19:32:22,197 reid_baseline INFO: Epoch 3 done. Time per batch: 0.000[s] Speed: 174.2[samples/s]
+2020-09-24 19:32:22,198 reid_baseline INFO: ----------
+2020-09-24 19:32:22,563 reid_baseline INFO: Epoch 4 done. Time per batch: 0.000[s] Speed: 175.2[samples/s]
+2020-09-24 19:32:22,564 reid_baseline INFO: ----------
+2020-09-24 19:32:22,923 reid_baseline INFO: Epoch 5 done. Time per batch: 0.000[s] Speed: 178.2[samples/s]
+2020-09-24 19:32:22,923 reid_baseline INFO: ----------
+2020-09-24 19:32:23,288 reid_baseline INFO: Epoch 6 done. Time per batch: 0.000[s] Speed: 175.7[samples/s]
+2020-09-24 19:32:23,288 reid_baseline INFO: ----------
+2020-09-24 19:32:23,647 reid_baseline INFO: Epoch 7 done. Time per batch: 0.000[s] Speed: 178.5[samples/s]
+2020-09-24 19:32:23,647 reid_baseline INFO: ----------
+2020-09-24 19:32:24,008 reid_baseline INFO: Epoch 8 done. Time per batch: 0.000[s] Speed: 177.7[samples/s]
+2020-09-24 19:32:24,008 reid_baseline INFO: ----------
+2020-09-24 19:32:24,370 reid_baseline INFO: Epoch 9 done. Time per batch: 0.000[s] Speed: 176.9[samples/s]
+2020-09-24 19:32:24,371 reid_baseline INFO: ----------
+2020-09-24 19:32:24,727 reid_baseline INFO: Epoch 10 done. Time per batch: 0.000[s] Speed: 179.7[samples/s]
+2020-09-24 19:32:24,728 reid_baseline INFO: ----------
+2020-09-24 19:32:25,087 reid_baseline INFO: Epoch 11 done. Time per batch: 0.000[s] Speed: 178.3[samples/s]
+2020-09-24 19:32:25,087 reid_baseline INFO: ----------
+=======
+>>>>>>> Stashed changes

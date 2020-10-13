@@ -36,7 +36,31 @@ class ImageDataset(Dataset):
         img_path, pid, camid = self.dataset[index]
         img = read_image(img_path)
 
+        # while it needs to transform everytime that want to get item
         if self.transform is not None:
             img = self.transform(img)
 
         return img, pid, camid, img_path
+
+class ImageNoLabelDataset(Dataset):
+    """Image Person ReID Dataset"""
+
+    def __init__(self, dataset, transform=None):
+        print("init dataset")
+        self.dataset = dataset
+        # TODO compute new transform
+        self.transform = transform
+        # self.transform = None
+
+    def __len__(self):
+        return len(self.dataset)
+
+    def __getitem__(self, index):
+        img_path, camid, date = self.dataset[index]
+        img = read_image(img_path)
+
+        # while it needs to transform everytime that want to get item
+        if self.transform is not None:
+            img = self.transform(img)
+
+        return img, camid, date, img_path

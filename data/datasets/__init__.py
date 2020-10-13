@@ -5,7 +5,9 @@ from .dukemtmcreid import DukeMTMCreID
 from .market1501 import Market1501
 from .msmt17 import MSMT17
 from .veri import VeRi
-from .dataset_loader import ImageDataset
+from .oxygen1 import Oxygen_1
+from .oxygen import Oxygen
+from .dataset_loader import ImageDataset,ImageNoLabelDataset
 
 __factory = {
     'market1501': Market1501,
@@ -13,6 +15,8 @@ __factory = {
     'dukemtmc': DukeMTMCreID,
     'msmt17': MSMT17,
     'veri': VeRi,
+    'oxygen1' : Oxygen_1,
+    'oxygen' : Oxygen
 }
 
 

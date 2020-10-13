@@ -127,3 +127,22 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Dataset
+toDataset/
+/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/log/
+/content/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/toDataset/
+/content/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/resnet50-19c8e357.pth
+/content/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/log
+/content/gdrive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/log/
+*.pth
+feature-pickle.pkl
+*/feature-pickle.pkl
+*.pkl
+*.png
+**/market1501/
+**/test_image/
+**/writer/
+**/log
+log/*
+log/

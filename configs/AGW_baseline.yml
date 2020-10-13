@@ -1,16 +1,23 @@
 MODEL:
   PRETRAIN_CHOICE: 'imagenet'
-  PRETRAIN_PATH: '/home/cgv841/.cache/torch/checkpoints/resnet50-19c8e357.pth'
-  CENTER_LOSS: 'on'
-  CENTER_FEAT_DIM: 2048
-  NAME: 'resnet50_nl'
+  # PRETRAIN_PATH: "/content/drive/Shared drives/REID/ReId-Survey-Paper/ReID-Survey/log/market1501/local-AGW-baseline/resnet50_nl_model_120.pth"
+  PRETRAIN_PATH: '/home/thanit456/torch/weights/resnet50-19c8e357.pth'
+  TRANSFER_MODE : 'off'
+  BACKBONE: 'resnet50_nl'
   WEIGHT_REGULARIZED_TRIPLET: 'on'
-  GENERALIZED_MEAN_POOL: 'on'
+  USE_COS: False # unused config
+  USE_DROPOUT: False
+  BASELINE: 
+    POOL_TYPE: 'gem'
+    COSINE_LOSS_TYPE: ''
+    SCALING_FACTOR: 60.0
+    MARGIN: 0.35
 
 INPUT:
   IMG_SIZE: [256, 128]
   PROB: 0.5 # random horizontal flip
   RE_PROB: 0.5 # random erasing
+  RE_MAX_RATIO: 0.4 # correspond to actual baseline
   PADDING: 10
 
 DATASETS:
@@ -25,12 +32,19 @@ SOLVER:
   OPTIMIZER_NAME: 'Adam'
   MAX_EPOCHS: 120
   BASE_LR: 0.00035
+  MARGIN: 0.3
 
-  CENTER_LR: 0.5
-  CENTER_LOSS_WEIGHT: 0.0005
+  CENTER_LOSS:
+    USE: True
+    LR: 0.5
+    # ALPHA: 0.5
+    WEIGHT: 0.0005
+    NUM_FEATS: 2048
 
-  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY: 5e-4
   IMS_PER_BATCH: 64
+  # IMS_PER_BATCH: 32
+
 
   STEPS: [40, 70]
   GAMMA: 0.1
@@ -39,16 +53,26 @@ SOLVER:
   WARMUP_ITERS: 10
   WARMUP_METHOD: 'linear'
 
-  CHECKPOINT_PERIOD: 40
+  CHECKPOINT_PERIOD: 20
   LOG_PERIOD: 20
   EVAL_PERIOD: 40
 
 TEST:
-  IMS_PER_BATCH: 128
+  IMS_PER_BATCH: 64
   RE_RANKING: 'off'
   WEIGHT: "path"
   FEAT_NORM: 'on'
   EVALUATE_ONLY: 'off'
+VISUALIZE :
+  OPTION : "off"
+  IMS_PER_BATCH : 256
+  NEED_NEW_FEAT_EMBED : "off"
+  INDEX : 0
+  TOP_RANK : 10 
+  RE_RANK : "off"
+  CAM_OPTION : "none"
+EMBEDDING_PROJECTOR:
+  OPTION: "off"
 
 OUTPUT_DIR: "./log/market1501/Experiment-AGW-baseline"
 
