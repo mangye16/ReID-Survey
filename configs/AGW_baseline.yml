@@ -49,6 +49,7 @@ TEST:
   WEIGHT: "path"
   FEAT_NORM: 'on'
   EVALUATE_ONLY: 'off'
+  PARTIAL_REID: 'off'
 
 OUTPUT_DIR: "./log/market1501/Experiment-AGW-baseline"
 

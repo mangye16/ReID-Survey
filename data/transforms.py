@@ -8,15 +8,26 @@ import torchvision.transforms as T
 def build_transforms(cfg):
     normalize_transform = T.Normalize(mean=cfg.INPUT.PIXEL_MEAN, std=cfg.INPUT.PIXEL_STD)
     transforms = {}
-    transforms['train'] = T.Compose([
-        T.Resize(cfg.INPUT.IMG_SIZE),
-        T.RandomHorizontalFlip(p=cfg.INPUT.PROB),
-        T.Pad(cfg.INPUT.PADDING),
-        T.RandomCrop(cfg.INPUT.IMG_SIZE),
-        T.ToTensor(),
-        normalize_transform,
-        RandomErasing(probability=cfg.INPUT.RE_PROB, mean=cfg.INPUT.PIXEL_MEAN)
-    ])
+    if cfg.TEST.PARTIAL_REID == 'off':
+        transforms['train'] = T.Compose([
+            T.Resize(cfg.INPUT.IMG_SIZE),
+            T.RandomHorizontalFlip(p=cfg.INPUT.PROB),
+            T.Pad(cfg.INPUT.PADDING),
+            T.RandomCrop(cfg.INPUT.IMG_SIZE),
+            T.ToTensor(),
+            normalize_transform,
+            RandomErasing(probability=cfg.INPUT.RE_PROB, mean=cfg.INPUT.PIXEL_MEAN)
+        ])
+    else:
+        transforms['train'] = T.Compose([
+            T.Resize(cfg.INPUT.IMG_SIZE),
+            T.RandomHorizontalFlip(p=cfg.INPUT.PROB),
+            T.RandomResizedCrop(size=256, scale=(0.5, 1.0), ratio=(1.0, 2.0)),
+            T.Resize(cfg.INPUT.IMG_SIZE),
+            T.ToTensor(),
+            normalize_transform,
+            RandomErasing(probability=cfg.INPUT.RE_PROB, mean=cfg.INPUT.PIXEL_MEAN)
+        ])
 
     transforms['eval'] = T.Compose([
             T.Resize(cfg.INPUT.IMG_SIZE),

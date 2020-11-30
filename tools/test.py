@@ -63,5 +63,9 @@ def do_test(
     logger.info('Validation Results')
     logger.info("mINP: {:.1%}".format(mINP))
     logger.info("mAP: {:.1%}".format(mAP))
-    for r in [1, 5, 10]:
-        logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
+    if cfg.TEST.PARTIAL_REID == 'off':
+        for r in [1, 5, 10]:
+            logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
+    else:
+        for r in [1, 3, 5, 10]:
+            logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))

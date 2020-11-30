@@ -39,9 +39,23 @@ def make_data_loader(cfg):
             collate_fn=train_collate_fn
         )
 
-    eval_set = ImageDataset(dataset.query + dataset.gallery, transforms['eval'])
-    data_loader['eval'] = DataLoader(
-        eval_set, batch_size=cfg.TEST.IMS_PER_BATCH, shuffle=False, num_workers=num_workers,
-        collate_fn=val_collate_fn
-    )
+    if cfg.TEST.PARTIAL_REID == 'off':
+        eval_set = ImageDataset(dataset.query + dataset.gallery, transforms['eval'])
+        data_loader['eval'] = DataLoader(
+            eval_set, batch_size=cfg.TEST.IMS_PER_BATCH, shuffle=False, num_workers=num_workers,
+            collate_fn=val_collate_fn
+        )
+    else:
+        dataset_reid = init_dataset('partial_reid', root=cfg.DATASETS.ROOT_DIR)
+        dataset_ilids = init_dataset('partial_ilids', root=cfg.DATASETS.ROOT_DIR)
+        eval_set_reid = ImageDataset(dataset_reid.query + dataset_reid.gallery, transforms['eval'])
+        data_loader['eval_reid'] = DataLoader(
+            eval_set_reid, batch_size=cfg.TEST.IMS_PER_BATCH, shuffle=False, num_workers=num_workers,
+            collate_fn=val_collate_fn
+        )
+        eval_set_ilids = ImageDataset(dataset_ilids.query + dataset_ilids.gallery, transforms['eval'])
+        data_loader['eval_ilids'] = DataLoader(
+            eval_set_ilids, batch_size=cfg.TEST.IMS_PER_BATCH, shuffle=False, num_workers=num_workers,
+            collate_fn=val_collate_fn
+        )
     return data_loader, len(dataset.query), num_classes

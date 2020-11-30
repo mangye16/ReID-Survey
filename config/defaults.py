@@ -135,6 +135,8 @@ _C.TEST.WEIGHT = ""
 # Whether feature is nomalized before test, if on, it is equivalent to cosine distance
 _C.TEST.FEAT_NORM = 'on'
 _C.TEST.EVALUATE_ONLY = 'off'
+# Whether to evaluate on partial re-id dataset
+_C.TEST.PARTIAL_REID = 'off'
 
 # ---------------------------------------------------------------------------- #
 # Misc options

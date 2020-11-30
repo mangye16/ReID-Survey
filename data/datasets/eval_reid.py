@@ -14,6 +14,8 @@ def eval_func(distmat, q_pids, g_pids, q_camids, g_camids, max_rank=50):
     indices = np.argsort(distmat, axis=1)
     matches = (g_pids[indices] == q_pids[:, np.newaxis]).astype(np.int32)
 
+    # print(len(q_pids), len(g_pids), "hello")
+
     # compute cmc curve for each query
     all_cmc = []
     all_AP = []
