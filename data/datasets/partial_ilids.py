@@ -15,13 +15,12 @@ class PartialILIDS(BaseImageDataset):
     def __init__(self, root='./toDataset', verbose=True, **kwargs):
         super(PartialILIDS, self).__init__()
         self.dataset_dir = osp.join(root, self.dataset_dir)
-        self.query_dir = osp.join(self.dataset_dir, 'Probe')
-        self.gallery_dir = osp.join(self.dataset_dir, 'Gallery')
+        self.query_dir = osp.join(self.dataset_dir, 'query')
+        self.gallery_dir = osp.join(self.dataset_dir, 'gallery')
 
         self._check_before_run()
 
-        query = self._process_dir(self.query_dir,camid=1)
-        gallery = self._process_dir(self.gallery_dir,camid=2)
+        query, gallery= self._process(self.query_dir, self.gallery_dir)
 
         if verbose:
             print("=> partial_ilids loaded")
@@ -42,15 +41,16 @@ class PartialILIDS(BaseImageDataset):
         if not osp.exists(self.gallery_dir):
             raise RuntimeError("'{}' is not available".format(self.gallery_dir))
 
-    def _process_dir(self, dir_path, camid):
-        img_paths = glob.glob(osp.join(dir_path, '*.jpg'))
-
-        dataset = []
-        pid_container = set()
-        for img_path in img_paths:
-            img_name = osp.basename(img_path)
-            pid = int(osp.splitext(img_name)[0])
-            pid_container.add(pid)
-            dataset.append((img_path, pid, camid))
-
-        return dataset
+    def _process(self, query_path, gallery_path):
+        query_img_paths = glob.glob(osp.join(query_path, '*.jpg'))
+        gallery_img_paths = glob.glob(osp.join(gallery_path, '*.jpg'))
+        query_paths = []
+        pattern = re.compile(r'([-\d]+)_(\d*)')
+        for img_path in query_img_paths:
+            pid, camid = map(int, pattern.search(img_path).groups())
+            query_paths.append([img_path, pid, camid])
+        gallery_paths = []
+        for img_path in gallery_img_paths:
+            pid, camid = map(int, pattern.search(img_path).groups())
+            gallery_paths.append([img_path, pid, camid])
+        return query_paths, gallery_paths

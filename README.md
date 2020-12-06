@@ -66,12 +66,16 @@ toDataset
         ......
 ```
 
+Partial-REID and Partial-iLIDS datasets are provided by https://github.com/lingxiao-he/Partial-Person-ReID
+
 ### 2. Install dependencies
 
-  - pytorch>=0.4
-  - torchvision
-  - ignite=0.1.2
+  - pytorch=1.0.0
+  - torchvision=0.2.1
+  - pytorch-ignite=0.1.2
   - yacs
+  - scipy=1.2.1
+  - h5py
   
 ### 3. Train
 

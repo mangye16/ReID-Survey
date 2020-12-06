@@ -22,7 +22,7 @@ def build_transforms(cfg):
         transforms['train'] = T.Compose([
             T.Resize(cfg.INPUT.IMG_SIZE),
             T.RandomHorizontalFlip(p=cfg.INPUT.PROB),
-            T.RandomResizedCrop(size=256, scale=(0.5, 1.0), ratio=(1.0, 2.0)),
+            T.RandomResizedCrop(size=256, scale=(0.5, 1.0), ratio=(1.0, 3.0)),
             T.Resize(cfg.INPUT.IMG_SIZE),
             T.ToTensor(),
             normalize_transform,
