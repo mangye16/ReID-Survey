@@ -18,7 +18,7 @@ mars/
     bbox_train/
     info/
 ```
-### 3. Train
+### 2. Train
 
 To train a AGW+ model on MARS with GPU device 0, run similarly:
 ```
