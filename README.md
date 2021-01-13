@@ -1,5 +1,5 @@
 # TPAMI 2021 ReID-Survey with a Powerful AGW Baseline
-Deep Learning for Person Re-identification:  A Survey and Outlook. PDF wirh supplementary materials. [arXiv](https://arxiv.org/abs/2001.04193v2)
+Deep Learning for Person Re-identification:  A Survey and Outlook. PDF with supplementary materials. [arXiv](https://arxiv.org/abs/2001.04193v2)
 
 - An implementation of AGW for cross-modality visible-infrared Re-ID is [HERE](https://github.com/mangye16/Cross-Modal-Re-ID-baseline).
 
