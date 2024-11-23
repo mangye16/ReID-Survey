@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=0,1,2,3 python examples/cluster_contrast_train_usl.py -b 256 -a vit_base -d msmt17 --self-norm --use-hard --hw-ratio 2 --num-instances 8 --conv-stem --iters 400 --eps 0.7 --k1 30
