@@ -1,3 +1,33 @@
+# IJCV 2024: Transformer-based ReID Survey
+
+Transformer for Object Re-Identification: A Survey. [arXiv](https://arxiv.org/abs/2401.06960v2)
+
+- An implementation of UntransReID for unsupervised Re-ID is [HERE](https://github.com/whucsy/ReID-Survey/tree/master/Transformer-ReID-Survey/UnTransReID_USL_ReID).
+  
+- An implementation of UntransReID for cross-modality visible-infrared unsupervised Re-ID is [HERE](https://github.com/whucsy/ReID-Survey/tree/master/Transformer-ReID-Survey/UnTransReID_VI_ReID).
+
+- An implementation of the unified experimental standard for animal Re-ID is [HERE](https://github.com/whucsy/ReID-Survey/tree/master/Transformer-ReID-Survey/Animal-Re-ID-main).
+  
+## Highlights
+
+- An in-depth analysis of Transformer's strengths, highlighting its impact across four key Re-ID directions: image/video-based, limited data/annotations, cross-modal, and special scenarios.
+
+- A new Transformer-based unsupervised baseline, UntransReID, achieving state-of-the-art performance on both single/cross modal Re-ID.
+
+- A unified experimental standard for animal Re-ID, designed to address its unique challenges and evaluate the potential of Transformer-based approaches.
+
+### Citation
+
+Please kindly cite this paper in your publications if it helps your research:
+```
+@article{ye2024transformer,
+  title={Transformer for Object Re-Identification: A Survey},
+  author={Ye, Mang and Chen, Shuoyi and Li, Chenyue and Zheng, Wei-Shi and Crandall, David and Du, Bo},
+  journal={arXiv preprint arXiv:2401.06960},
+  year={2024}
+}
+```
+
 # TPAMI 2021 ReID-Survey with a Powerful AGW Baseline
 Deep Learning for Person Re-identification:  A Survey and Outlook. PDF with supplementary materials. [arXiv](https://arxiv.org/abs/2001.04193v2)
 
