@@ -23,4 +23,4 @@ Run **market_change.py** to change the format to Market1501 format
 Run **split_train_test.py** to split the dataset to train_set and test_set  
 
 
-# Our project will be constantly updated
+## Our project will be constantly updated [HERE](https://github.com/JigglypuffStitch/Animal-Re-ID).
