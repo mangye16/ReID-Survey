@@ -1,0 +1,57 @@
+MODEL:
+  PRETRAIN_PATH: '/home/chenshuoyi/.cache/torch/checkpoints/vit_base_ics_cfs_lup.pth'
+  PRETRAIN_HW_RATIO: 2
+  METRIC_LOSS_TYPE: 'triplet'
+  IF_LABELSMOOTH: 'off'
+  IF_WITH_CENTER: 'no'
+  NAME: 'transformer'
+  NO_MARGIN: True
+  # DEVICE_ID: ('3')
+  TRANSFORMER_TYPE: 'vit_small_patch16_224_TransReID'
+  STRIDE_SIZE: [16, 16]
+  STEM_CONV: True # False for vanilla ViT-S
+  GEM_POOLING: False
+  # DIST_TRAIN: True
+
+INPUT:
+  SIZE_TRAIN: [288, 144] #[384, 128]
+  SIZE_TEST: [288, 144]
+  PROB: 0.5 # random horizontal flip
+  RE_PROB: 0.5 # random erasing
+  PADDING: 10
+  PIXEL_MEAN: [0.5, 0.5, 0.5]
+  PIXEL_STD: [0.5, 0.5, 0.5]
+
+# DATASETS:
+#   NAMES: ('market1501')
+#   ROOT_DIR: ('/home/michuan.lh/datasets')
+
+# DATALOADER:
+#   SAMPLER: 'softmax_triplet'
+#   NUM_INSTANCE: 4
+#   NUM_WORKERS: 8
+
+SOLVER:
+  OPTIMIZER_NAME: 'SGD'
+  MAX_EPOCHS: 120
+  BASE_LR: 0.0004
+  WARMUP_EPOCHS: 20
+  IMS_PER_BATCH: 64
+  WARMUP_METHOD: 'cosine'
+  LARGE_FC_LR: False
+  CHECKPOINT_PERIOD: 120
+  LOG_PERIOD: 20
+  EVAL_PERIOD: 120
+  WEIGHT_DECAY:  1e-4
+  WEIGHT_DECAY_BIAS: 1e-4
+  BIAS_LR_FACTOR: 2
+
+TEST:
+  EVAL: True
+  IMS_PER_BATCH: 256
+  RE_RANKING: False
+  WEIGHT: ''
+  NECK_FEAT: 'before'
+  FEAT_NORM: 'yes'
+
+# OUTPUT_DIR: '../../log/transreid/market/vit_base_ics_cfs_lup_384'
