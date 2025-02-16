@@ -21,4 +21,4 @@ Please kindly cite this paper in your publications if it helps your research:
 }
 ```
 # Acknowledgements
-Our implementation is primarily based on the [cluster-contrast-reid](https://github.com/alibaba/cluster-contrast-reid) open-source codebase. We sincerely appreciate the authors for their outstanding work.
+Our implementation is mainly based on [cluster-contrast-reid](https://github.com/alibaba/cluster-contrast-reid) and [TransReID-SSL](https://github.com/damo-cv/TransReID-SSL) open source code libraries. We sincerely thank the authors for their excellent work. The pre-trained model can be downloaded from [TransReID-SSL](https://github.com/damo-cv/TransReID-SSL)
